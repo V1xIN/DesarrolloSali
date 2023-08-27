@@ -7,6 +7,7 @@ import { IonicModule } from '@ionic/angular';
 import { RecuperacontraPageRoutingModule } from './recuperacontra-routing.module';
 
 import { RecuperacontraPage } from './recuperacontra.page';
+import { IconoComponenteComponent } from 'src/app/components/icono-componente/icono-componente.component';
 
 @NgModule({
   imports: [
@@ -15,6 +16,6 @@ import { RecuperacontraPage } from './recuperacontra.page';
     IonicModule,
     RecuperacontraPageRoutingModule
   ],
-  declarations: [RecuperacontraPage]
+  declarations: [RecuperacontraPage, IconoComponenteComponent]
 })
 export class RecuperacontraPageModule {}
