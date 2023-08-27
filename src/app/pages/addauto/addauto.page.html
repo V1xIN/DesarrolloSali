@@ -5,7 +5,8 @@
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <img alt="Silhouette of mountains" src="https://cdn.discordapp.com/attachments/1143004800951275550/1144058767630155836/Sin_titulo3.png" />
+  <ion-input type="file" (change)="handleFileInput($event)" accept="image/*"></ion-input>
+  <img [src]="selectedImage" *ngIf="selectedImage">
 
   <ion-header collapse="condense">
 
@@ -21,7 +22,7 @@
     <ion-input label="Nro Motor" label-placement="floating" fill="outline" placeholder="B1055558576454" ></ion-input>
     <ion-input label="Nro Chasis" label-placement="floating" fill="outline" placeholder="65645356587698"></ion-input>
     
-    <ion-button shape="round">Ingresar Auto</ion-button>
-  
+    <ion-button shape="round">Ingresar Auto</ion-button><br>
+    <ion-button color="danger" [routerLink]="['/register']" >Volver</ion-button>
 
 </ion-content>

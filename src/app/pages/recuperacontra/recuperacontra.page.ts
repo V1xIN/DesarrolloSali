@@ -6,7 +6,8 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./recuperacontra.page.scss'],
 })
 export class RecuperacontraPage implements OnInit {
-
+  public alertButtons = ['OK'];
+  
   constructor() { }
 
   ngOnInit() {

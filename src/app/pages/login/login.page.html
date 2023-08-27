@@ -23,11 +23,10 @@
         A la aplicacion por excelencia para encontrar y realizar viajes a tu destino de una manera segura.
       </ion-card-content>
     </ion-card>
-    <ion-input label="Correo Electrónico" label-placement="floating" fill="outline" placeholder="Ingrese su Correo"></ion-input>
-    <ion-input label="Contraseña" label-placement="floating" fill="outline" placeholder="Ej: 123Fact@" type="password"></ion-input>
-    <ion-button shape="round">Iniciar Sesión</ion-button><br>
-    <ion-button fill="outline">Registrarse</ion-button> <ion-button fill="clear">Olvide mi Contraseña</ion-button>
+    <ion-input label="Correo Electrónico" label-placement="floating" fill="outline" placeholder="Ingrese su Correo"></ion-input><br>
+    <ion-input label="Contraseña" label-placement="floating" fill="outline" placeholder="Ej: 123Fact@" type="password"></ion-input><br>
+    <ion-button color="success">Iniciar Sesion</ion-button><ion-button color="warning" [routerLink]="['/register']">Registrarse</ion-button><br>
+    <ion-button fill="clear" [routerLink]="['/recuperacontra']">Olvide mi Contraseña</ion-button>
 
   </ion-content> 
 </ion-content>
-
