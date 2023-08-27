@@ -4,18 +4,17 @@ import { FormsModule } from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
 
-import { RecuperacontraPageRoutingModule } from './recuperacontra-routing.module';
+import { ModificaruserPageRoutingModule } from './modificaruser-routing.module';
 
-import { RecuperacontraPage } from './recuperacontra.page';
-
+import { ModificaruserPage } from './modificaruser.page';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    RecuperacontraPageRoutingModule
+    ModificaruserPageRoutingModule
   ],
-  declarations: [RecuperacontraPage]
+  declarations: [ModificaruserPage]
 })
-export class RecuperacontraPageModule {}
+export class ModificaruserPageModule {}

@@ -32,12 +32,16 @@ const routes: Routes = [
     loadChildren: () => import('./pages/addviaje/addviaje.module').then( m => m.AddviajePageModule)
   },
   {
-    path: '**',
-    loadChildren: () => import('./pages/not-found/not-found.module').then( m => m.NotFoundPageModule)
+    path: 'modificaruser',
+    loadChildren: () => import('./pages/modificaruser/modificaruser.module').then( m => m.ModificaruserPageModule)
   },
   {
-    path: 'pp',
-    loadChildren: () => import('./pages/menu/menu.module').then( m => m.MenuPageModule)
+    path: 'pprincipal',
+    loadChildren: () => import('./pages/pprincipal/pprincipal.module').then( m => m.PprincipalPageModule)
+  },
+  {
+    path: '**',
+    loadChildren: () => import('./pages/not-found/not-found.module').then( m => m.NotFoundPageModule)
   }
 
 
