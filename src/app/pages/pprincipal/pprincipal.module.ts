@@ -8,6 +8,7 @@ import { PprincipalPageRoutingModule } from './pprincipal-routing.module';
 
 import { PprincipalPage } from './pprincipal.page';
 
+
 @NgModule({
   imports: [
     CommonModule,
@@ -15,6 +16,6 @@ import { PprincipalPage } from './pprincipal.page';
     IonicModule,
     PprincipalPageRoutingModule
   ],
-  declarations: [PprincipalPage]
+  declarations: [PprincipalPage, ]
 })
 export class PprincipalPageModule {}
