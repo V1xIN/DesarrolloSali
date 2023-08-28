@@ -39,10 +39,19 @@ const routes: Routes = [
     path: 'pprincipal',
     loadChildren: () => import('./pages/pprincipal/pprincipal.module').then( m => m.PprincipalPageModule)
   },
+
+
+  {
+    path: 'reclamo',
+    loadChildren: () => import('./pages/reclamo/reclamo.module').then( m => m.ReclamoPageModule)
+  },
+
   {
     path: '**',
     loadChildren: () => import('./pages/not-found/not-found.module').then( m => m.NotFoundPageModule)
   }
+ 
+
 
 
 ];

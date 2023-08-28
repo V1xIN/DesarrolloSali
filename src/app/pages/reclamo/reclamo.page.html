@@ -1,0 +1,45 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>reclamo</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class ="fondo" [fullscreen]="true">
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">reclamo</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <ion-card class="caja">
+
+    <ion-select label="Tipo de poblema" label-placement="floating" fill="outline">
+      <ion-select-option value="1">Auto</ion-select-option>
+      <ion-select-option value="2">Pasajero</ion-select-option>
+      <ion-select-option value="3">Conductor</ion-select-option>
+    </ion-select>
+    <ion-textarea label="Cuéntanos tu problema"
+    labelPlacement="floating"
+    >
+        
+      </ion-textarea>
+    
+    <ion-button shape="round" class="boton" [routerLink]="['']">Ingresar reclamo</ion-button><br>
+  </ion-card>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+</ion-content>
+
+
