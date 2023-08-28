@@ -4,10 +4,38 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
+<ion-content class ="fondo" [fullscreen]="true">
   <ion-header collapse="condense">
     <ion-toolbar>
       <ion-title size="large">modificaruser</ion-title>
     </ion-toolbar>
   </ion-header>
+
+
+
+
+  <ion-content>
+    <ion-card class="caja">
+    
+       
+        <ion-input label="Cambiar foto" label-placement="floating" type="file" fill="outline" (change)="handleFileInput($event)" accept="image/*">
+          <img [src]="selectedImage" *ngIf="selectedImage">
+        </ion-input>
+       
+  
+      <ion-input label="Cambiar contraseña" label-placement="floating" fill="outline" placeholder="Ingrese su Correo"></ion-input>
+      <ion-input label="Cambiar dirección" label-placement="floating" fill="outline" placeholder="Ingrese su Correo"></ion-input>
+    
+    
+  
+  </ion-card>
+  
+  <ion-button color="danger" [routerLink]="['/']" >Volver</ion-button>
+  
+  
+  </ion-content>
+
+
+
+
 </ion-content>

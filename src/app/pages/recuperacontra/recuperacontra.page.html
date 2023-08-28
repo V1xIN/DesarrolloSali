@@ -10,17 +10,31 @@
     <br>
     <ion-input label="Correo Electrónico" label-placement="floating" fill="outline"
       placeholder="Ingrese su Correo"></ion-input><br>
-    <ion-input label="Contraseña nueva" label-placement="floating" fill="outline"
-      placeholder="Ingrese Contraseña nueva"></ion-input><br>
-    <ion-input label="Confirmar contraseña" label-placement="floating" fill="outline"
-      placeholder="Confirmar contraseña"></ion-input><br>
-    <ion-button color="success" id="present-alert" [routerLink]="['/']">Cambiar contraseña</ion-button>
+  
+    <ion-button color="success" id="present-alert" [routerLink]="['/']">Enviar código</ion-button>
 
-    <ion-alert trigger="present-alert" header="Contraseña restablecida" subHeader="Su contraseña se ha cambiado"
+    <ion-alert trigger="present-alert" header="Código enviado" subHeader="Revisar bandeja de entrada de su correo electrónico"
       [buttons]="alertButtons">
     </ion-alert>
  
   </ion-card>
 
   <ion-button color="danger"  [routerLink]="['/']">Cancelar</ion-button>
+
+<!--  <ion-card class="caja">
+  <ion-input label="Contraseña nueva" label-placement="floating" fill="outline"
+  placeholder="Ingrese Contraseña nueva"></ion-input><br>
+<ion-input label="Confirmar contraseña" label-placement="floating" fill="outline"
+  placeholder="Confirmar contraseña"></ion-input><br>
+
+
+  <ion-button color="success" id="present-alert" [routerLink]="['/']">Cambiar contraseña</ion-button>
+
+    <ion-alert trigger="present-alert" header="Contraseña cambiada" subHeader="Ha cambiado su contraseña correctamente"
+      [buttons]="alertButtons">
+    </ion-alert>
+
+  </ion-card>  -->
+ 
+ 
 </ion-content>
