@@ -4,7 +4,7 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
+<ion-content class ="fondo" [fullscreen]="true">
   <img alt="Silhouette of mountains" src="https://cdn.discordapp.com/attachments/1143004800951275550/1145132206319214653/Sin_titulo2.png" />
 
   <ion-header collapse="condense">
@@ -12,6 +12,10 @@
       <ion-title size="large">addviaje</ion-title>
     </ion-toolbar>
   </ion-header>
+
+
+
+  <ion-card class="caja">
 
     <ion-input label="Desde" label-placement="floating" fill="outline" placeholder="Plaza Norte"></ion-input>
     <ion-input label="Hacia" label-placement="floating" fill="outline" placeholder="Costanera Center"></ion-input>
@@ -27,7 +31,12 @@
 
     <ion-input label="Tarifa" label-placement="floating" fill="outline" placeholder="BB-RR-48"></ion-input>
 
+    <br>
+
     <ion-button shape="round">Ingresar Viaje</ion-button>
 
+    <br>
+    
+  </ion-card>
 
 </ion-content>
