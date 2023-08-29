@@ -12,7 +12,7 @@ const routes: Routes = [
     loadChildren: () => import('./folder/folder.module').then( m => m.FolderPageModule)
   },
   {
-    path: '',
+    path: 'login',
     loadChildren: () => import('./pages/login/login.module').then( m => m.LoginPageModule)
   },
   {
@@ -36,7 +36,7 @@ const routes: Routes = [
     loadChildren: () => import('./pages/modificaruser/modificaruser.module').then( m => m.ModificaruserPageModule)
   },
   {
-    path: 'pprincipal',
+    path: '',
     loadChildren: () => import('./pages/pprincipal/pprincipal.module').then( m => m.PprincipalPageModule)
   },
   {
@@ -47,7 +47,10 @@ const routes: Routes = [
     path: 'reclamo',
     loadChildren: () => import('./pages/reclamo/reclamo.module').then( m => m.ReclamoPageModule)
   },
-
+  {
+    path: 'infoviaje',
+    loadChildren: () => import('./pages/infoviaje/infoviaje.module').then( m => m.InfoviajePageModule)
+  },
   {
     path: '**',
     loadChildren: () => import('./pages/not-found/not-found.module').then( m => m.NotFoundPageModule)

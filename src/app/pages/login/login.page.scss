@@ -31,6 +31,8 @@ $color-terciario: #FFC000;
 
 
 ion-input{
+    justify-content: center;
+    display: flex;
     color: #ffffff;
     margin-top: 15px;
     margin-left: 15px;
@@ -41,6 +43,7 @@ ion-input{
 
 ion-button{
     position: relative;
+    margin: 20px;
 }
 
 .links-secundarios{
