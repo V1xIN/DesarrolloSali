@@ -39,8 +39,10 @@ const routes: Routes = [
     path: 'pprincipal',
     loadChildren: () => import('./pages/pprincipal/pprincipal.module').then( m => m.PprincipalPageModule)
   },
-
-
+  {
+    path: 'perfil',
+    loadChildren: () => import('./pages/perfil/perfil.module').then( m => m.PerfilPageModule)
+  },
   {
     path: 'reclamo',
     loadChildren: () => import('./pages/reclamo/reclamo.module').then( m => m.ReclamoPageModule)
@@ -50,6 +52,7 @@ const routes: Routes = [
     path: '**',
     loadChildren: () => import('./pages/not-found/not-found.module').then( m => m.NotFoundPageModule)
   }
+
  
 
 
