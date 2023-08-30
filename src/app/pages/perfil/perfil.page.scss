@@ -1,13 +1,13 @@
 .fondo {
 
-    --ion-background-color: #4682b4;
+    --ion-background-color: #effaff;
 }
 
 
 
 
 .caja {
-    background-color: #358c83;
+    background-color: #4682b4;
 
     border-radius: 10px;
     box-shadow: 0px 0px 2px black;
@@ -36,3 +36,7 @@ ion-button{
     align-items: center;
     justify-content: center;
 }
+ion-toolbar{
+    --ion-background-color: #4682b4;
+    --ion-text-color: #effaff;
+  }

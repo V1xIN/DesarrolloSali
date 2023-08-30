@@ -1,5 +1,8 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
     <ion-title>Restablecer la contraseña</ion-title>
   </ion-toolbar>
 </ion-header>
@@ -8,18 +11,19 @@
 
   <ion-card class="caja">
     <br>
+    <ion-label color="blank"><p>Ingrese su Correo:</p></ion-label>
     <ion-input label="Correo Electrónico" label-placement="floating" fill="outline"
       placeholder="Ingrese su Correo"></ion-input><br>
   
-    <ion-button color="success" id="present-alert" [routerLink]="['/']">Enviar código</ion-button>
+    <ion-button shape="round" color="success" id="present-alert" [routerLink]="['/']">Enviar código</ion-button>
 
     <ion-alert trigger="present-alert" header="Código enviado" subHeader="Revisar bandeja de entrada de su correo electrónico"
       [buttons]="alertButtons">
     </ion-alert>
- 
+    <ion-button shape="round" color="danger"  [routerLink]="['/']">Cancelar</ion-button>
   </ion-card>
 
-  <ion-button color="danger"  [routerLink]="['/']">Cancelar</ion-button>
+  
 
 <!--  <ion-card class="caja">
   <ion-input label="Contraseña nueva" label-placement="floating" fill="outline"
