@@ -3,8 +3,8 @@ import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 
 const routes: Routes = [
   {
-    path: 'folder/Inbox',
-    redirectTo: 'folder/Inbox',
+    path: '',
+    redirectTo: 'pprincipal',
     pathMatch: 'full'
   },
   {
@@ -36,7 +36,7 @@ const routes: Routes = [
     loadChildren: () => import('./pages/modificaruser/modificaruser.module').then( m => m.ModificaruserPageModule)
   },
   {
-    path: '',
+    path: 'pprincipal',
     loadChildren: () => import('./pages/pprincipal/pprincipal.module').then( m => m.PprincipalPageModule)
   },
   {

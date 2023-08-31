@@ -1,9 +1,19 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
+    <!-- Botón del menú a la izquierda -->
     <ion-buttons slot="start">
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
-    <ion-title>Información Viaje</ion-title>
+    
+    <!-- Título con imagen a la izquierda -->
+    <ion-title slot="start" style="display: flex; align-items: center;">
+      Informacion Viaje
+    </ion-title>
+    
+    <!-- Avatar a la derecha -->
+    <ion-avatar slot="end">
+      <img [routerLink]="['/pprincipal']" alt="Avatar" src="https://cdn.discordapp.com/attachments/1143004800951275550/1145132206319214653/Sin_titulo2.png" />
+    </ion-avatar>
   </ion-toolbar>
 </ion-header>
 
