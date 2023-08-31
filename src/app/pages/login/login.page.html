@@ -19,20 +19,41 @@
 
   </app-icono-componente>
 
+
+  <ion-content>
 <ion-card class="caja">
-    <ion-input label="Correo Electrónico" class="text-input" label-placement="floating" fill="outline" placeholder="Ingrese su Correo"></ion-input><br>
-    <ion-input label="Contraseña" label-placement="floating" fill="outline" placeholder="Ej: 123Fact@" type="password"></ion-input><br>
 
 
 
-    <ion-button shape="round" color="success">Iniciar Sesion</ion-button>
+
+<ion-card-header>
+<ion-card-title>Iniciar Sesión</ion-card-title>
+
+</ion-card-header>
+    
+  <form [formGroup]="formularioLogin">
+    <ion-item>
+      <ion-label position="floating">Nombre</ion-label>
+      <ion-input formControlName="nombre"></ion-input>
+
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="floating">Constraseña</ion-label>
+      <ion-input formControlName="password" type="password"></ion-input>
+
+    </ion-item>
+  </form>
+
+
+    <ion-button  shape="round" color="success">Iniciar Sesion</ion-button>
 
 
     
     
   </ion-card>
 
-
+</ion-content>
 
   
   <ion-button class="links-secundarios" fill="clear"  [routerLink]="['/register']">Registrarse</ion-button>

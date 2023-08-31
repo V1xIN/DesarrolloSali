@@ -25,13 +25,13 @@
       </ion-input>
      
 
-    <ion-input label="Nombre" label-placement="floating" fill="outline" placeholder="Ingrese su Correo"></ion-input>
-    <ion-input label="Apellido" label-placement="floating" fill="outline" placeholder="Ingrese su Correo"></ion-input>
-    <ion-input label="Rut" label-placement="floating" fill="outline" placeholder="Ingrese su Correo"></ion-input>
+    <ion-input label="Nombre" label-placement="floating" fill="outline" placeholder="Ingrese su nombre"></ion-input>
+    <ion-input label="Apellido" label-placement="floating" fill="outline" placeholder="Ingrese su apellido"></ion-input>
+    <ion-input label="Rut" label-placement="floating" fill="outline" placeholder="Ingrese su rut"></ion-input>
     <ion-input label="Correo Electrónico" label-placement="floating" fill="outline" placeholder="Ingrese su Correo"></ion-input>
     <ion-input label="Contraseña" label-placement="floating" fill="outline" placeholder="Ej: 123Fact@" type="password"></ion-input>
-    <ion-input label="Telefono" label-placement="floating" fill="outline" placeholder="Ingrese su Correo"></ion-input>
-    <ion-input label="Direccion" label-placement="floating" fill="outline" placeholder="Ingrese su Correo"></ion-input>
+    <ion-input label="Telefono" label-placement="floating" fill="outline" placeholder="Ingrese su teléfono"></ion-input>
+    <ion-input label="Direccion" label-placement="floating" fill="outline" placeholder="Ingrese su dirección"></ion-input>
     <ion-button shape="round" class="boton" [routerLink]="['/perfil']">Registrarse</ion-button>
     <ion-button shape="round"[routerLink]="['/addauto']">Ingresar un auto</ion-button>
     <ion-button shape="round" color="danger" [routerLink]="['/']" >Volver</ion-button>
@@ -40,6 +40,67 @@
 </ion-card>
 
 
+
+<ion-card-header>
+  <ion-card-title>Iniciar Sesión</ion-card-title>
+  
+  </ion-card-header>
+      
+    <form [formGroup]="formularioRegistro" (keyup.enter)="guardar()">
+      <ion-item>
+        <ion-label position="floating">Nombre</ion-label>
+        <ion-input formControlName="nombre"></ion-input>
+  
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="floating">Apellido</ion-label>
+        <ion-input formControlName="apellido"></ion-input>
+  
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="floating">Rut</ion-label>
+        <ion-input formControlName="rut"></ion-input>
+  
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="floating">Correo electrónico</ion-label>
+        <ion-input formControlName="mail" type="email"></ion-input>
+  
+      </ion-item>
+
+  
+      <ion-item>
+        <ion-label position="floating">Constraseña</ion-label>
+        <ion-input formControlName="password" type="password"></ion-input>
+  
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="floating">Confirmar contraseña</ion-label>
+        <ion-input formControlName="confirmacionPassword" type="password"></ion-input>
+  
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="floating">Teléfono</ion-label>
+        <ion-input formControlName="celular" ></ion-input>
+  
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="floating">Dirección</ion-label>
+        <ion-input formControlName="direccion" ></ion-input>
+  
+      </ion-item>
+
+      <ion-button shape="round" class="boton" (click)="guardar()">Registrarse</ion-button>
+
+
+    </form>
+  
 
 
 </ion-content>
