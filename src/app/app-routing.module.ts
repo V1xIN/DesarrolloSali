@@ -52,13 +52,18 @@ const routes: Routes = [
     loadChildren: () => import('./pages/infoviaje/infoviaje.module').then( m => m.InfoviajePageModule)
   },
   {
+    path: 'infoviaje2',
+    loadChildren: () => import('./pages/infoviaje2/infoviaje2.module').then( m => m.Infoviaje2PageModule)
+  },
+  {
+    path: 'infoviaje3',
+    loadChildren: () => import('./pages/infoviaje3/infoviaje3.module').then( m => m.Infoviaje3PageModule)
+  },
+
+  {
     path: '**',
     loadChildren: () => import('./pages/not-found/not-found.module').then( m => m.NotFoundPageModule)
-  }
-
- 
-
-
+  },
 
 ];
 
