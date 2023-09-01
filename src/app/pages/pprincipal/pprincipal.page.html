@@ -4,113 +4,53 @@
     <ion-buttons slot="start">
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
-    
+
     <!-- Título con imagen a la izquierda -->
     <ion-title slot="start" style="display: flex; align-items: center;">
       Inicio
     </ion-title>
-    
+
     <!-- Avatar a la derecha -->
     <ion-avatar slot="end">
-      <img alt="Avatar" src="https://cdn.discordapp.com/attachments/1143004800951275550/1145132206319214653/Sin_titulo2.png" />
+      <img alt="Avatar"
+        src="https://cdn.discordapp.com/attachments/1143004800951275550/1145132206319214653/Sin_titulo2.png" />
     </ion-avatar>
   </ion-toolbar>
 </ion-header>
 
-<ion-content  class="fondo" [fullscreen]="true">
+<ion-content class="fondo" [fullscreen]="true">
   <ion-header collapse="condense">
     <ion-toolbar>
       <ion-title size="large">pag Principal</ion-title>
     </ion-toolbar>
   </ion-header>
+
+
+
+
+
+  <ion-card *ngFor="let v of viajes" class="caja">
+
+    <ion-card-header>
+      <ion-card-title>{{v.horasalida}}</ion-card-title>
+
+    </ion-card-header>
+    <ion-card-content>
+      <ion-icon name="flag"></ion-icon>{{v.desde | uppercase}} <ion-icon name="arrow-forward-circle"></ion-icon>{{v.hacia | uppercase}}
+    </ion-card-content>
+    <ion-card-content>
+      {{v.marca | uppercase}}
+    </ion-card-content>
+    <img alt="Silhouette of mountains"
+      src="{{v.img}}" />
+    <br>
+    <ion-button [routerLink]="['/infoviaje']">Ver información</ion-button>
+    <br>
+  </ion-card>
+
   
 
 
-
-
-<ion-card class="caja">
-  
-  <ion-card-header>
-    <ion-card-title>En 5 minutos</ion-card-title>
-    
-  </ion-card-header>
-
-  <ion-card-content>
-    <ion-icon name="flag"></ion-icon> Mall Plaza Norte <ion-icon name="arrow-forward-circle"></ion-icon> Costanera Center
-  </ion-card-content>
-
-
-  <ion-card-content>
-    Mitsubishi Lancer rojo
-  </ion-card-content>
-
-
-   <img alt="Silhouette of mountains" src="https://arc-anglerfish-arc2-prod-copesa.s3.amazonaws.com/public/RP5XD5W7ERASLG5HD3LOVOXUQM.jpg" /> 
   
 
-   <br>
-  <ion-button  [routerLink]="['/infoviaje']">Ver información</ion-button>
-  <br>
   
-</ion-card>
-
-<br>
-
-
-<ion-card class="caja">
-  
-  <ion-card-header>
-
-    <ion-card-title>En 10 minutos</ion-card-title>
-    
-  </ion-card-header>
-
-  <ion-card-content>
-    <ion-icon name="flag"></ion-icon> Mall Plaza Norte <ion-icon name="arrow-forward-circle"></ion-icon> Costanera Center
-  </ion-card-content>
-
-
-  <ion-card-content>
-    Toyota Yaris gris
-  </ion-card-content>
-
-   <img alt="Silhouette of mountains" src="https://admin.kovacs.ecrm.cl/files/bms_producto_mutimedia/1451/Colorizer_plata-metalico.jpg" /> 
-  
-
-   <br>
-  <ion-button fill="clear" [routerLink]="['/infoviaje2']">Ver información</ion-button>
-  <br>
-  
-</ion-card>
-
-<br>
-
-
-<ion-card class="caja">
-  
-  <ion-card-header>
-    <ion-card-title>En 20 minutos</ion-card-title>
-    
-  </ion-card-header>
-
-  <ion-card-content>
-    <ion-icon name="flag"></ion-icon> Mall Plaza Norte <ion-icon name="arrow-forward-circle"></ion-icon> Costanera Center
-  </ion-card-content>
-
-
-
-  <ion-card-content>
-    Susuki Swift azul
-  </ion-card-content>
-
-   <img alt="Silhouette of mountains" src="https://upload.wikimedia.org/wikipedia/commons/9/9a/2018_Suzuki_Swift_SZ5_Boosterjet_SHVS_1.0_Front.jpg" /> 
-  
-
-   <br>
-  <ion-button fill="clear" [routerLink]="['/infoviaje3']">Ver información</ion-button>
-  <br>
-  
-</ion-card>
-    
-    
-

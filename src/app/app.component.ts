@@ -13,7 +13,7 @@ export class AppComponent {
     { title: 'Agregar auto', url: '/addauto', icon: 'car-sport' },
     { title: 'Agregar viaje', url: '/addviaje', icon: 'trail-sign' },
     { title: 'Iniciar Sesión', url: '/login', icon: 'log-in' },
-    { title: 'Cerrar Sesión', url: '/folder/trash', icon: 'log-out' },
+    { title: 'Cerrar Sesión', url: '/login', icon: 'log-out' },
   ];
   constructor() {}
 }

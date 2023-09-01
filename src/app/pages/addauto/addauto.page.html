@@ -4,27 +4,24 @@
     <ion-buttons slot="start">
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
-    
+
     <!-- Título con imagen a la izquierda -->
     <ion-title slot="start" style="display: flex; align-items: center;">
       Agregar Auto
     </ion-title>
-    
+
     <!-- Avatar a la derecha -->
     <ion-avatar slot="end">
-      <img [routerLink]="['/pprincipal']" alt="Avatar" src="https://cdn.discordapp.com/attachments/1143004800951275550/1145132206319214653/Sin_titulo2.png" />
+      <img [routerLink]="['/pprincipal']" alt="Avatar"
+        src="https://cdn.discordapp.com/attachments/1143004800951275550/1145132206319214653/Sin_titulo2.png" />
     </ion-avatar>
   </ion-toolbar>
 </ion-header>
 
-<ion-content  class="fondo" [fullscreen]="true">
- 
+<ion-content class="fondo" [fullscreen]="true">
+
 
   <ion-header collapse="condense">
-
-
-
-    
     <ion-toolbar>
       <ion-title size="large">Agregar Auto</ion-title>
     </ion-toolbar>
@@ -32,27 +29,28 @@
 
 
   <ion-content>
-  <ion-card class="caja">
+    <ion-card class="caja">
 
-    <ion-input label="Foto automovil" label-placement="floating" fill="outline" type="file" (change)="handleFileInput($event)" accept="image/*">
-      <img [src]="selectedImage" *ngIf="selectedImage">
-    </ion-input>
-   
-    <ion-input label="Marca" label-placement="floating" fill="outline" placeholder="Nissan"></ion-input>
-    <ion-input label="Modelo" label-placement="floating" fill="outline" placeholder="SM3"></ion-input>
-    <ion-input label="Patente" label-placement="floating" fill="outline" placeholder="BB-RR-48"></ion-input>
-    <ion-input label="Color" label-placement="floating" fill="outline" placeholder="Negro"></ion-input>
-    <ion-input label="Nro Motor" label-placement="floating" fill="outline" placeholder="B1055558576454" ></ion-input>
-    <ion-input label="Nro Chasis" label-placement="floating" fill="outline" placeholder="65645356587698"></ion-input>
-    
-    <br>
+      <ion-input label="Foto automovil" label-placement="floating" fill="outline" type="file"
+        (change)="handleFileInput($event)" accept="image/*">
+        <img [src]="selectedImage" *ngIf="selectedImage">
+      </ion-input>
 
-    <ion-button shape="round">Ingresar Auto</ion-button>
-    <br>
+      <ion-input label="Marca" label-placement="floating" fill="outline" placeholder="Nissan"></ion-input>
+      <ion-input label="Modelo" label-placement="floating" fill="outline" placeholder="SM3"></ion-input>
+      <ion-input label="Patente" label-placement="floating" fill="outline" placeholder="BB-RR-48"></ion-input>
+      <ion-input label="Color" label-placement="floating" fill="outline" placeholder="Negro"></ion-input>
+      <ion-input label="Nro Motor" label-placement="floating" fill="outline" placeholder="B1055558576454"></ion-input>
+      <ion-input label="Nro Chasis" label-placement="floating" fill="outline" placeholder="65645356587698"></ion-input>
 
-  </ion-card>
-</ion-content>
+      <br>
 
-    <ion-button color="danger" [routerLink]="['/register']" >Volver</ion-button>
+      <ion-button shape="round">Ingresar Auto</ion-button>
+      <br>
+
+    </ion-card>
+  </ion-content>
+
+  <ion-button color="danger" [routerLink]="['/register']">Volver</ion-button>
 
 </ion-content>
