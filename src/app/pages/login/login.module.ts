@@ -7,9 +7,6 @@ import { IonicModule } from '@ionic/angular';
 import { LoginPageRoutingModule } from './login-routing.module';
 
 import { LoginPage } from './login.page';
-
-import { IconoComponenteComponent } from 'src/app/components/icono-componente/icono-componente.component';
-
 @NgModule({
   imports: [
     CommonModule,
@@ -18,6 +15,6 @@ import { IconoComponenteComponent } from 'src/app/components/icono-componente/ic
     IonicModule,
     LoginPageRoutingModule
   ],
-  declarations: [LoginPage, IconoComponenteComponent]
+  declarations: [LoginPage]
 })
 export class LoginPageModule {}
