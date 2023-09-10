@@ -42,6 +42,8 @@
       
       <ion-input label="Contraseña" label-placement="floating" fill="outline" placeholder="Ej: 123Fact@" type="password" [(ngModel)]="password"></ion-input>
       <p *ngIf="errorMessages.password" class="error-message">{{ errorMessages.password }}</p>
+      <ion-input label="Repetir Contraseña" label-placement="floating" fill="outline" placeholder="Ej: 123Fact@" type="password" [(ngModel)]="reppassword"></ion-input>
+      <p *ngIf="errorMessages.reppassword" class="error-message">{{ errorMessages.reppassword }}</p>
       
       <ion-input label="Telefono" label-placement="floating" fill="outline" placeholder="Ingrese su teléfono" [(ngModel)]="telefono"></ion-input>
       <p *ngIf="errorMessages.telefono" class="error-message">{{ errorMessages.telefono }}</p>

@@ -12,6 +12,7 @@ export class RegisterPage {
   rut: string = '';
   email: string = '';
   password: string = '';
+  reppassword: string = '';
   telefono: string = '';
   direccion: string = '';
   errorMessages: any = {};
@@ -90,6 +91,33 @@ export class RegisterPage {
 
     if (!isValid) {
       this.errorMessages.password = "La contraseña debe cumplir con ciertas condiciones de seguridad.";
+    }
+
+    return isValid;
+  }
+  validaterepPassword(): boolean {
+    const lengthCheck = this.password.length >= 6 && this.reppassword.length <= 12;
+    const uppercaseCheck = /[A-Z]/.test(this.reppassword);
+    const lowercaseCheck = /[a-z]/.test(this.reppassword);
+    const numberCheck = /\d/.test(this.reppassword);
+    const specialCharacterCheck = /[@$!%*?&]/.test(this.reppassword);
+    const noWhitespaceCheck = /^\S+$/.test(this.reppassword);
+    const noConsecutiveCheck = !/(.)\1/.test(this.reppassword);
+    const noRepeatingCheck = !/(.)\1\1/.test(this.reppassword);
+
+    const isValid = (
+      lengthCheck &&
+      uppercaseCheck &&
+      lowercaseCheck &&
+      numberCheck &&
+      specialCharacterCheck &&
+      noWhitespaceCheck &&
+      noConsecutiveCheck &&
+      noRepeatingCheck
+    );
+
+    if (!isValid) {
+      this.errorMessages.reppassword = "La contraseña debe cumplir con ciertas condiciones de seguridad.";
     }
 
     return isValid;
