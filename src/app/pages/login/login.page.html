@@ -5,11 +5,11 @@
     </ion-buttons>
     
     <ion-title slot="start" style="display: flex; align-items: center;">
-     Bienvenido(a)
+      Bienvenido(a)
     </ion-title>
     
     <ion-avatar slot="end">
-      <img [routerLink]="['/pprincipal']" alt="Avatar" src="https://cdn.discordapp.com/attachments/1143004800951275550/1145132206319214653/Sin_titulo2.png" />
+      <img alt="Avatar" src="https://cdn.discordapp.com/attachments/1143004800951275550/1145132206319214653/Sin_titulo2.png" />
     </ion-avatar>
   </ion-toolbar>
 </ion-header>
@@ -23,27 +23,20 @@
 
   <ion-content>
     <ion-card class="caja">
+      <ion-input label="Correo Electrónico" label-placement="floating" fill="outline" placeholder="Ingrese su Correo" [(ngModel)]="email" (input)="validateEmail()"></ion-input>
+      <p *ngIf="errorMessages.email" class="error-message">{{ errorMessages.email }}</p>
+      
+      <ion-input label="Contraseña" label-placement="floating" fill="outline" placeholder="Ej: 123Fact@" type="{{ showPassword ? 'text' : 'password' }}" [(ngModel)]="password" (input)="validatePassword()"></ion-input>
+      <p *ngIf="errorMessages.password" class="error-message">{{ errorMessages.password }}</p>
+      
+      <ion-button shape="round" (click)="togglePasswordVisibility()">
+        {{ showPassword ? 'Ocultar Contraseña' : 'Mostrar Contraseña' }}
+      </ion-button>
+      
+      <ion-button shape="round" class="boton" [routerLink]="['/pprincipal']">Iniciar Sesión</ion-button>
 
-      <img src="https://t3.ftcdn.net/jpg/05/23/04/00/360_F_523040057_JYMTxoQGquklUthNLLjspI7ldR1hrFlH.jpg"/>
-      
-      <ion-input label="Usuario" label-placement="floating" fill="outline" placeholder="Ingrese su correo" ></ion-input>
-      
-      
-      <ion-input label="Contraseña" label-placement="floating" fill="outline" placeholder="Ingrese su contraseña" ></ion-input>
-      
-      <ion-button shape="round" color="success" [routerLink]="['/pprincipal']">Iniciar Sesión</ion-button>
       <a class="links-secundarios" [routerLink]="['/register']">Registrarse</a><br>
       <a class="links-secundarios" [routerLink]="['/recuperacontra']">Olvidé mi Contraseña</a><br> 
-
-
-      
-      
     </ion-card>
   </ion-content>
 </ion-content>
-
-
-
-
-
-

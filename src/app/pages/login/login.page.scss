@@ -59,3 +59,11 @@ ion-toolbar{
     --ion-background-color: #4682b4;
     --ion-text-color: #effaff;
 }
+
+
+.error-messages-container {
+    display: block; /* Asegura que los mensajes estén en formato vertical */
+    color: red; /* Color de texto en rojo u otro color deseado */
+    margin-top: 5px; /* Espacio superior entre mensajes (ajusta según sea necesario) */
+  }
+  
