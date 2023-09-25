@@ -6,25 +6,89 @@ import { Component } from '@angular/core';
 import { AlertController } from '@ionic/angular';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class BDService {
-
   public database!: SQLiteObject;
-  tablaNoticia: string = "CREATE TABLE IF NOT EXISTS noticia ( id INTEGER PRIMARY KEY autoincrement, titulo VARCHAR(100) NOT NULL,texto VARCHAR(300) NOT NULL);";
-  registroNoticia: string = "INSERT OR IGNORE INTRO NOTICIA(id, titulo,texto) VALUES ( 1,  'Soy un título', 'Soy un texto largo de la noticia'); ";
-  listaNoticias = new BehaviorSubject([]);
-  private isDBREADY: BehaviorSubject<boolean> = new BehaviorSubject
-  (false);
+
+
+//TABLAS CREADAS//  
+  tablaRol: string =
+  'CREATE TABLE IF NOT EXISTS rol (idrol INTEGER PRIMARY KEY autoincrement NOT NULL, nombrerol VARCHAR (30) NOT NULL);';
+
+  tablaComuna: string =
+  'CREATE TABLE IF NOT EXISTS comuna (idcomuna INTEGER PRIMARY KEY autoincrement NOT NULL, nombreComuna VARCHAR(30)NOT NULL);';
+  tablaSedes: string =
+  'CREATE TABLE IF NOT EXISTS sede (idSede INTEGER PRIMARY KEY autoincrement NOT NULL, nombreSede VARCHAR(30)NOT NULL);';
+
+
+  tablaUsuario: string =
+    'CREATE TABLE IF NOT EXISTS usuario ( rut INTEGER PRIMARY KEY , nombre VARCHAR(100) NOT NULL,apellido VARCHAR(100) NOT NULL, correo VARCHAR(100) NOT NULL, clave VARCHAR(100) NOT NULL, telefono INTEGER(9) NOT NULL, direccion VARCHAR(50) NOT NULL, idrol FK );'; // TABLA CON FK INCOMPLETA
+
+  tablaViaje: string =
+    'CREATE TABLE IF NOT EXISTS viaje (idViaje INTEGER PRIMARY KEY NOT NULL , fechaViaje DATE NOT NULL, horaViaje DATE NOT NULL, asientos NUMBER(2) NOT NULL, lugarSalida idSede FK, lugarLlegada idComuna FK, descipcion VARCHAR(50) NOT NULL, calificacion idCalificacion FK );';  // TABLA CON FK INCOMPLETA
+
+  tablaCalificacion: string =
+    'CREATE TABLE IF NOT EXISTS calificacion (idCalificacion INTEGER PRIMARY KEY autoincrement NOT NULL, comentarioCalificacion VARCHAR(100), calificacion INTEGER(1) NOT NULL );';
+  
+  tablaReclamo: string =
+  'CREATE TABLE IF NOT EXISTS reclamo (idReclamo INTEGER PRIMARY KEY autoincrement NOT NULL, descripcionReclamo VARCHAR(100) NOT NULL);';
 
   
-  constructor(private alertController: AlertController, public sqlite: SQLite, private platform: Platform) {
+  tablaAuto: string =
+    'CREATE TABLE IF NOT EXISTS auto (patente INTEGER PRIMARY KEY autoincrement NOT NULL, color VARCHAR(10) NOT NULL, marca VARCHAR(20) NOT NULL, modelo VARCHAR(20) NOT NULL,  numeroMotor VARCHAR(100) NOT NULL, numeroChasis VARCHAR(100) NOT NULL, rut FK) ;';  // TABLA CON FK INCOMPLETA
 
+  // FIN DE CREACIÓN DE TABLAS //
+
+
+    // COMIENZO DE LOS INSERT //
+
+  insertRol1: string =
+  "INSERT OR IGNORE INTO rol (idrol, nombrerol) VALUES (1, 'Pasajero');";
+
+  insertRol2: string =
+  "INSERT OR IGNORE INTO rol (idrol, nombrerol) VALUES (2, 'Conductor');";
+
+  insertComuna: string = 
+  "INSERT OF IGNORE INTO comuna (idComuna, nombreComuna) VALUES (1, 'Huechuraba');";
+
+  insertComuna2: string = 
+  "INSERT OF IGNORE INTO comuna (idComuna, nombreComuna) VALUES (2, 'Quilicura');";
+
+  insertComuna3: string = 
+  "INSERT OF IGNORE INTO comuna (idComuna, nombreComuna) VALUES (3, 'Independencia');";
+
+  insertComuna4: string = 
+  "INSERT OF IGNORE INTO comuna (idComuna, nombreComuna) VALUES (4, 'Recoleta');";
+
+  insertComuna5: string = 
+  "INSERT OF IGNORE INTO comuna (idComuna, nombreComuna) VALUES (5, 'Conchalí');";
+
+
+  insertSede: string =
+  "INSERT OR IGNORE INTO sede (idSede, nombreSede) VALUES (1, 'Plaza Norte');";
+
+
+  insertSede2: string =
+  "INSERT OR IGNORE INTO sede (idSede, nombreSede) VALUES (2, 'Alameda');";
+
+  //FIN DE LOS INSERT//
+
+  
+  
+
+  registroUsuario: string =
+    "INSERT OR IGNORE INTRO NOTICIA(id, titulo,texto) VALUES ( 1,  'Soy un título', 'Soy un texto largo de la noticia'); ";
+  listaNoticias = new BehaviorSubject([]);
+  private isDBREADY: BehaviorSubject<boolean> = new BehaviorSubject(false);
+
+  constructor(
+    private alertController: AlertController,
+    public sqlite: SQLite,
+    private platform: Platform
+  ) {
     this.crearBD();
-
   }
-
-
 
   async presentAlert() {
     const alert = await this.alertController.create({
@@ -37,46 +101,40 @@ export class BDService {
     await alert.present();
   }
 
-  crearBD(){
+  crearBD() {
     // verificar el platform
-   this.platform.ready().then(()=>{
-   //creamos la BD
-   this.sqlite.create({
-   name: 'bdnoticias.db',
-   location: 'default'
-   }).then((db: SQLiteObject)=>{
-     //capturar la coneccion a BD
-      this.database = db;
-   
-     // ejecuto la creación de tablas
-      this.crearTablas();
-   }).catch(e => {
-      this.presentAlert("Error en crearBD: " + e);
-   
-   })
-   
-   })
-   
-   
-   }
+    this.platform.ready().then(() => {
+      //creamos la BD
+      this.sqlite
+        .create({
+          name: 'bdnoticias.db',
+          location: 'default',
+        })
+        .then((db: SQLiteObject) => {
+          //capturar la coneccion a BD
+          this.database = db;
 
+          // ejecuto la creación de tablas
+          this.crearTablas();
+        })
+        .catch((e) => {
+          this.presentAlert('Error en crearBD: ' + e);
+        });
+    });
+  }
 
-   async crearTablas(){
-    try{
-    // ejecutar la creación de tablas
-    await this.database.executeSql(this.tablaNoticia,[]);
-    
-    //ejecuto los insert
-    await this.database.executeSql(this.registroNoticia,[]);
-    
-    
-    //cambio mi observable de BD
-    this.isDBREADY.next(true);
-    
-    }catch(e){
-      this.presentAlert("Error en crearBD: " + e);
+  async crearTablas() {
+    try {
+      // ejecutar la creación de tablas
+      await this.database.executeSql(this.tablaUsuario, []);
+
+      //ejecuto los insert
+      await this.database.executeSql(this.registroUsuario, []);
+
+      //cambio mi observable de BD
+      this.isDBREADY.next(true);
+    } catch (e) {
+      this.presentAlert('Error en crearBD: ' + e);
     }
-    
-    }
-    
+  }
 }
