@@ -16,6 +16,7 @@ export class RegisterPage {
   telefono: string = '';
   direccion: string = '';
   errorMessages: any = {};
+  
 
   constructor() {}
 
@@ -25,136 +26,74 @@ export class RegisterPage {
   }
 
   validateNombre(): boolean {
-    const nombrePattern = /^[A-Z][a-zA-Z]{0,11}$/;
-    const isValid = nombrePattern.test(this.nombre);
 
-    if (!isValid) {
-      this.errorMessages.nombre = "El nombre debe comenzar con una letra mayúscula y tener entre 1 y 12 caracteres alfabéticos.";
+    //NOMBRE
+    if (!this.nombre.trim()) {
+      this.errorMessages.nombre = 'Por favor, ingrese su nombre';
+    } else {
+      this.errorMessages.nombre = '';
+    }
+    
+    //APELLIDO
+    if (!this.apellido.trim()) {
+      this.errorMessages.apellido = 'Por favor, ingrese su apellido';
+    } else {
+      this.errorMessages.apellido = '';
     }
 
-    return isValid;
-  }
+    /////////////RUT
+    const rutRegex = /^(\d{7,8})-(\d{1}|[kK])$/;
 
-  validateApellido(): boolean {
-    const apellidoPattern = /^[A-Z][a-zA-Z]{0,11}$/;
-    const isValid = apellidoPattern.test(this.apellido);
-
-    if (!isValid) {
-      this.errorMessages.apellido = "El apellido debe comenzar con una letra mayúscula y tener entre 1 y 12 caracteres alfabéticos.";
+    if (!rutRegex.test(this.rut)) {
+      // Si no coincide con la expresión regular, muestra un mensaje de error
+      this.errorMessages.rut = 'RUT inválido. Debe estar en formato xxxxxxxx-x';
+    } else {
+      // Si es válido, elimina el mensaje de error
+      this.errorMessages.rut = '';
     }
 
-    return isValid;
-  }
-
-  validateRut(): boolean {
-    const rutPattern = /^[0-9]{1,2}\.[0-9]{3}\.[0-9]{3}-[0-9Kk]{1}$/;
-    const isValid = rutPattern.test(this.rut);
-
-    if (!isValid) {
-      this.errorMessages.rut = "El RUT debe tener el formato correcto, por ejemplo: 12.345.678-9";
+    // Correo electrónico:
+    if (!this.email.match(/^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$/)) {
+      this.errorMessages.email = 'El correo electrónico debe contener @ y .';
+    } else {
+      this.errorMessages.email = '';
     }
 
-    return isValid;
-  }
 
-  validateEmail(): boolean {
-    const emailPattern = /@/;
-    const isValid = emailPattern.test(this.email);
+    //CONTRASEÑA
 
-    if (!isValid) {
-      this.errorMessages.email = "El correo electrónico debe contener el caracter '@'.";
+    if (this.password.length < 8) {
+      this.errorMessages.password = 'La contraseña debe contener al menos una letra mayúscula, una letra minúscula y un número';
+    } else if (!/[A-Z]/.test(this.password) || !/[a-z]/.test(this.password) || !/[0-9]/.test(this.password)) {
+      this.errorMessages.password = 'La contraseña debe tener al menos 8 caracteres';
+    } else {
+      this.errorMessages.password = '';
     }
 
-    return isValid;
-  }
+    //CELULAR
 
-  validatePassword(): boolean {
-    const lengthCheck = this.password.length >= 6 && this.password.length <= 12;
-    const uppercaseCheck = /[A-Z]/.test(this.password);
-    const lowercaseCheck = /[a-z]/.test(this.password);
-    const numberCheck = /\d/.test(this.password);
-    const specialCharacterCheck = /[@$!%*?&]/.test(this.password);
-    const noWhitespaceCheck = /^\S+$/.test(this.password);
-    const noConsecutiveCheck = !/(.)\1/.test(this.password);
-    const noRepeatingCheck = !/(.)\1\1/.test(this.password);
-
-    const isValid = (
-      lengthCheck &&
-      uppercaseCheck &&
-      lowercaseCheck &&
-      numberCheck &&
-      specialCharacterCheck &&
-      noWhitespaceCheck &&
-      noConsecutiveCheck &&
-      noRepeatingCheck
-    );
-
-    if (!isValid) {
-      this.errorMessages.password = "La contraseña debe cumplir con ciertas condiciones de seguridad.";
+    if (!/^\d{9}$/.test(this.telefono)) {
+      this.errorMessages.telefono = 'Número de teléfono no válido Ej: 912345678';
+    } else {
+      this.errorMessages.telefono = '';
     }
 
-    return isValid;
-  }
-  validaterepPassword(): boolean {
-    const lengthCheck = this.password.length >= 6 && this.reppassword.length <= 12;
-    const uppercaseCheck = /[A-Z]/.test(this.reppassword);
-    const lowercaseCheck = /[a-z]/.test(this.reppassword);
-    const numberCheck = /\d/.test(this.reppassword);
-    const specialCharacterCheck = /[@$!%*?&]/.test(this.reppassword);
-    const noWhitespaceCheck = /^\S+$/.test(this.reppassword);
-    const noConsecutiveCheck = !/(.)\1/.test(this.reppassword);
-    const noRepeatingCheck = !/(.)\1\1/.test(this.reppassword);
-
-    const isValid = (
-      lengthCheck &&
-      uppercaseCheck &&
-      lowercaseCheck &&
-      numberCheck &&
-      specialCharacterCheck &&
-      noWhitespaceCheck &&
-      noConsecutiveCheck &&
-      noRepeatingCheck
-    );
-
-    if (!isValid) {
-      this.errorMessages.reppassword = "La contraseña debe cumplir con ciertas condiciones de seguridad.";
+    //DIRECCION
+    if (this.direccion.length < 5) {
+      this.errorMessages.direccion = 'Ingrese su Direccion, por favor';
+      return false;
+    } else {
+      this.errorMessages.direccion = '';
     }
 
-    return isValid;
+    return true;
   }
 
-  validateTelefono(): boolean {
-    const telefonoPattern = /^\+56 9 [0-9]{4} [0-9]{4}$/;
-    const isValid = telefonoPattern.test(this.telefono);
-
-    if (!isValid) {
-      this.errorMessages.telefono = "El teléfono debe tener el formato correcto, por ejemplo: +56 9 1234 5678";
-    }
-
-    return isValid;
-  }
-
-  validateDireccion(): boolean {
-    const direccionPattern = /^[A-Za-z\s]{1,16}\s[1-9][0-9]{2,3}$/;
-    const isValid = direccionPattern.test(this.direccion);
-
-    if (!isValid) {
-      this.errorMessages.direccion = "La dirección debe cumplir con ciertas condiciones.";
-    }
-
-    return isValid;
-  }
 
   areAllValid(): boolean {
     return (
       this.selectedImage !== '' &&
-      this.validateNombre() &&
-      this.validateApellido() &&
-      this.validateRut() &&
-      this.validateEmail() &&
-      this.validatePassword() &&
-      this.validateTelefono() &&
-      this.validateDireccion()
+      this.validateNombre() 
     );
   }
 
