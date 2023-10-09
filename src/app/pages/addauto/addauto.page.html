@@ -36,21 +36,56 @@
         <img [src]="selectedImage" *ngIf="selectedImage">
       </ion-input>
 
-      <ion-input label="Marca" label-placement="floating" fill="outline" placeholder="Nissan"></ion-input>
-      <ion-input label="Modelo" label-placement="floating" fill="outline" placeholder="SM3"></ion-input>
-      <ion-input label="Patente" label-placement="floating" fill="outline" placeholder="BB-RR-48"></ion-input>
-      <ion-input label="Color" label-placement="floating" fill="outline" placeholder="Negro"></ion-input>
-      <ion-input label="Nro Motor" label-placement="floating" fill="outline" placeholder="B1055558576454"></ion-input>
-      <ion-input label="Nro Chasis" label-placement="floating" fill="outline" placeholder="65645356587698"></ion-input>
+      <ion-select label="Marca" label-placement="floating" fill="outline">
+        <ion-select-option value="Toyota">Toyota</ion-select-option>
+        <ion-select-option value="Chevrolet">Chevrolet</ion-select-option>
+        <ion-select-option value="Hyundai">Hyundai</ion-select-option>
+        <ion-select-option value="Kia">Kia</ion-select-option>
+        <ion-select-option value="Nissan">Nissan</ion-select-option>
+        <ion-select-option value="Ford">Ford</ion-select-option>
+        <ion-select-option value="Volkswagen">Volkswagen</ion-select-option>
+        <ion-select-option value="Mazda">Mazda</ion-select-option>
+        <ion-select-option value="Suzuki">Suzuki</ion-select-option>
+        <ion-select-option value="Subaru">Subaru</ion-select-option>
+        <ion-select-option value="Mercedes-Benz">Mercedes-Benz</ion-select-option>
+        <ion-select-option value="BMW">BMW</ion-select-option>
+      </ion-select>
+      
+      <ion-input label="Modelo" label-placement="floating" fill="outline" placeholder="SM3"[(ngModel)]="modelo" required (blur)="validateModel(modelo)"></ion-input>
+      <p *ngIf="errorMessages.modelo" class="error-message">{{ errorMessages.modelo }}</p>
+
+
+      <ion-input label="Patente" label-placement="floating" fill="outline" placeholder="BB-RR-48"[(ngModel)]="patente" required (blur)="validatePatent(patente)"></ion-input>
+      <p *ngIf="errorMessages.patente" class="error-message">{{ errorMessages.patente }}</p>
+
+
+      <ion-select label="Color" label-placement="floating" fill="outline">
+        <ion-select-option value="Rojo">Rojo</ion-select-option>
+        <ion-select-option value="Azul">Azul</ion-select-option>
+        <ion-select-option value="Verde">Verde</ion-select-option>
+        <ion-select-option value="Blanco">Blanco</ion-select-option>
+        <ion-select-option value="Negro">Negro</ion-select-option>
+        <ion-select-option value="Gris">Gris</ion-select-option>
+        <ion-select-option value="Plateado">Plateado</ion-select-option>
+        <ion-select-option value="Amarillo">Amarillo</ion-select-option>
+        <ion-select-option value="Naranja">Naranja</ion-select-option>
+        <ion-select-option value="Marrón">Marrón</ion-select-option>
+        <ion-select-option value="Violeta">Violeta</ion-select-option>
+        <ion-select-option value="Rosa">Rosa</ion-select-option>
+      </ion-select>
+      
+      <ion-input label="Nro Chasis" label-placement="floating" fill="outline" placeholder="65645356587698"[(ngModel)]="nroChasis" required (blur)="validateChassis(nroChasis)"></ion-input>
+      <p *ngIf="errorMessages.nroChasis" class="error-message">{{ errorMessages.nroChasis }}</p>
+
+
 
       <br>
 
       <ion-button shape="round">Ingresar Auto</ion-button>
       <br>
-
+      <ion-button shape="round" [routerLink]="['/']">Volver</ion-button>
     </ion-card>
   </ion-content>
 
-  <ion-button color="danger" [routerLink]="['/register']">Volver</ion-button>
 
 </ion-content>

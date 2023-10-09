@@ -32,22 +32,20 @@
 
     <ion-input label="Desde" label-placement="floating" fill="outline" placeholder="Plaza Norte"></ion-input>
     <ion-input label="Hacia" label-placement="floating" fill="outline" placeholder="Costanera Center"></ion-input>
-    <ion-input label="Fecha del viaje" label-placement="floating" fill="outline" placeholder=""></ion-input>
     <ion-select label="Asientos Disponibles" label-placement="floating" fill="outline">
       <ion-select-option value="1">1</ion-select-option>
       <ion-select-option value="2">2</ion-select-option>
       <ion-select-option value="3">3</ion-select-option>
     </ion-select>
 
-    <ion-input type="time" label="Hora Salida" type="time" label-placement="floating" fill="outline" placeholder="13:00"></ion-input>
+    <ion-datetime presentation="date-time" [preferWheel]="true"></ion-datetime>
     
 
-    <ion-input label="Tarifa" label-placement="floating" fill="outline" placeholder="BB-RR-48"></ion-input>
 
     <br>
 
     <ion-button shape="round">Ingresar Viaje</ion-button>
-
+    <ion-button shape="round" [routerLink]="['/']">Volver</ion-button>
     <br>
     
   </ion-card>
