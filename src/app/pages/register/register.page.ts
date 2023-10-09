@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import {Camera, CameraResultType, CameraSource} from '@capacitor/camera';
 
 @Component({
   selector: 'app-register',
@@ -6,7 +7,7 @@ import { Component } from '@angular/core';
   styleUrls: ['./register.page.scss'],
 })
 export class RegisterPage {
-  selectedImage: string = '';
+  selectedImage: any ;
   nombre: string = '';
   apellido: string = '';
   rut: string = '';
@@ -17,8 +18,25 @@ export class RegisterPage {
   direccion: string = '';
   errorMessages: any = {};
   
+  
 
   constructor() {}
+
+
+  takePicture = async () => {
+    const image2 = await Camera.getPhoto({
+      quality: 90,                                
+      allowEditing: false,                         
+      resultType: CameraResultType.DataUrl,	   
+	source: CameraSource.Camera	  
+    });
+
+
+  this.selectedImage = image2.dataUrl;
+  }
+
+
+
 
   handleFileInput(event: any): void {
     const file = event.target.files[0];

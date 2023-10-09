@@ -24,9 +24,8 @@
   <ion-content>
     <ion-card class="caja">
 
-      <ion-input label="Foto perfil" label-placement="floating" type="file" fill="outline" (change)="handleFileInput($event)" accept="image/*">
-        <img [src]="selectedImage" *ngIf="selectedImage">
-      </ion-input>
+      <ion-button (click)="takePicture()">Take picture</ion-button>
+      <img *ngIf="selectedImage" [src]="selectedImage" alt="image" style="width: 100%;max-width: 250px;">
       
       <ion-input label="Nombre" label-placement="floating" fill="outline" placeholder="Ingrese su nombre" [(ngModel)]="nombre"></ion-input>
       <p *ngIf="errorMessages.nombre" class="error-message">{{ errorMessages.nombre }}</p>
@@ -43,10 +42,10 @@
       <ion-input label="Contraseña" label-placement="floating" fill="outline" placeholder="Ej: 123Fact@" type="password" [(ngModel)]="password"></ion-input>
       <p *ngIf="errorMessages.password" class="error-message">{{ errorMessages.password }}</p>
       
-      <ion-input label="Repetir Contraseña" label-placement="floating" fill="outline" placeholder="Ej: 123Fact@" type="password" [(ngModel)]="password"></ion-input>
+      <ion-input label="Repetir Contraseña" label-placement="floating" fill="outline" placeholder="Ej: 123Fact@" type="password" [(ngModel)]="reppassword" ></ion-input>
       <p *ngIf="errorMessages.password" class="error-message">{{ errorMessages.password }}</p>
       
-      <ion-input label="Telefono" label-placement="floating" fill="outline" placeholder="Ingrese su teléfono" [(ngModel)]="telefono"></ion-input>
+      <ion-input label="Telefono" label-placement="floating" fill="outline" placeholder="Ingrese su teléfono" [(ngModel)]="telefono" ></ion-input>
       <p *ngIf="errorMessages.telefono" class="error-message">{{ errorMessages.telefono }}</p>
       
       <ion-input label="Direccion" label-placement="floating" fill="outline" placeholder="Ingrese su dirección" [(ngModel)]="direccion"></ion-input>
