@@ -30,11 +30,9 @@
 
   <ion-content>
     <ion-card class="caja">
-
-      <ion-input label="Foto automovil" label-placement="floating" fill="outline" type="file"
-        (change)="handleFileInput($event)" accept="image/*">
-        <img [src]="selectedImage" *ngIf="selectedImage">
-      </ion-input>
+      <br>
+      <ion-button (click)="takePicture()">Tomar foto</ion-button>
+      <img *ngIf="image" [src]="image" alt="image" style="width: 100%;max-width: 250px;">
 
       <ion-select label="Marca" label-placement="floating" fill="outline">
         <ion-select-option value="Toyota">Toyota</ion-select-option>

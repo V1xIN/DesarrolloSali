@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {Camera, CameraResultType, CameraSource} from '@capacitor/camera';
 
 @Component({
   selector: 'app-addauto',
@@ -11,12 +12,30 @@ export class AddautoPage implements OnInit {
   modelo: string = '';
   patente: string = '';
   nroChasis: string = '';
+  image: any;
 
   errorMessages = {
     modelo: '',
     patente: '',
     nroChasis: '',
   };
+
+ 
+
+  constructor() { }
+
+  takePicture = async () => {
+    const image = await Camera.getPhoto({
+      quality: 90,
+      allowEditing: false,
+      resultType: CameraResultType.DataUrl,
+      source: CameraSource.Camera
+    });
+  
+    // image.dataUrl contendrá el Data URL de la imagen capturada.
+    this.image = image.dataUrl;
+  };
+
 
   handleFileInput(event: any) {
     const file = event.target.files[0];
@@ -82,8 +101,6 @@ export class AddautoPage implements OnInit {
       nroChasis: '',
     };
   }
-
-  constructor() { }
 
   ngOnInit() {
   }

@@ -23,9 +23,11 @@
 
   <ion-content>
     <ion-card class="caja">
+      <br>
 
-      <ion-button (click)="takePicture()">Take picture</ion-button>
-      <img *ngIf="selectedImage" [src]="selectedImage" alt="image" style="width: 100%;max-width: 250px;">
+      <ion-button (click)="takePicture()">Tomar foto</ion-button>
+      <img *ngIf="image" [src]="image" alt="image" style="width: 100%;max-width: 250px;">
+  
       
       <ion-input label="Nombre" label-placement="floating" fill="outline" placeholder="Ingrese su nombre" [(ngModel)]="nombre"></ion-input>
       <p *ngIf="errorMessages.nombre" class="error-message">{{ errorMessages.nombre }}</p>

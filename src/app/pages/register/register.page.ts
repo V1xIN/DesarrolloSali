@@ -17,31 +17,26 @@ export class RegisterPage {
   telefono: string = '';
   direccion: string = '';
   errorMessages: any = {};
-  
+  image: any;
   
 
   constructor() {}
 
 
   takePicture = async () => {
-    const image2 = await Camera.getPhoto({
-      quality: 90,                                
-      allowEditing: false,                         
-      resultType: CameraResultType.DataUrl,	   
-	source: CameraSource.Camera	  
+    const image = await Camera.getPhoto({
+      quality: 90,
+      allowEditing: false,
+      resultType: CameraResultType.DataUrl,
+      source: CameraSource.Camera
     });
+  
+    // image.dataUrl contendrá el Data URL de la imagen capturada.
+    this.image = image.dataUrl;
+  };
 
 
-  this.selectedImage = image2.dataUrl;
-  }
 
-
-
-
-  handleFileInput(event: any): void {
-    const file = event.target.files[0];
-    this.selectedImage = URL.createObjectURL(file);
-  }
 
   validateNombre(): boolean {
 
@@ -129,4 +124,8 @@ export class RegisterPage {
   resetErrorMessages(): void {
     this.errorMessages = {}; // Reiniciar los mensajes de error
   }
+
+  
+
+
 }
