@@ -27,34 +27,41 @@
 
       <ion-button (click)="takePicture()">Tomar foto</ion-button>
       <img *ngIf="image" [src]="image" alt="image" style="width: 100%;max-width: 250px;">
-  
       
-      <ion-input label="Nombre" label-placement="floating" fill="outline" placeholder="Ingrese su nombre" [(ngModel)]="nombre"></ion-input>
+      <input type="file" style="display: none" #fileInput (change)="handleFileInput($event)">
+      <ion-button (click)="fileInput.click()">Subir foto</ion-button>
+      <img [src]="selectedImage" *ngIf="selectedImage">
+      
+
+
+      
+      <ion-input label="Nombre" label-placement="floating" fill="outline" placeholder="Ingrese su nombre" [(ngModel)]="nombre" (input)="validateNombre()"></ion-input>
       <p *ngIf="errorMessages.nombre" class="error-message">{{ errorMessages.nombre }}</p>
 
-      <ion-input label="Apellido" label-placement="floating" fill="outline" placeholder="Ingrese su apellido" [(ngModel)]="apellido"></ion-input>
+      <ion-input label="Apellido" label-placement="floating" fill="outline" placeholder="Ingrese su apellido" [(ngModel)]="apellido" (input)="validateApellido()"></ion-input>
       <p *ngIf="errorMessages.apellido" class="error-message">{{ errorMessages.apellido }}</p>
-      
-      <ion-input label="Rut" label-placement="floating" fill="outline" placeholder="Ingrese su rut" [(ngModel)]="rut"></ion-input>
-      <p *ngIf="errorMessages.rut" class="error-message">{{ errorMessages.rut }}</p>
-      
-      <ion-input label="Correo Electrónico" label-placement="floating" fill="outline" placeholder="Ingrese su Correo" [(ngModel)]="email"></ion-input>
-      <p *ngIf="errorMessages.email" class="error-message">{{ errorMessages.email }}</p>
-      
-      <ion-input label="Contraseña" label-placement="floating" fill="outline" placeholder="Ej: 123Fact@" type="password" [(ngModel)]="password"></ion-input>
-      <p *ngIf="errorMessages.password" class="error-message">{{ errorMessages.password }}</p>
-      
-      <ion-input label="Repetir Contraseña" label-placement="floating" fill="outline" placeholder="Ej: 123Fact@" type="password" [(ngModel)]="reppassword" ></ion-input>
-      <p *ngIf="errorMessages.password" class="error-message">{{ errorMessages.password }}</p>
-      
-      <ion-input label="Telefono" label-placement="floating" fill="outline" placeholder="Ingrese su teléfono" [(ngModel)]="telefono" ></ion-input>
-      <p *ngIf="errorMessages.telefono" class="error-message">{{ errorMessages.telefono }}</p>
-      
-      <ion-input label="Direccion" label-placement="floating" fill="outline" placeholder="Ingrese su dirección" [(ngModel)]="direccion"></ion-input>
-      <p *ngIf="errorMessages.direccion" class="error-message">{{ errorMessages.direccion }}</p>
-      
 
-      <ion-button shape="round" class="boton" [routerLink]="['/perfil']" [disabled]="!areAllValid()">Registrarse</ion-button>
+      <ion-input label="Rut" label-placement="floating" fill="outline" placeholder="Ingrese su rut" [(ngModel)]="rut" (input)="validateRut()"></ion-input>
+      <p *ngIf="errorMessages.rut" class="error-message">{{ errorMessages.rut }}</p>
+
+      <ion-input label="Correo Electrónico" label-placement="floating" fill="outline" placeholder="Ingrese su Correo" [(ngModel)]="email" (input)="validateEmail()"></ion-input>
+      <p *ngIf="errorMessages.email" class="error-message">{{ errorMessages.email }}</p>
+
+      <ion-input label="Contraseña" label-placement="floating" fill="outline" placeholder="Ej: 123Fact@" type="password" [(ngModel)]="password" (input)="validatePassword()"></ion-input>
+      <p *ngIf="errorMessages.password" class="error-message">{{ errorMessages.password }}</p>
+
+      <ion-input label="Repetir Contraseña" label-placement="floating" fill="outline" placeholder="Ej: 123Fact@" type="password" [(ngModel)]="reppassword" (input)="validateReppassword()"></ion-input>
+      <p *ngIf="errorMessages.reppassword" class="error-message">{{ errorMessages.reppassword }}</p>
+
+      <ion-input label="Telefono" label-placement="floating" fill="outline" placeholder="Ingrese su teléfono" [(ngModel)]="telefono" (input)="validateTelefono()"></ion-input>
+      <p *ngIf="errorMessages.telefono" class="error-message">{{ errorMessages.telefono }}</p>
+
+      <ion-input label="Direccion" label-placement="floating" fill="outline" placeholder="Ingrese su dirección" [(ngModel)]="direccion" (input)="validateDireccion()"></ion-input>
+      <p *ngIf="errorMessages.direccion" class="error-message">{{ errorMessages.direccion }}</p>
+
+
+      <!---<ion-button shape="round" class="boton" [routerLink]="['/perfil']" [disabled]="!areAllValid()">Registrarse</ion-button>--->
+
       <ion-button shape="round" [routerLink]="['/addauto']">Ingresar un auto</ion-button>
       <ion-button shape="round" [routerLink]="['/']">Volver</ion-button>
       

@@ -34,6 +34,12 @@
       <ion-button (click)="takePicture()">Tomar foto</ion-button>
       <img *ngIf="image" [src]="image" alt="image" style="width: 100%;max-width: 250px;">
 
+      <input type="file" style="display: none" #fileInput (change)="handleFileInput($event)">
+      <ion-button (click)="fileInput.click()">Subir foto</ion-button>
+      <img [src]="selectedImage" *ngIf="selectedImage">
+
+
+
       <ion-select label="Marca" label-placement="floating" fill="outline">
         <ion-select-option value="Toyota">Toyota</ion-select-option>
         <ion-select-option value="Chevrolet">Chevrolet</ion-select-option>

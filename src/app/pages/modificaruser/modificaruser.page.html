@@ -30,11 +30,15 @@
   <ion-content>
     <ion-card class="caja">
     
-       
+      <br>
       <ion-button (click)="takePicture()">Tomar foto</ion-button>
       <img *ngIf="image" [src]="image" alt="image" style="width: 100%;max-width: 250px;">
        
-  
+      <input type="file" style="display: none" #fileInput (change)="handleFileInput($event)">
+      <ion-button (click)="fileInput.click()">Subir foto</ion-button>
+      <img [src]="selectedImage" *ngIf="selectedImage">
+
+
       <ion-input label="Cambiar contraseña" label-placement="floating" fill="outline" placeholder="Ingrese su Correo"></ion-input>
       <ion-input label="Cambiar dirección" label-placement="floating" fill="outline" placeholder="Ingrese su Correo"></ion-input>
       <ion-button shape="round" color="success" [routerLink]="['/perfil']" >Modificar</ion-button>
