@@ -19,6 +19,17 @@ export class RegisterPage {
   direccion: string = '';
   errorMessages: any = {};
   image: any;
+  isRegistrationInProgress: boolean = false;
+
+  // Define propiedades para controlar si se ha mostrado el mensaje de error de cada campo
+  nombreErrorShown: boolean = false;
+  apellidoErrorShown: boolean = false;
+  rutErrorShown: boolean = false;
+  emailErrorShown: boolean = false;
+  passwordErrorShown: boolean = false;
+  reppasswordErrorShown: boolean = false;
+  telefonoErrorShown: boolean = false;
+  direccionErrorShown: boolean = false;
 
   constructor(private alertController: AlertController) {}
 
@@ -48,74 +59,107 @@ export class RegisterPage {
   validateNombre() {
     if (/[^a-zA-ZáéíóúÁÉÍÓÚ\s]/.test(this.nombre) || this.nombre.length < 1 || this.nombre.length > 14) {
       this.errorMessages.nombre = 'Nombre no válido. Debe contener solo letras y tener entre 1 y 14 caracteres.';
-      this.showAlert(this.errorMessages.nombre);
+      if (!this.nombreErrorShown) {
+        this.showAlert(this.errorMessages.nombre);
+        this.nombreErrorShown = true;
+      }
     } else {
       this.errorMessages.nombre = '';
+      this.nombreErrorShown = false;
     }
   }
 
   validateApellido() {
     if (/[^a-zA-ZáéíóúÁÉÍÓÚ\s]/.test(this.apellido) || this.apellido.length < 1 || this.apellido.length > 14) {
       this.errorMessages.apellido = 'Apellido no válido. Debe contener solo letras y tener entre 1 y 14 caracteres.';
-      this.showAlert(this.errorMessages.apellido);
+      if (!this.apellidoErrorShown) {
+        this.showAlert(this.errorMessages.apellido);
+        this.apellidoErrorShown = true;
+      }
     } else {
       this.errorMessages.apellido = '';
+      this.apellidoErrorShown = false;
     }
   }
 
   validateRut() {
     if (!/^(\d{7,8}([0-9]|K))$/.test(this.rut)) {
       this.errorMessages.rut = 'Rut no válido. Debe contener 8 o 9 dígitos seguidos de un número o la letra K.';
-      this.showAlert(this.errorMessages.rut);
+      if (!this.rutErrorShown) {
+        this.showAlert(this.errorMessages.rut);
+        this.rutErrorShown = true;
+      }
     } else {
       this.errorMessages.rut = '';
+      this.rutErrorShown = false;
     }
   }
 
   validateEmail() {
     if (!/\S+@\S+\.\S+/.test(this.email)) {
       this.errorMessages.email = 'Correo electrónico no válido. Debe contener un "@" y un dominio válido.';
-      this.showAlert(this.errorMessages.email);
+      if (!this.emailErrorShown) {
+        this.showAlert(this.errorMessages.email);
+        this.emailErrorShown = true;
+      }
     } else {
       this.errorMessages.email = '';
+      this.emailErrorShown = false;
     }
   }
 
   validatePassword() {
     if (!/(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[@#$%^&+=!])(?!\s)(?!.*([0-9])\1{5,}).{6,20}/.test(this.password)) {
       this.errorMessages.password = 'Contraseña no válida. Debe cumplir con los criterios de seguridad.';
-      this.showAlert(this.errorMessages.password);
+      if (!this.passwordErrorShown) {
+        this.showAlert(this.errorMessages.password);
+        this.passwordErrorShown = true;
+      }
     } else {
       this.errorMessages.password = '';
+      this.passwordErrorShown = false;
     }
   }
 
   validateReppassword() {
     if (this.password !== this.reppassword) {
       this.errorMessages.reppassword = 'Las contraseñas no coinciden.';
-      this.showAlert(this.errorMessages.reppassword);
+      if (!this.reppasswordErrorShown) {
+        this.showAlert(this.errorMessages.reppassword);
+        this.reppasswordErrorShown = true;
+      }
     } else {
       this.errorMessages.reppassword = '';
+      this.reppasswordErrorShown = false;
     }
   }
 
   validateTelefono() {
     if (!/^\d{9}$/.test(this.telefono)) {
       this.errorMessages.telefono = 'Teléfono no válido. Debe tener 9 dígitos sin espacios ni otros caracteres.';
-      this.showAlert(this.errorMessages.telefono);
+      if (!this.telefonoErrorShown) {
+        this.showAlert(this.errorMessages.telefono);
+        this.telefonoErrorShown = true;
+      }
     } else {
       this.errorMessages.telefono = '';
+      this.telefonoErrorShown = false;
     }
   }
 
   validateDireccion() {
-    if (!/^[a-z\s\d]{3,4}$/.test(this.direccion)) {
-      this.errorMessages.direccion = 'Dirección no válida. Debe estar en minúsculas y contener al menos 3 o 4 caracteres.';
-      this.showAlert(this.errorMessages.direccion);
+    if (!/^[a-z\s\d]{1,12}(?:[^\d]*\d){3,4}$/.test(this.direccion)) {
+      this.errorMessages.direccion = 'Dirección no válida. Debe estar en minúsculas, contener entre 1 y 12 caracteres y tener 3 o 4 números.';
+      if (!this.direccionErrorShown) {
+        this.showAlert(this.errorMessages.direccion);
+        this.direccionErrorShown = true;
+      }
     } else {
       this.errorMessages.direccion = '';
+      this.direccionErrorShown = false;
     }
   }
+  
 
   // Función para mostrar alerta de validación
   async showAlert(message: string) {
@@ -125,5 +169,39 @@ export class RegisterPage {
       buttons: ['OK'],
     });
     await alert.present();
+  }
+
+  // Función para validar si todos los campos son válidos
+  areAllValid(): boolean {
+    // Verifica que todos los campos no tengan errores
+    return (
+      !this.errorMessages.nombre &&
+      !this.errorMessages.apellido &&
+      !this.errorMessages.rut &&
+      !this.errorMessages.email &&
+      !this.errorMessages.password &&
+      !this.errorMessages.reppassword &&
+      !this.errorMessages.telefono &&
+      !this.errorMessages.direccion
+    );
+  }
+
+  async register() {
+    if (this.areAllValid()) {
+      // Aquí realizarás el registro o la acción necesaria cuando los datos sean válidos,
+      // por ejemplo, enviar los datos al servidor y luego redirigir al usuario al perfil
+      // o realizar cualquier otra acción que desees.
+
+      // Ejemplo de redirección al perfil:
+      // this.router.navigate(['/perfil']);
+    } else {
+      // Muestra una alerta si los datos no son válidos
+      const alert = await this.alertController.create({
+        header: 'Error de Validación',
+        message: 'Por favor, complete todos los campos correctamente antes de registrarse.',
+        buttons: ['OK'],
+      });
+      await alert.present();
+    }
   }
 }
