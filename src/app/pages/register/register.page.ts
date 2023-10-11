@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { Camera, CameraResultType, CameraSource } from '@capacitor/camera';
 import { AlertController } from '@ionic/angular';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-register',
@@ -31,7 +32,7 @@ export class RegisterPage {
   telefonoErrorShown: boolean = false;
   direccionErrorShown: boolean = false;
 
-  constructor(private alertController: AlertController) {}
+  constructor(private alertController: AlertController, private router: Router) {}
 
   takePicture = async () => {
     const image = await Camera.getPhoto({
@@ -159,7 +160,6 @@ export class RegisterPage {
       this.direccionErrorShown = false;
     }
   }
-  
 
   // Función para mostrar alerta de validación
   async showAlert(message: string) {
@@ -187,21 +187,36 @@ export class RegisterPage {
   }
 
   async register() {
-    if (this.areAllValid()) {
-      // Aquí realizarás el registro o la acción necesaria cuando los datos sean válidos,
-      // por ejemplo, enviar los datos al servidor y luego redirigir al usuario al perfil
-      // o realizar cualquier otra acción que desees.
+    this.validateNombre();
+    this.validateApellido();
+    this.validateRut();
+    this.validateEmail();
+    this.validatePassword();
+    this.validateReppassword();
+    this.validateTelefono();
+    this.validateDireccion();
 
-      // Ejemplo de redirección al perfil:
-      // this.router.navigate(['/perfil']);
+    if (this.areAllValid()) {
+      // Lógica para el registro exitoso
+      this.showRegistrationSuccessAlert();
+      this.router.navigate(['/perfil']);
     } else {
-      // Muestra una alerta si los datos no son válidos
       const alert = await this.alertController.create({
         header: 'Error de Validación',
-        message: 'Por favor, complete todos los campos correctamente antes de registrarse.',
+        message: 'Por favor, complete todos los campos correctamente antes de registrarse',
         buttons: ['OK'],
       });
       await alert.present();
     }
+  }
+
+  // Función para mostrar alerta de registro exitoso
+  async showRegistrationSuccessAlert() {
+    const alert = await this.alertController.create({
+      header: 'Registro exitoso',
+      message: '¡Datos registrados con éxito!',
+      buttons: ['OK'],
+    });
+    await alert.present();
   }
 }

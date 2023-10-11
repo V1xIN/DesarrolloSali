@@ -58,7 +58,7 @@
 
       <ion-input label="Direccion" label-placement="floating" fill="outline" placeholder="Ingrese su dirección" [(ngModel)]="direccion" (input)="validateDireccion()"></ion-input>
       <p *ngIf="errorMessages.direccion" class="error-message">{{ errorMessages.direccion }}</p>
-
+      <br>
 
       <ion-button shape="round" class="boton" (click)="register()" [disabled]="!areAllValid()">Registrarse</ion-button>
 
