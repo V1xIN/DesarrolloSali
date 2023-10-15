@@ -26,7 +26,7 @@
       <br>
 
       <ion-button (click)="takePicture()">Tomar foto</ion-button>
-      <img *ngIf="image" [src]="image" alt="image" style="width: 100%;max-width: 250px;">
+      <img *ngIf="image2" [src]="image2" alt="image2" style="width: 100%;max-width: 250px;">
       
       <input type="file" style="display: none" #fileInput (change)="handleFileInput($event)">
       <ion-button (click)="fileInput.click()">Subir foto</ion-button>
@@ -59,6 +59,11 @@
       <ion-input label="Direccion" label-placement="floating" fill="outline" placeholder="Ingrese su dirección" [(ngModel)]="direccion" (input)="validateDireccion()"></ion-input>
       <p *ngIf="errorMessages.direccion" class="error-message">{{ errorMessages.direccion }}</p>
       <br>
+      <ion-item>
+        <ion-select placeholder="Seleccione usuario" *ngFor="let x of arregloRoles">
+          <ion-select-option>{{x.idrol}}</ion-select-option> // PRIMER PASO JSON ACA
+        </ion-select>
+      </ion-item>
 
       <ion-button shape="round" class="boton" (click)="register()" [disabled]="!areAllValid()">Registrarse</ion-button>
 

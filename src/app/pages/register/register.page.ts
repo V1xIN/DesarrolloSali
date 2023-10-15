@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { Camera, CameraResultType, CameraSource } from '@capacitor/camera';
 import { AlertController } from '@ionic/angular';
 import { Router } from '@angular/router';
+import { BDService } from 'src/app/services/bd.service';
 
 @Component({
   selector: 'app-register',
@@ -19,7 +20,15 @@ export class RegisterPage {
   telefono: string = '';
   direccion: string = '';
   errorMessages: any = {};
-  image: any;
+  rol: any = '';
+  arregloRoles: any = [
+    {
+      idrol: '',
+      nombrerol: ''
+    }
+  ]
+
+  image2: any;
   isRegistrationInProgress: boolean = false;
 
   // Define propiedades para controlar si se ha mostrado el mensaje de error de cada campo
@@ -32,10 +41,10 @@ export class RegisterPage {
   telefonoErrorShown: boolean = false;
   direccionErrorShown: boolean = false;
 
-  constructor(private alertController: AlertController, private router: Router) {}
+  constructor(private alertController: AlertController, private router: Router, private bd: BDService) {}
 
   takePicture = async () => {
-    const image = await Camera.getPhoto({
+    const image2 = await Camera.getPhoto({
       quality: 90,
       allowEditing: false,
       resultType: CameraResultType.DataUrl,
@@ -43,7 +52,7 @@ export class RegisterPage {
     });
 
     // image.dataUrl contendrá el Data URL de la imagen capturada.
-    this.image = image.dataUrl;
+    this.image2 = image2.dataUrl;
   };
 
   handleFileInput(event: any) {
@@ -218,5 +227,20 @@ export class RegisterPage {
       buttons: ['OK'],
     });
     await alert.present();
+  }
+
+  ngOnInit() {
+    //me subscribo al observable de la BD
+    this.bd.bdState().subscribe(res=>{
+      //verifico si el estatus es true
+      if(res){
+        //me subscribir al observable de la Tabla
+        this.bd.fetchRol().subscribe(datos=>{
+          this.arregloRoles = datos;
+        })
+
+      }
+    })
+
   }
 }
