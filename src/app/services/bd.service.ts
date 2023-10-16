@@ -56,30 +56,86 @@ export class BDService {
   insertRol2: string =
     "INSERT OR IGNORE INTO rol (idrol, nombrerol) VALUES (2, 'Conductor');";
 
+  //separador
+
   insertComuna: string =
-    "INSERT OF IGNORE INTO comuna (idComuna, nombreComuna) VALUES (1, 'Huechuraba');";
+    "INSERT OR IGNORE INTO comuna (idComuna, nombreComuna) VALUES (1, 'Huechuraba');";
 
   insertComuna2: string =
-    "INSERT OF IGNORE INTO comuna (idComuna, nombreComuna) VALUES (2, 'Quilicura');";
+    "INSERT OR IGNORE INTO comuna (idComuna, nombreComuna) VALUES (2, 'Alameda');";
 
   insertComuna3: string =
-    "INSERT OF IGNORE INTO comuna (idComuna, nombreComuna) VALUES (3, 'Independencia');";
+    "INSERT OR IGNORE INTO comuna (idComuna, nombreComuna) VALUES (3, 'Santiago Centro');";
 
   insertComuna4: string =
-    "INSERT OF IGNORE INTO comuna (idComuna, nombreComuna) VALUES (4, 'Recoleta');";
+    "INSERT OR IGNORE INTO comuna (idComuna, nombreComuna) VALUES (4, 'Providencia');";
 
   insertComuna5: string =
-    "INSERT OF IGNORE INTO comuna (idComuna, nombreComuna) VALUES (5, 'Conchalí');";
+    "INSERT OR IGNORE INTO comuna (idComuna, nombreComuna) VALUES (5, 'Maipú');";
 
+  insertComuna6: string =
+    "INSERT OR IGNORE INTO comuna (idComuna, nombreComuna) VALUES (6, 'Cerrillos');";
+
+  insertComuna7: string =
+    "INSERT OR IGNORE INTO comuna (idComuna, nombreComuna) VALUES (7, 'Melipilla');";  
+
+  insertComuna8: string =
+    "INSERT OR IGNORE INTO comuna (idComuna, nombreComuna) VALUES (8, 'La Florida');";  
+
+  insertComuna9: string =
+    "INSERT OR IGNORE INTO comuna (idComuna, nombreComuna) VALUES (9, 'Puente Alto');";  
+
+  insertComuna10: string =
+    "INSERT OR IGNORE INTO comuna (idComuna, nombreComuna) VALUES (10, 'San Bernardo');";  
+
+  insertComuna11: string =
+    "INSERT OR IGNORE INTO comuna (idComuna, nombreComuna) VALUES (11, 'Las Condes');";  
+    
+  insertComuna12: string =
+    "INSERT OR IGNORE INTO comuna (idComuna, nombreComuna) VALUES (12, 'San Joaquín');";       
+
+  //separador
 
   insertSede: string =
-    "INSERT OR IGNORE INTO sede (idSede, nombreSede) VALUES (1, 'Plaza Norte');";
-
+    "INSERT OR IGNORE INTO sede (idSede, nombreSede) VALUES (1, 'Sede Plaza Norte');";
 
   insertSede2: string =
-    "INSERT OR IGNORE INTO sede (idSede, nombreSede) VALUES (2, 'Alameda');";
+    "INSERT OR IGNORE INTO sede (idSede, nombreSede) VALUES (2, 'Sede Alameda');";
 
-  //FIN DE LOS INSERT//
+  insertSede3: string =
+    "INSERT OR IGNORE INTO sede (idSede, nombreSede) VALUES (3, 'Sede Padre Alonso de Ovalle');";  
+
+  insertSede4: string =
+    "INSERT OR IGNORE INTO sede (idSede, nombreSede) VALUES (4, 'Sede Antonio Varas');";
+
+  insertSede5: string =
+    "INSERT OR IGNORE INTO sede (idSede, nombreSede) VALUES (5, 'Sede Educación Continua');";
+
+  insertSede6: string =
+    "INSERT OR IGNORE INTO sede (idSede, nombreSede) VALUES (6, 'Sede Maipú');";
+
+  insertSede7: string =
+    "INSERT OR IGNORE INTO sede (idSede, nombreSede) VALUES (7, 'Sede Plaza Oeste');";
+
+  insertSede8: string =
+    "INSERT OR IGNORE INTO sede (idSede, nombreSede) VALUES (8, 'Sede Melipilla');";
+
+  insertSede9: string =
+    "INSERT OR IGNORE INTO sede (idSede, nombreSede) VALUES (9, 'Sede Plaza Vespucio');";
+
+  insertSede10: string =
+    "INSERT OR IGNORE INTO sede (idSede, nombreSede) VALUES (10, 'Sede Puente Alto');";
+
+  insertSede11: string =
+    "INSERT OR IGNORE INTO sede (idSede, nombreSede) VALUES (11, 'Sede San Bernardo');";
+
+  insertSede12: string =
+    "INSERT OR IGNORE INTO sede (idSede, nombreSede) VALUES (12, 'Sede San Carlos de Apoquindo');";
+
+  insertSede13: string =
+    "INSERT OR IGNORE INTO sede (idSede, nombreSede) VALUES (12, 'Sede San Joaquín');";
+
+ 
 
   //Funciones que retornan los observables
   listaRol = new BehaviorSubject([]);
