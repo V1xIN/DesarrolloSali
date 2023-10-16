@@ -133,7 +133,7 @@ export class BDService {
     "INSERT OR IGNORE INTO sede (idSede, nombreSede) VALUES (12, 'Sede San Carlos de Apoquindo');";
 
   insertSede13: string =
-    "INSERT OR IGNORE INTO sede (idSede, nombreSede) VALUES (12, 'Sede San Joaquín');";
+    "INSERT OR IGNORE INTO sede (idSede, nombreSede) VALUES (13, 'Sede San Joaquín');";
 
  
 
