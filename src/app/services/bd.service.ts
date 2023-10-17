@@ -149,11 +149,7 @@ export class BDService {
 
   private isDBReady: BehaviorSubject<boolean> = new BehaviorSubject(false);
 
-  constructor(
-    private alertController: AlertController,
-    public sqlite: SQLite,
-    private platform: Platform
-  ) {
+  constructor(private alertController: AlertController,public sqlite: SQLite,private platform: Platform){
     this.crearBD();
   }
 
@@ -258,12 +254,12 @@ buscarRol(){
 
   crearBD() {
     // verificar el platform
-    this.platform.ready().then(() => {
+    this.platform.ready().then(()=>{
       //creamos la BD
       this.sqlite.create({
           name: 'bdsali.db',
           location: 'default',
-        }).then((db: SQLiteObject) => {
+        }).then((db:SQLiteObject)=>{
           //capturar la coneccion a BD
           this.database = db;
 

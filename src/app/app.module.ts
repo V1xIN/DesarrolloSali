@@ -11,7 +11,7 @@ import { SQLite } from '@awesome-cordova-plugins/sqlite/ngx';
 @NgModule({
   declarations: [AppComponent],
   imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule],
-  providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy,} , SQLite],
+  providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy,}, SQLite],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
