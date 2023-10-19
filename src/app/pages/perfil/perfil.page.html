@@ -25,24 +25,22 @@
   </ion-header>
 
   <ion-card class="caja">
-  <ion-card-header>
-    <ion-card-title>
-      <ion-avatar>
-        <img alt="Silhouette of a person's head" src="https://ionicframework.com/docs/img/demos/avatar.svg" />
-      </ion-avatar>
-    </ion-card-title>
+    <ion-card-header>
+      <ion-card-title>
+        <ion-avatar>
+          <img alt="Silhouette of a person's head" src="https://ionicframework.com/docs/img/demos/avatar.svg" />
+        </ion-avatar>
+      </ion-card-title>
+    </ion-card-header>
     
-  </ion-card-header>
-
-  <ion-card-content >
-    <ion-label >Nombre:</ion-label>
-    <ion-label >Apellido:</ion-label>
-    <ion-label >Rut:</ion-label>
-    <ion-label >Correo Electrónico:</ion-label>
-    <ion-label >Contraseña:</ion-label>
-    <ion-label >Telefono:</ion-label>
-    <ion-label >Direccion:</ion-label><br>
-    <ion-button shape="round" class="boton" [routerLink]="['/modificaruser']">Editar Perfil</ion-button>
-  </ion-card-content>
-</ion-card>
+    <ion-card-content >
+      <ion-label>Nombre: {{ nombre }}</ion-label>
+      <ion-label>Apellido: {{ apellido }}</ion-label>
+      <ion-label>Rut: {{ rut }}</ion-label>
+      <ion-label>Correo Electrónico: {{ email }}</ion-label>
+      <ion-label>Teléfono: {{ telefono }}</ion-label>
+      <ion-label>Dirección: {{ direccion }}</ion-label>
+      <ion-button shape="round" class="boton" [routerLink]="['/modificaruser']">Editar Perfil</ion-button>
+    </ion-card-content>
+  </ion-card>
 </ion-content>
