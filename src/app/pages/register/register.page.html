@@ -59,11 +59,11 @@
       <ion-input label="Direccion" label-placement="floating" fill="outline" placeholder="Ingrese su dirección" [(ngModel)]="direccion" (input)="validateDireccion()"></ion-input>
       <p *ngIf="errorMessages.direccion" class="error-message">{{ errorMessages.direccion }}</p>
       <br>
-      <!--<ion-item *ngFor="let x of arregloRoles">
+      <ion-item *ngFor="let x of arregloRoles">
         <ion-select placeholder="Seleccione usuario">
           <ion-select-option>{{x.idrol}}{{x.nombrerol}}</ion-select-option> 
         </ion-select>
-      </ion-item><--->
+      </ion-item>
 
       <ion-button shape="round" class="boton" (click)="register()" [disabled]="!areAllValid()">Registrarse</ion-button>
 
