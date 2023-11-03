@@ -7,6 +7,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AddviajePage implements OnInit {
 
+  sedes: any;
+  comunas: any;
+  fechaViaje: any;
+  horaViaje: any;
+  asientos: any;
+  costo
+
   constructor() { }
 
   ngOnInit() {

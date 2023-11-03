@@ -21,12 +21,7 @@ export class RegisterPage {
   direccion: string = '';
   errorMessages: any = {};
   rol: any = '';
-  arregloRoles: any = [
-    {
-      idrol: '',
-      nombrerol: ''
-    }
-  ]
+  arregloRoles: any;
 
   image2: any;
   isRegistrationInProgress: boolean = false;

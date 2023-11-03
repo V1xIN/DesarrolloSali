@@ -131,14 +131,14 @@ export class BDService {
     "INSERT OR IGNORE INTO sede (idSede, nombreSede) VALUES (13, 'Sede San Joaquín');";
 
   //Funciones que retornan los observables
-  listaRol = new BehaviorSubject<Rol[]>([]);
-  listaComuna = new BehaviorSubject<Comuna[]>([]);
-  listaSedes = new BehaviorSubject<Sedes[]>([]);
-  listaUsuario = new BehaviorSubject<Usuario[]>([]);
-  listaViaje = new BehaviorSubject<Viaje[]>([]);
-  listaReclamo = new BehaviorSubject<Reclamo[]>([]);
-  listaAuto = new BehaviorSubject<Auto[]>([]);
-  listaDetalle = new BehaviorSubject<Detalle[]>([]);
+  listaRol = new BehaviorSubject([]);
+  listaComuna = new BehaviorSubject([]);
+  listaSedes = new BehaviorSubject([]);
+  listaUsuario = new BehaviorSubject([]);
+  listaViaje = new BehaviorSubject([]);
+  listaReclamo = new BehaviorSubject([]);
+  listaAuto = new BehaviorSubject([]);
+  listaDetalle = new BehaviorSubject([]);
 
   private isDBReady: BehaviorSubject<boolean> = new BehaviorSubject(false);
 
@@ -196,7 +196,7 @@ export class BDService {
         }
       }
       //actualizo el observable
-      this.listaSedes.next(items);
+      this.listaSedes.next(items as any);
     });
   }
 
@@ -215,7 +215,7 @@ export class BDService {
         }
       }
       //actualizo el observable
-      this.listaRol.next(roles);
+      this.listaRol.next(roles as any);
     });
   }
 
@@ -311,6 +311,7 @@ export class BDService {
       //cambio mi observable de BD
       this.isDBReady.next(true);
       this.buscarRol();
+      this.buscarSedes();
     } catch (e) {
       this.presentAlert('Error en crearBD: ' + e);
     }
