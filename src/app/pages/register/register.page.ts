@@ -20,7 +20,7 @@ export class RegisterPage {
   telefono: string = '';
   direccion: string = '';
   errorMessages: any = {};
-  rol: any = '';
+  rol: any;
   arregloRoles: any;
 
   image2: any;

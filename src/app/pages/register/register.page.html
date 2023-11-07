@@ -61,10 +61,10 @@
       <br>
       <ion-item>
         <ion-select placeholder="Seleccione usuario" [(ngModel)]="rol">
-          <ion-select-option *ngFor="let x of arregloRoles" value="x.idrol">{{x.nombrerol}}</ion-select-option> 
+          <ion-select-option *ngFor="let x of arregloRoles" value="x">{{x.nombrerol}}</ion-select-option> 
         </ion-select>
       </ion-item>
-
+      <br>
       <ion-button shape="round" class="boton" (click)="register()" [disabled]="!areAllValid()">Registrarse</ion-button>
 
 
