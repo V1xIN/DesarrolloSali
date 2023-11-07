@@ -61,7 +61,7 @@
       <br>
       <ion-item>
         <ion-select placeholder="Seleccione usuario" [(ngModel)]="rol">
-          <ion-select-option *ngFor="let x of arregloRoles" value="x">{{x.nombrerol}}</ion-select-option> 
+          <ion-select-option *ngFor="let x of arregloRoles" [value]="x">{{x.nombrerol}}</ion-select-option> 
         </ion-select>
       </ion-item>
       <br>
