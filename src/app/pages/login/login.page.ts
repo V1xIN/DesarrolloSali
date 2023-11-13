@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { AlertController } from '@ionic/angular';
 import { Router } from '@angular/router';
+import { BDService } from 'src/app/services/bd.service';
 
 @Component({
   selector: 'app-login',
@@ -17,7 +18,7 @@ export class LoginPage {
   emailErrorShown: boolean = false;
   passwordErrorShown: boolean = false;
 
-  constructor(private alertController: AlertController, private router: Router) {}
+  constructor(private alertController: AlertController, private router: Router, private bd: BDService) {}
 
   validateEmail() {
     if (!/\S+@\S+\.\S+/.test(this.email)) {
@@ -61,9 +62,21 @@ export class LoginPage {
     this.validatePassword();
 
     if (this.areAllValid()) {
-      // Lógica para iniciar sesión
-      this.showAlert('Inicio de sesión exitoso', '¡Bienvenido!');
-      this.router.navigate(['/pprincipal']);
+      this.bd.iniciarSesion(this.email, this.password)
+        .then((isLoggedIn: boolean) => {
+          if (isLoggedIn) {
+            // Inicio de sesión exitoso
+            this.showAlert('Inicio de sesión exitoso', '¡Bienvenido!');
+            this.router.navigate(['/pprincipal']);
+          } else {
+            // Credenciales incorrectas
+            this.showAlert('Error de inicio de sesión', 'Correo electrónico o contraseña incorrectos.');
+          }
+        })
+        .catch((error) => {
+          // Manejo de errores
+          this.showAlert('Error de inicio de sesión', 'Error al intentar iniciar sesión: ' + error);
+        });
     } else {
       const alert = await this.alertController.create({
         header: 'Error de Validación',

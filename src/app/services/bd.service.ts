@@ -252,6 +252,43 @@ export class BDService {
     });
   } 
 
+  iniciarSesion(email: string, password: string): Promise<boolean> {
+    return new Promise<boolean>((resolve, reject) => {
+      // Buscar usuario por correo electrónico
+      this.database.executeSql('SELECT * FROM usuario WHERE correo = ?', [email])
+        .then((data) => {
+          if (data.rows.length > 0) {
+            // Usuario encontrado, verificar contraseña
+            const usuario = {
+              rut: data.rows.item(0).rut,
+              nombre: data.rows.item(0).nombre,
+              apellido: data.rows.item(0).apellido,
+              correo: data.rows.item(0).correo,
+              clave: data.rows.item(0).clave,
+              telefono: data.rows.item(0).telefono,
+              direccion: data.rows.item(0).direccion,
+              idrol_FK: data.rows.item(0).idrol_FK,
+            };
+
+            if (usuario.clave === password) {
+              // Contraseña correcta, inicio de sesión exitoso
+              resolve(true);
+            } else {
+              // Contraseña incorrecta
+              resolve(false);
+            }
+          } else {
+            // Usuario no encontrado
+            resolve(false);
+          }
+        })
+        .catch((error) => {
+          // Manejo de errores
+          reject(error);
+        });
+    });
+  }
+
   insertarUsuario(usuario: Usuario): Promise<void> {
     const sql = 'INSERT INTO usuario (rut, nombre, apellido, correo, clave, telefono, direccion, idrol_FK) VALUES (?, ?, ?, ?, ?, ?, ?, ?)';
     const values = [
