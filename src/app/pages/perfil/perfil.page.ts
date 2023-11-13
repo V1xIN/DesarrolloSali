@@ -1,5 +1,3 @@
-// perfil.page.ts
-
 import { Component, OnInit } from '@angular/core';
 import { BDService } from 'src/app/services/bd.service';
 import { Usuario } from 'src/app/services/usuario.service';
@@ -10,30 +8,40 @@ import { Usuario } from 'src/app/services/usuario.service';
   styleUrls: ['./perfil.page.scss'],
 })
 export class PerfilPage implements OnInit {
-  nombre: string = ''; // Asignar un valor inicial vacío
+  nombre: string = '';
   apellido: string = '';
   rut: string = '';
   email: string = '';
   telefono: string = '';
   direccion: string = '';
+  esConductor: boolean = false;
 
   constructor(private bdService: BDService) {}
 
   ngOnInit() {
-    // Cambia 'el-rut-del-usuario-registrado' con el rut del usuario actual
-    const rutUsuarioRegistrado = 'el-rut-del-usuario-registrado';
+    // Obtener el rut del usuario registrado desde el localStorage
+    const rutUsuarioRegistrado = localStorage.getItem('rutUsuarioRegistrado');
 
-    // Llama a tu servicio para obtener los datos del usuario
-    this.bdService.buscarUsuarioPorRut(rutUsuarioRegistrado).subscribe((usuario: Usuario[]) => {
-      if (usuario && usuario.length > 0) {
-        // Asigna los datos del usuario a las variables del componente
-        this.nombre = usuario[0].nombre;
-        this.apellido = usuario[0].apellido;
-        this.rut = usuario[0].rut;
-        this.email = usuario[0].correo;
-        this.telefono = usuario[0].telefono.toString(); // Convierte el número a cadena si es necesario
-        this.direccion = usuario[0].direccion;
-      }
-    });
+    // Verificar si el rut existe en el localStorage
+    if (rutUsuarioRegistrado) {
+      // Buscar el usuario por el rut obtenido
+      this.bdService.buscarUsuarioPorRut(rutUsuarioRegistrado).subscribe((usuario: Usuario[]) => {
+        if (usuario && usuario.length > 0) {
+          // Actualizar los campos del perfil con la información del usuario
+          this.nombre = usuario[0].nombre;
+          this.apellido = usuario[0].apellido;
+          this.rut = usuario[0].rut;
+          this.email = usuario[0].correo;
+          this.telefono = usuario[0].telefono.toString();
+          this.direccion = usuario[0].direccion;
+          this.esConductor = this.isConductor(usuario[0]);
+        }
+      });
+    }
+  }
+
+  private isConductor(usuario: Usuario): boolean {
+    // Ajusta según la estructura de tus datos
+    return usuario.idrol_FK === 'id_del_rol_conductor';
   }
 }

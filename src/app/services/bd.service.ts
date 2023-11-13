@@ -252,6 +252,30 @@ export class BDService {
     });
   } 
 
+  insertarUsuario(usuario: Usuario): Promise<void> {
+    const sql = 'INSERT INTO usuario (rut, nombre, apellido, correo, clave, telefono, direccion, idrol_FK) VALUES (?, ?, ?, ?, ?, ?, ?, ?)';
+    const values = [
+      usuario.rut,
+      usuario.nombre,
+      usuario.apellido,
+      usuario.correo,
+      usuario.clave,
+      usuario.telefono,
+      usuario.direccion,
+      usuario.idrol_FK
+    ];
+
+    return this.database.executeSql(sql, values)
+      .then(() => {
+        // Éxito al insertar el usuario
+        // Puedes realizar acciones adicionales aquí si es necesario
+      })
+      .catch((error) => {
+        // Manejo de errores
+        throw error;
+      });
+  }
+
   async presentAlert(msj: string) {
     const alert = await this.alertController.create({
       header: 'Alert',

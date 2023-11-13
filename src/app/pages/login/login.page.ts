@@ -22,10 +22,7 @@ export class LoginPage {
   validateEmail() {
     if (!/\S+@\S+\.\S+/.test(this.email)) {
       this.errorMessages.email = 'Correo electrónico no válido. Debe contener un "@" y un dominio válido.';
-      if (!this.emailErrorShown) {
-        this.showAlert('Error de Validación', this.errorMessages.email);
-        this.emailErrorShown = true;
-      }
+      this.emailErrorShown = true;
     } else {
       this.errorMessages.email = '';
       this.emailErrorShown = false;
@@ -35,10 +32,7 @@ export class LoginPage {
   validatePassword() {
     if (!/(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[@#$%^&+=!])(?!\s)(?!.*([0-9])\1{5,}).{6,20}/.test(this.password)) {
       this.errorMessages.password = 'Contraseña no válida. Debe cumplir con los criterios de seguridad.';
-      if (!this.passwordErrorShown) {
-        this.showAlert('Error de Validación', this.errorMessages.password);
-        this.passwordErrorShown = true;
-      }
+      this.passwordErrorShown = true;
     } else {
       this.errorMessages.password = '';
       this.passwordErrorShown = false;

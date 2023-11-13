@@ -1,39 +1,27 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <!-- Botón del menú a la izquierda -->
     <ion-buttons slot="start">
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
     
-    <!-- Título con imagen a la izquierda -->
     <ion-title slot="start" style="display: flex; align-items: center;">
-      Perfil de usuario
+      Perfil
     </ion-title>
     
-    <!-- Avatar a la derecha -->
     <ion-avatar slot="end">
       <img [routerLink]="['/pprincipal']" alt="Avatar" src="https://cdn.discordapp.com/attachments/1142192349838053398/1171554690794803200/Captura-modified.png?ex=655d1a54&is=654aa554&hm=9352305d890d3878c369d31726da8776d248430d23031f60e84de8bbfa2a7b82&" />
     </ion-avatar>
   </ion-toolbar>
 </ion-header>
 
-<ion-content class ="fondo" [fullscreen]="true">
+<ion-content class="fondo" [fullscreen]="true">
   <ion-header collapse="condense">
     <ion-toolbar>
-      <ion-title size="large">perfil</ion-title>
+      <ion-title size="large">Perfil</ion-title>
     </ion-toolbar>
   </ion-header>
-
-  <ion-card class="caja">
-    <ion-card-header>
-      <ion-card-title>
-        <ion-avatar>
-          <img alt="Silhouette of a person's head" src="https://ionicframework.com/docs/img/demos/avatar.svg" />
-        </ion-avatar>
-      </ion-card-title>
-    </ion-card-header>
     
-    <ion-card-content >
+    <ion-card-content>
       <ion-label>Nombre: {{ nombre }}</ion-label>
       <ion-label>Apellido: {{ apellido }}</ion-label>
       <ion-label>Rut: {{ rut }}</ion-label>
@@ -41,6 +29,9 @@
       <ion-label>Teléfono: {{ telefono }}</ion-label>
       <ion-label>Dirección: {{ direccion }}</ion-label>
       <ion-button shape="round" class="boton" [routerLink]="['/modificaruser']">Editar Perfil</ion-button>
+
+      <!-- Mostrar el botón solo si es conductor -->
+      <ion-button *ngIf="esConductor" shape="round" [routerLink]="['/addauto']">Ingresar un auto</ion-button>
     </ion-card-content>
   </ion-card>
 </ion-content>
