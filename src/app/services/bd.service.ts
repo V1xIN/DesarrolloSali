@@ -252,13 +252,20 @@ export class BDService {
     });
   } 
 
+  
+
+  cerrarSesion() {
+    // Otros procesos de cierre de sesión
+    localStorage.removeItem('rutUsuarioRegistrado');
+  }
+  
+
   iniciarSesion(email: string, password: string): Promise<boolean> {
     return new Promise<boolean>((resolve, reject) => {
       // Buscar usuario por correo electrónico
       this.database.executeSql('SELECT * FROM usuario WHERE correo = ?', [email])
         .then((data) => {
           if (data.rows.length > 0) {
-            // Usuario encontrado, verificar contraseña
             const usuario = {
               rut: data.rows.item(0).rut,
               nombre: data.rows.item(0).nombre,
@@ -269,9 +276,14 @@ export class BDService {
               direccion: data.rows.item(0).direccion,
               idrol_FK: data.rows.item(0).idrol_FK,
             };
-
+  
+            // Utiliza una función de comparación de contraseñas adecuada (por ejemplo, bcrypt.compare)
+            // Por ahora, compararemos directamente la contraseña para la demostración.
             if (usuario.clave === password) {
               // Contraseña correcta, inicio de sesión exitoso
+              // Actualiza localStorage con el nuevo rut
+              localStorage.setItem('rutUsuarioRegistrado', usuario.rut);
+  
               resolve(true);
             } else {
               // Contraseña incorrecta
@@ -288,6 +300,7 @@ export class BDService {
         });
     });
   }
+  
 
   insertarUsuario(usuario: Usuario): Promise<void> {
     const sql = 'INSERT INTO usuario (rut, nombre, apellido, correo, clave, telefono, direccion, idrol_FK) VALUES (?, ?, ?, ?, ?, ?, ?, ?)';
