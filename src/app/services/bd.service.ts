@@ -129,6 +129,85 @@ export class BDService {
 
   insertSede13: string =
     "INSERT OR IGNORE INTO sede (idSede, nombreSede) VALUES (13, 'Sede San Joaquín');";
+    //separador
+  insertColor: string =
+    "INSERT OR IGNORE INTO auto (idAuto, color) VALUES (1, 'Rojo');";
+
+  insertColor2: string =
+    "INSERT OR IGNORE INTO auto (idAuto, color) VALUES (2, 'azul');";
+  
+  insertColor3: string =
+    "INSERT OR IGNORE INTO auto (idAuto, color) VALUES (3, 'Verde');";
+
+  insertColor4: string =
+    "INSERT OR IGNORE INTO auto (idAuto, color) VALUES (4, 'Blanco');";
+
+  insertColor5: string =
+    "INSERT OR IGNORE INTO auto (idAuto, color) VALUES (5, 'Negro');";  
+
+  insertColor6: string =
+    "INSERT OR IGNORE INTO auto (idAuto, color) VALUES (6, 'Gris');";
+  
+  insertColor7: string =
+    "INSERT OR IGNORE INTO auto (idAuto, color) VALUES (7, 'Plateado');";
+
+  insertColor8: string =
+    "INSERT OR IGNORE INTO auto (idAuto, color) VALUES (8, 'Amarillo');";
+
+  insertColor9: string =
+    "INSERT OR IGNORE INTO auto (idAuto, color) VALUES (9, 'Naranja');";
+
+  insertColor10: string =
+    "INSERT OR IGNORE INTO auto (idAuto, color) VALUES (10, 'Marrón');";
+
+  insertColor11: string =
+    "INSERT OR IGNORE INTO auto (idAuto, color) VALUES (11, 'Violeta');";
+
+  insertColor12: string =
+    "INSERT OR IGNORE INTO auto (idAuto, color) VALUES (12, 'Rosa');";
+  //separador
+  insertMarca: string =
+    "INSERT OR IGNORE INTO auto (idAuto, marca) VALUES (1, 'Toyota');";
+
+  insertMarca2: string =
+    "INSERT OR IGNORE INTO auto (idAuto, marca) VALUES (2, 'Chevrolet');";
+
+  insertMarca3: string =
+    "INSERT OR IGNORE INTO auto (idAuto, marca) VALUES (3, 'Hyundai');";
+
+  insertMarca4: string =
+    "INSERT OR IGNORE INTO auto (idAuto, marca) VALUES (4, 'Kia');";
+
+  insertMarca5: string =
+    "INSERT OR IGNORE INTO auto (idAuto, marca) VALUES (5, 'Nissan');";
+
+  insertMarca6: string =
+    "INSERT OR IGNORE INTO auto (idAuto, marca) VALUES (6, 'Ford');";
+
+  insertMarca7: string =
+    "INSERT OR IGNORE INTO auto (idAuto, marca) VALUES (7, 'Volkswagen');";
+
+  insertMarca8: string =
+    "INSERT OR IGNORE INTO auto (idAuto, marca) VALUES (8, 'Mazda');";
+
+  insertMarca9: string =
+    "INSERT OR IGNORE INTO auto (idAuto, marca) VALUES (9, 'Suzuki');";
+
+  insertMarca10: string =
+    "INSERT OR IGNORE INTO auto (idAuto, marca) VALUES (10, 'Subaru');";
+
+  insertMarca11: string =
+    "INSERT OR IGNORE INTO auto (idAuto, marca) VALUES (11, 'Mercedes-Benz');";
+
+  insertMarca12: string =
+    "INSERT OR IGNORE INTO auto (idAuto, marca) VALUES (12, 'BMW');";
+
+
+
+
+
+
+
 
   //Funciones que retornan los observables
   listaRol = new BehaviorSubject([]);
@@ -252,7 +331,40 @@ export class BDService {
     });
   } 
 
+  agregarAuto(auto: Auto): void {
+    this.insertarAuto(auto)
+      .then(() => {
+        console.log('Auto agregado exitosamente');
+        // Actualizar la lista de autos
+        this.fetchAuto();
+      })
+      .catch((error) => {
+        console.error('Error al agregar auto:', error);
+      });
+  }
   
+  
+  insertarAuto(auto: Auto): Promise<void> {
+    const sql = 'INSERT INTO auto (patente, color, marca, modelo, numeroChasis, rut_FK) VALUES (?, ?, ?, ?, ?, ?)';
+    const values = [
+      auto.patente,
+      auto.color,
+      auto.marca,
+      auto.modelo,
+      auto.numeroChasis,
+      auto.rut_FK,
+    ];
+  
+    return this.database.executeSql(sql, values)
+      .then(() => {
+        // Éxito al insertar el auto
+        // Puedes realizar acciones adicionales aquí si es necesario
+      })
+      .catch((error) => {
+        // Manejo de errores
+        throw error;
+      });
+  }
 
   cerrarSesion() {
     // Otros procesos de cierre de sesión
