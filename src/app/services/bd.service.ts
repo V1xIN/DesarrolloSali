@@ -278,6 +278,24 @@ export class BDService {
       this.listaSedes.next(items as any);
     });
   }
+  buscarComunas() {
+    return this.database.executeSql('SELECT * FROM comuna', []).then(res => {
+      //variable para almacenar el resultado
+      let items: Comuna[] = [];
+      //verifico la cantidad de registros
+      if (res.rows.length > 0) {
+        //agrego registro a registro en mi variable
+        for (var i = 0; i < res.rows.length; i++) {
+          items.push({
+            idcomuna: res.rows.item(i).idcomuna,
+            nombreComuna: res.rows.item(i).nombreComuna,
+          });
+        }
+      }
+      //actualizo el observable
+      this.listaComuna.next(items as any);
+    });
+  }
 
   buscarRol() {
     return this.database.executeSql('SELECT * FROM rol', []).then(res => {
@@ -295,6 +313,32 @@ export class BDService {
       }
       //actualizo el observable
       this.listaRol.next(roles as any);
+    });
+  }
+
+  buscarViajes() {
+    return this.database.executeSql('SELECT * FROM rol', []).then(res => {
+      //variable para almacenar el resultado
+      let roles: Viaje[] = [];
+      //verifico la cantidad de registros
+      if (res.rows.length > 0) {
+        //agrego registro a registro en mi variable
+        for (var i = 0; i < res.rows.length; i++) {
+          roles.push({
+            idViaje: res.rows.item(i).idrol,
+            fechaViaje: res.rows.item(i).fechaViaje,
+            horaViaje: res.rows.item(i).horaViaje,
+            asientos: res.rows.item(i).asientos,
+            costo: res.rows.item(i).costo,
+            idAuto_FK: res.rows.item(i).idAuto_FK,
+            idSede_FK: res.rows.item(i).idSede_FK,
+            idcomuna_FK: res.rows.item(i).idcomuna_FK,
+            
+          });
+        }
+      }
+      //actualizo el observable
+      this.listaViaje.next(roles as any);
     });
   }
 
@@ -413,6 +457,12 @@ export class BDService {
     });
   }
   
+  //inserts de usuario
+  insertarViajes(idViaje:any, fechaViaje:any, horaViaje:any, asientos:any, costo:any, idAuto_FK:any, idSede_FK:any, idcomuna_FK:any){
+    return this.database.executeSql('INSERT INTO viaje(idViaje,fechaViaje,horaViaje,asientos,costo,idAuto_FK,idSede_FK,idcomuna_FK) VALUES(?,?,?,?,?,?,?,?)',[idViaje,fechaViaje,horaViaje,asientos,costo,idAuto_FK,idSede_FK,idcomuna_FK]).then(res=>{
+      this.buscarViajes;
+    })
+  }
 
   insertarUsuario(usuario: Usuario): Promise<void> {
     const sql = 'INSERT INTO usuario (rut, nombre, apellido, correo, clave, telefono, direccion, idrol_FK) VALUES (?, ?, ?, ?, ?, ?, ?, ?)';
@@ -498,6 +548,7 @@ export class BDService {
       this.isDBReady.next(true);
       this.buscarRol();
       this.buscarSedes();
+      this.buscarComunas();
     } catch (e) {
       this.presentAlert('Error en crearBD: ' + e);
     }
