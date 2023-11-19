@@ -60,7 +60,7 @@
       <p *ngIf="errorMessages.direccion" class="error-message">{{ errorMessages.direccion }}</p>
       <br>
       <ion-item>
-        <ion-select placeholder="Seleccione usuario" [(ngModel)]="rol">
+        <ion-select placeholder="Seleccione su tipo de usuario" [(ngModel)]="rol">
           <ion-select-option *ngFor="let x of arregloRoles" [value]="x">{{x.nombrerol}}</ion-select-option> 
         </ion-select>
       </ion-item>
