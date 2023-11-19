@@ -1,9 +1,9 @@
 export class Auto {
+  idAuto = '';
   patente = '';
   color = '';
   marca = '';
   modelo = '';
-  numeroMotor = '';
   numeroChasis = '';
   rut_FK = '';
 }

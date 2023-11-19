@@ -317,7 +317,7 @@ export class BDService {
   }
 
   buscarViajes() {
-    return this.database.executeSql('SELECT * FROM rol', []).then(res => {
+    return this.database.executeSql('SELECT * FROM viaje', []).then(res => {
       //variable para almacenar el resultado
       let roles: Viaje[] = [];
       //verifico la cantidad de registros
@@ -385,6 +385,29 @@ export class BDService {
       .catch((error) => {
         console.error('Error al agregar auto:', error);
       });
+  }
+  buscarAuto() {
+    return this.database.executeSql('SELECT * FROM auto', []).then(res => {
+      //variable para almacenar el resultado
+      let roles: Auto[] = [];
+      //verifico la cantidad de registros
+      if (res.rows.length > 0) {
+        //agrego registro a registro en mi variable
+        for (var i = 0; i < res.rows.length; i++) {
+          roles.push({
+            idAuto : res.rows.item(i).idAuto,
+            patente : res.rows.item(i).patente,
+            color : res.rows.item(i).color,
+            marca : res.rows.item(i).marca,
+            modelo : res.rows.item(i).modelo,
+            numeroChasis : res.rows.item(i).numeroChasis,
+            rut_FK : res.rows.item(i).rut_FK,
+          });
+        }
+      }
+      //actualizo el observable
+      this.listaRol.next(roles as any);
+    });
   }
   
   
@@ -458,8 +481,8 @@ export class BDService {
   }
   
   //inserts de usuario
-  insertarViajes(idViaje:any, fechaViaje:any, horaViaje:any, asientos:any, costo:any, idAuto_FK:any, idSede_FK:any, idcomuna_FK:any){
-    return this.database.executeSql('INSERT INTO viaje(idViaje,fechaViaje,horaViaje,asientos,costo,idAuto_FK,idSede_FK,idcomuna_FK) VALUES(?,?,?,?,?,?,?,?)',[idViaje,fechaViaje,horaViaje,asientos,costo,idAuto_FK,idSede_FK,idcomuna_FK]).then(res=>{
+  insertarViajes(fechaViaje:any, horaViaje:any, asientos:any, costo:any, idAuto_FK:any, idSede_FK:any, idcomuna_FK:any){
+    return this.database.executeSql('INSERT INTO viaje(fechaViaje,horaViaje,asientos,costo,idAuto_FK,idSede_FK,idcomuna_FK) VALUES(?,?,?,?,?,?,?,?)',[fechaViaje,horaViaje,asientos,costo,idAuto_FK,idSede_FK,idcomuna_FK]).then(res=>{
       this.buscarViajes;
     })
   }
@@ -549,6 +572,8 @@ export class BDService {
       this.buscarRol();
       this.buscarSedes();
       this.buscarComunas();
+      this.buscarAuto();
+      this.buscarViajes();
     } catch (e) {
       this.presentAlert('Error en crearBD: ' + e);
     }

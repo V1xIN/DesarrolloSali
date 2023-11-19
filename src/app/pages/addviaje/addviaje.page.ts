@@ -9,16 +9,16 @@ import { BDService } from 'src/app/services/bd.service';
   styleUrls: ['./addviaje.page.scss'],
 })
 export class AddviajePage implements OnInit {
-  idViaje = '';
-  fechaViaje = '';
-  horaViaje = '';
-  asientos = '';
-  costo = '';
-  idAuto_FK = '';
+  fechaViaje : any;
+  horaViaje : any;
+  asientos : any;
+  costo : any;
+  auto : any;
   Sede: any;
   Comuna: any;
   arreglocomunas: any;
   arregloSedes: any;
+  arregloAutos: any;
 
 
   constructor(private alertController: AlertController,
@@ -34,8 +34,16 @@ export class AddviajePage implements OnInit {
         this.bd.fetchSedes().subscribe((datos2) => {
           this.arregloSedes = datos2;
         });
+        this.bd.fetchAuto().subscribe((datos3) => {
+          this.arregloAutos = datos3;
+        });
       }
     });
   }
 
+  insertarviaje(){
+    this.bd.insertarViajes(this.fechaViaje,this.horaViaje,this.asientos,this.costo, this.auto, this.Sede,this.Comuna);
+    this.bd.presentAlert("Viaje Agregado");
+    this.router.navigate(['/pprincipal']);
+  }
 }

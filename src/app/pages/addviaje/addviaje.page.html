@@ -29,31 +29,34 @@
 
 
   <ion-card class="caja">
-
+    <ion-input label="Fecha Viaje" label-placement="floating" fill="outline" placeholder="Ingrese la fecha del Viaje" [(ngModel)]="fechaViaje" ></ion-input>
+    <ion-input label="Hora Viaje" label-placement="floating" fill="outline" placeholder="Ingrese la hora del Viaje" [(ngModel)]="horaViaje" ></ion-input>
+    <ion-input label="Numero De Asientos" label-placement="floating" fill="outline" placeholder="Ingrese el numero de asientos" [(ngModel)]="asientos" ></ion-input>
+    <ion-input label="Costo" label-placement="floating" fill="outline" placeholder="Ingrese el costo del Viaje" [(ngModel)]="costo" ></ion-input>
+    <br>
     <ion-item>
-      <ion-select placeholder="Desde" [(ngModel)]="Sede">
+      <ion-select placeholder="Seleccione un auto" [(ngModel)]="auto">
+        <ion-select-option *ngFor="let A of arregloAutos" [value]="A">{{A.patente}}</ion-select-option> 
+      </ion-select>
+    </ion-item>
+    <br>
+    <ion-item>
+      <ion-select placeholder="Lugar de comienzo" [(ngModel)]="Sede">
         <ion-select-option *ngFor="let s of arregloSedes" [value]="s">{{s.nombreSede}}</ion-select-option> 
       </ion-select>
     </ion-item>
-    
+    <br>
     <ion-item>
-      <ion-select placeholder="Hasta" [(ngModel)]="Comuna">
+      <ion-select placeholder="Lugar de llegada" [(ngModel)]="Comuna">
         <ion-select-option *ngFor="let c of arreglocomunas" [value]="c">{{c.nombreComuna}}</ion-select-option> 
       </ion-select>
     </ion-item>
-    <ion-select label="Asientos Disponibles" label-placement="floating" fill="outline" >
-      <ion-select-option value="1">1</ion-select-option>
-      <ion-select-option value="2">2</ion-select-option>
-      <ion-select-option value="3">3</ion-select-option>
-    </ion-select>
 
-    <ion-datetime presentation="date-time" [preferWheel]="true"></ion-datetime>
     
-
-
+    
     <br>
 
-    <ion-button shape="round">Ingresar Viaje</ion-button>
+    <ion-button shape="round" (click)="insertarviaje()">Ingresar Viaje</ion-button>
     <ion-button shape="round" [routerLink]="['/']">Volver</ion-button>
     <br>
     

@@ -110,11 +110,11 @@ export class AddautoPage implements OnInit {
 
     // Crear un objeto Auto con los datos del formulario
     const nuevoAuto: Auto = {
+      idAuto: '',
       modelo: this.modelo,
       patente: this.patente,
       color: this.color,
       marca: this.marca,
-      numeroMotor: '',
       numeroChasis: this.numeroChasis,
       rut_FK: '',
     };
