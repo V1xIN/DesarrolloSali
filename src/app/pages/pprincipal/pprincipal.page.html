@@ -29,17 +29,18 @@
 
 
 
-  <ion-card *ngFor="let v of viajes" class="caja">
+  <ion-card *ngFor="let v of arregloviajes" class="caja">
 
     <ion-card-header>
-      <ion-card-title>{{v.horasalida}}</ion-card-title>
+      <ion-card-title>{{v.fechaViaje}}</ion-card-title>
+      <ion-card-title>{{v.horaViaje}}</ion-card-title>
 
     </ion-card-header>
     <ion-card-content>
-      <ion-icon name="flag"></ion-icon>{{v.desde | uppercase}} <ion-icon name="arrow-forward-circle"></ion-icon>{{v.hacia | uppercase}}
+      <ion-icon name="flag"></ion-icon>{{v.idSede_FK | uppercase}} <ion-icon name="arrow-forward-circle"></ion-icon>{{v.idcomuna_FK | uppercase}}
     </ion-card-content>
     <ion-card-content>
-      {{v.marca | uppercase}}
+      {{v.idAuto_FK | uppercase}}
     </ion-card-content>
     <img alt="Silhouette of mountains"
       src="{{v.img}}" />

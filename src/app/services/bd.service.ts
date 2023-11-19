@@ -35,14 +35,19 @@ export class BDService {
     'CREATE TABLE IF NOT EXISTS auto (idAuto INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, patente VARCHAR(20) NOT NULL, color VARCHAR(10) NOT NULL, marca VARCHAR(20) NOT NULL, modelo VARCHAR(20) NOT NULL, numeroChasis VARCHAR(100) NOT NULL, rut_FK VARCHAR(12), FOREIGN KEY (rut_FK) REFERENCES usuario(rut));';
 
   tablaViaje: string =
-    'CREATE TABLE IF NOT EXISTS viaje (idViaje INTEGER PRIMARY KEY NOT NULL, fechaViaje DATE NOT NULL, horaViaje DATE NOT NULL, asientos INTEGER NOT NULL, costo INTEGER NOT NULL, idAuto_FK INTEGER, idSede_FK INTEGER, idcomuna_FK INTEGER, FOREIGN KEY (idAuto_FK) REFERENCES auto(idAuto), FOREIGN KEY (idSede_FK) REFERENCES sede(idSede), FOREIGN KEY (idcomuna_FK) REFERENCES comuna(idcomuna));';
+    'CREATE TABLE IF NOT EXISTS viaje (idViaje INTEGER PRIMARY KEY NOT NULL, fechaViaje VARCHAR(30) NOT NULL, horaViaje VARCHAR(30) NOT NULL, asientos INTEGER NOT NULL, costo INTEGER NOT NULL, idAuto_FK INTEGER, idSede_FK INTEGER, idcomuna_FK INTEGER, FOREIGN KEY (idAuto_FK) REFERENCES auto(idAuto), FOREIGN KEY (idSede_FK) REFERENCES sede(idSede), FOREIGN KEY (idcomuna_FK) REFERENCES comuna(idcomuna));';
 
   tablaReclamo: string =
     'CREATE TABLE IF NOT EXISTS reclamo (idReclamo INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, descripcionReclamo VARCHAR(100) NOT NULL, idViaje_FK INTEGER, FOREIGN KEY (idViaje_FK) REFERENCES viaje(idViaje));';
 
   tablaDetalle: string =
     'CREATE TABLE IF NOT EXISTS detalleviaje (idDetalle INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, calificacion INTEGER NOT NULL, rut_FK VARCHAR(12), idViaje_FK INTEGER, FOREIGN KEY (rut_FK) REFERENCES usuario(rut), FOREIGN KEY (idViaje_FK) REFERENCES viaje(idViaje));';
-  // FIN DE CREACIÓN DE TABLAS //
+  tablaColor: string =
+    'CREATE TABLE IF NOT EXISTS color (idcolor INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, color VARCHAR (30) NOT NULL);';
+  tablaMarca: string =
+    'CREATE TABLE IF NOT EXISTS marca (idmarca INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, nombremarca VARCHAR (30) NOT NULL);';
+    
+    // FIN DE CREACIÓN DE TABLAS //
 
   // COMIENZO DE LOS INSERT //
   insertRol1: string =
@@ -131,76 +136,77 @@ export class BDService {
     "INSERT OR IGNORE INTO sede (idSede, nombreSede) VALUES (13, 'Sede San Joaquín');";
     //separador
   insertColor: string =
-    "INSERT OR IGNORE INTO auto (idAuto, color) VALUES (1, 'Rojo');";
+    "INSERT OR IGNORE INTO color (idcolor, color) VALUES (1, 'Rojo');";
 
   insertColor2: string =
-    "INSERT OR IGNORE INTO auto (idAuto, color) VALUES (2, 'azul');";
+    "INSERT OR IGNORE INTO color (idcolor, color) VALUES (2, 'azul');";
   
   insertColor3: string =
-    "INSERT OR IGNORE INTO auto (idAuto, color) VALUES (3, 'Verde');";
+    "INSERT OR IGNORE INTO color (idcolor, color) VALUES (3, 'Verde');";
 
   insertColor4: string =
-    "INSERT OR IGNORE INTO auto (idAuto, color) VALUES (4, 'Blanco');";
+    "INSERT OR IGNORE INTO color (idcolor, color) VALUES (4, 'Blanco');";
 
   insertColor5: string =
-    "INSERT OR IGNORE INTO auto (idAuto, color) VALUES (5, 'Negro');";  
+    "INSERT OR IGNORE INTO color (idcolor, color) VALUES (5, 'Negro');";  
 
   insertColor6: string =
-    "INSERT OR IGNORE INTO auto (idAuto, color) VALUES (6, 'Gris');";
+    "INSERT OR IGNORE INTO color (idcolor, color) VALUES (6, 'Gris');";
   
   insertColor7: string =
-    "INSERT OR IGNORE INTO auto (idAuto, color) VALUES (7, 'Plateado');";
+    "INSERT OR IGNORE INTO color (idcolor, color) VALUES (7, 'Plateado');";
 
   insertColor8: string =
-    "INSERT OR IGNORE INTO auto (idAuto, color) VALUES (8, 'Amarillo');";
+    "INSERT OR IGNORE INTO color (idcolor, color) VALUES (8, 'Amarillo');";
 
   insertColor9: string =
-    "INSERT OR IGNORE INTO auto (idAuto, color) VALUES (9, 'Naranja');";
+    "INSERT OR IGNORE INTO color (idcolor, color) VALUES (9, 'Naranja');";
 
   insertColor10: string =
-    "INSERT OR IGNORE INTO auto (idAuto, color) VALUES (10, 'Marrón');";
+    "INSERT OR IGNORE INTO color (idcolor, color) VALUES (10, 'Marrón');";
 
   insertColor11: string =
-    "INSERT OR IGNORE INTO auto (idAuto, color) VALUES (11, 'Violeta');";
+    "INSERT OR IGNORE INTO color (idcolor, color) VALUES (11, 'Violeta');";
 
   insertColor12: string =
-    "INSERT OR IGNORE INTO auto (idAuto, color) VALUES (12, 'Rosa');";
+    "INSERT OR IGNORE INTO color (idcolor, color) VALUES (12, 'Rosa');";
+
   //separador
   insertMarca: string =
-    "INSERT OR IGNORE INTO auto (idAuto, marca) VALUES (1, 'Toyota');";
+    "INSERT OR IGNORE INTO marca (idAuto, marca) VALUES (1, 'Toyota');";
 
   insertMarca2: string =
-    "INSERT OR IGNORE INTO auto (idAuto, marca) VALUES (2, 'Chevrolet');";
+    "INSERT OR IGNORE INTO marca (idAuto, marca) VALUES (2, 'Chevrolet');";
 
   insertMarca3: string =
-    "INSERT OR IGNORE INTO auto (idAuto, marca) VALUES (3, 'Hyundai');";
+    "INSERT OR IGNORE INTO marca (idAuto, marca) VALUES (3, 'Hyundai');";
 
   insertMarca4: string =
-    "INSERT OR IGNORE INTO auto (idAuto, marca) VALUES (4, 'Kia');";
+    "INSERT OR IGNORE INTO marca (idAuto, marca) VALUES (4, 'Kia');";
 
   insertMarca5: string =
-    "INSERT OR IGNORE INTO auto (idAuto, marca) VALUES (5, 'Nissan');";
+    "INSERT OR IGNORE INTO marca (idAuto, marca) VALUES (5, 'Nissan');";
 
   insertMarca6: string =
-    "INSERT OR IGNORE INTO auto (idAuto, marca) VALUES (6, 'Ford');";
+    "INSERT OR IGNORE INTO marca (idAuto, marca) VALUES (6, 'Ford');";
 
   insertMarca7: string =
-    "INSERT OR IGNORE INTO auto (idAuto, marca) VALUES (7, 'Volkswagen');";
+    "INSERT OR IGNORE INTO marca (idAuto, marca) VALUES (7, 'Volkswagen');";
 
   insertMarca8: string =
-    "INSERT OR IGNORE INTO auto (idAuto, marca) VALUES (8, 'Mazda');";
+    "INSERT OR IGNORE INTO marca (idAuto, marca) VALUES (8, 'Mazda');";
 
   insertMarca9: string =
-    "INSERT OR IGNORE INTO auto (idAuto, marca) VALUES (9, 'Suzuki');";
+    "INSERT OR IGNORE INTO marca (idAuto, marca) VALUES (9, 'Suzuki');";
 
   insertMarca10: string =
-    "INSERT OR IGNORE INTO auto (idAuto, marca) VALUES (10, 'Subaru');";
+    "INSERT OR IGNORE INTO marca (idAuto, marca) VALUES (10, 'Subaru');";
 
   insertMarca11: string =
-    "INSERT OR IGNORE INTO auto (idAuto, marca) VALUES (11, 'Mercedes-Benz');";
+    "INSERT OR IGNORE INTO marca (idAuto, marca) VALUES (11, 'Mercedes-Benz');";
 
   insertMarca12: string =
-    "INSERT OR IGNORE INTO auto (idAuto, marca) VALUES (12, 'BMW');";
+    "INSERT OR IGNORE INTO marca (idAuto, marca) VALUES (12, 'BMW');";
 
 
 
@@ -333,7 +339,6 @@ export class BDService {
             idAuto_FK: res.rows.item(i).idAuto_FK,
             idSede_FK: res.rows.item(i).idSede_FK,
             idcomuna_FK: res.rows.item(i).idcomuna_FK,
-            
           });
         }
       }

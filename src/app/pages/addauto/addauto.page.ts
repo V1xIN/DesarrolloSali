@@ -79,7 +79,7 @@ export class AddautoPage implements OnInit {
     }
   }
 
-  validateChassis(chassis: string): boolean {
+  /*validateChassis(chassis: string): boolean {
     const regexChassis = /^[^IOQÑiñ]{1}[A-HJ-NPR-Z0-9]{4}-[A-HJ-NPR-Z0-9]{2}-[0-9]{1}-[A-HJ-NPR-Z0-9]{1}-[0-9]{1}-[0-9]{1}-[0-9]{1}-[0-9]{1}-[0-9]{1}-[0-9]{1}-[0-9]{1}$/;
     if (!chassis || !regexChassis.test(chassis)) {
       this.errorMessages.nroChasis = 'El número de chasis no es válido.';
@@ -89,14 +89,13 @@ export class AddautoPage implements OnInit {
       this.errorMessages.nroChasis = '';
       return true;
     }
-  }
+  }*/
 
   areAllValid(): boolean {
     return (
       this.selectedImage !== '' &&
       this.validateModel(this.modelo) &&
-      this.validatePatent(this.patente) &&
-      this.validateChassis(this.numeroChasis)
+      this.validatePatent(this.patente) 
     );
   }
 
