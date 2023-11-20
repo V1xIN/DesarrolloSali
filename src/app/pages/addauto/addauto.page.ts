@@ -114,9 +114,9 @@ export class AddautoPage implements OnInit {
       patente: this.patente,
       color: this.color,
       marca: this.marca,
-      numeroMotor: '',
       numeroChasis: this.numeroChasis,
       rut_FK: '',
+      idAuto: ''
     };
 
     // Llamar a la función insertarAuto del servicio BDService

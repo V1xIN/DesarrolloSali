@@ -3,8 +3,8 @@ export class Viaje {
   fechaViaje = '';
   horaViaje = '';
   asientos = '';
+  costo = '';
+  idAuto_FK = '';
   idSede_FK = '';
   idcomuna_FK = '';
-  descipcion = '';
-  idCalificacion_FK = '';
 }
