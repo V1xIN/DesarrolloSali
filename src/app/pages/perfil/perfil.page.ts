@@ -20,7 +20,7 @@ export class PerfilPage implements OnInit {
 
   ngOnInit() {
     const rutUsuarioRegistrado = localStorage.getItem('rutUsuarioRegistrado');
-  
+
     if (rutUsuarioRegistrado) {
       this.bdService.buscarUsuarioPorRut(rutUsuarioRegistrado).subscribe(
         (usuario: Usuario[]) => {
@@ -34,8 +34,9 @@ export class PerfilPage implements OnInit {
             this.esConductor = this.isConductor(usuario[0]);
           }
         }
+      
       );
-  
+
       // Suscríbete a listaUsuario para recibir actualizaciones
       this.bdService.fetchUsuario().subscribe(
         (usuarios: Usuario[]) => {
@@ -52,10 +53,9 @@ export class PerfilPage implements OnInit {
       );
     }
   }
-  
 
   private isConductor(usuario: Usuario): boolean {
     // Ajusta según la estructura de tus datos
-    return usuario.idrol_FK === 'conductor';
+    return usuario.idroles_FK.includes('2'); // Considerando que el idrol_FK para conductor es 2
   }
-}
+}  

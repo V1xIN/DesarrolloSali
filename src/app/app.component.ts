@@ -8,13 +8,13 @@ import { BDService } from 'src/app/services/bd.service';
 })
 export class AppComponent implements OnInit {
   public appPages = [
-    { title: 'Perfil', url: '/perfil', icon: 'person-circle' },
-    { title: 'Reclamo', url: '/reclamo', icon: 'alert-circle' },
-    { title: 'Registro', url: '/register', icon: 'finger-print' },
-    { title: 'Agregar auto', url: '/addauto', icon: 'car-sport' },
-    { title: 'Agregar viaje', url: '/addviaje', icon: 'trail-sign' },
-    { title: 'Iniciar Sesión', url: '/login', icon: 'log-in' },
-    { title: 'Cerrar Sesión', url: '/login', icon: 'log-out' },
+    { title: 'Perfil', url: '/perfil', icon: 'person-circle', visible: false },
+    { title: 'Reclamo', url: '/reclamo', icon: 'alert-circle', visible: false },
+    { title: 'Registro', url: '/register', icon: 'finger-print', visible: true },
+    { title: 'Agregar auto', url: '/addauto', icon: 'car-sport', visible: false },
+    { title: 'Agregar viaje', url: '/addviaje', icon: 'trail-sign', visible: false },
+    { title: 'Iniciar Sesión', url: '/login', icon: 'log-in', visible: true },
+    { title: 'Cerrar Sesión', url: '/login', icon: 'log-out', visible: false },
   ];
 
   // Agrega una propiedad para almacenar la información del usuario actual
@@ -36,6 +36,8 @@ export class AppComponent implements OnInit {
         if (usuarios.length > 0) {
           // Asigna la información del usuario actual
           this.usuarioActual = usuarios[0];
+          // Actualiza la visibilidad de las opciones según si hay un usuario registrado
+          this.actualizarVisibilidadOpciones();
         }
       });
     }
@@ -46,5 +48,20 @@ export class AppComponent implements OnInit {
     localStorage.removeItem('rutUsuarioRegistrado');
     // También puedes restablecer la información del usuario actual a un objeto vacío
     this.usuarioActual = {};
+    // Actualiza la visibilidad de las opciones después de cerrar sesión
+    this.actualizarVisibilidadOpciones();
+  }
+
+  private actualizarVisibilidadOpciones() {
+    // Actualiza la propiedad 'visible' de cada opción según si hay un usuario registrado o no
+    this.appPages.forEach((opcion) => {
+      if (opcion.title === 'Iniciar Sesión') {
+        opcion.visible = !this.usuarioActual || Object.keys(this.usuarioActual).length === 0;
+      } else if (opcion.title === 'Cerrar Sesión') {
+        opcion.visible = this.usuarioActual && Object.keys(this.usuarioActual).length > 0;
+      } else {
+        opcion.visible = true; // Opciones que no son de inicio/cierre de sesión siempre visibles
+      }
+    });
   }
 }

@@ -128,22 +128,34 @@ export class ModificaruserPage {
     this.validateEmail();
     this.validateTelefono();
     this.validateDireccion();
-
+  
     // Verifica que al menos un campo sea válido
     if (this.isAnyFieldValid()) {
       // Obtener datos del usuario actual
       this.bdService.obtenerUsuarioActual().subscribe(
         (usuarioActual) => {
           if (usuarioActual.length > 0) {
-            const updatedUserData = {
+            const updatedUserData: any = {
               ...usuarioActual[0], // Tomar el primer usuario (debería haber solo uno)
-              nombre: this.nombre || usuarioActual[0].nombre,
-              apellido: this.apellido || usuarioActual[0].apellido,
-              email: this.email || usuarioActual[0].correo,
-              telefono: this.telefono || usuarioActual[0].telefono,
-              direccion: this.direccion || usuarioActual[0].direccion,
             };
-
+  
+            // Actualizar solo los campos que tienen un valor en el formulario
+            if (this.nombre) {
+              updatedUserData.nombre = this.nombre;
+            }
+            if (this.apellido) {
+              updatedUserData.apellido = this.apellido;
+            }
+            if (this.email) {
+              updatedUserData.email = this.email;
+            }
+            if (this.telefono) {
+              updatedUserData.telefono = this.telefono;
+            }
+            if (this.direccion) {
+              updatedUserData.direccion = this.direccion;
+            }
+  
             this.bdService.actualizarUsuario(updatedUserData).subscribe(
               () => {
                 // Lógica después de una actualización exitosa
@@ -174,4 +186,4 @@ export class ModificaruserPage {
       await alert.present();
     }
   }
-}
+}  

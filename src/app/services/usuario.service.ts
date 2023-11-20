@@ -6,5 +6,5 @@ export class Usuario {
   clave = '';
   telefono = '';
   direccion = '';
-  idrol_FK = '';
+  idroles_FK: string[] = [];
 }

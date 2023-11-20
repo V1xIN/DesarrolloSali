@@ -29,8 +29,8 @@ export class BDService {
     'CREATE TABLE IF NOT EXISTS sede (idSede INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, nombreSede VARCHAR(30) NOT NULL);';
 
   tablaUsuario: string =
-    'CREATE TABLE IF NOT EXISTS usuario (rut VARCHAR(12) PRIMARY KEY, nombre VARCHAR(100) NOT NULL, apellido VARCHAR(100) NOT NULL, correo VARCHAR(100) NOT NULL, clave VARCHAR(100) NOT NULL, telefono INTEGER NOT NULL, direccion VARCHAR(50) NOT NULL, idrol_FK INTEGER, FOREIGN KEY (idrol_FK) REFERENCES rol(idrol));';
-
+    'CREATE TABLE IF NOT EXISTS usuario (rut VARCHAR(12) PRIMARY KEY, nombre VARCHAR(100) NOT NULL, apellido VARCHAR(100) NOT NULL, correo VARCHAR(100) NOT NULL, clave VARCHAR(100) NOT NULL, telefono INTEGER NOT NULL, direccion VARCHAR(50) NOT NULL, idroles_FK INTEGER, foto VARCHAR(255), FOREIGN KEY (idrol_FK) REFERENCES rol(idrol));';
+  
   tablaAuto: string =
     'CREATE TABLE IF NOT EXISTS auto (idAuto INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, patente VARCHAR(20) NOT NULL, color VARCHAR(10) NOT NULL, marca VARCHAR(20) NOT NULL, modelo VARCHAR(20) NOT NULL, rut_FK VARCHAR(12), FOREIGN KEY (rut_FK) REFERENCES usuario(rut));';
 
@@ -227,31 +227,29 @@ export class BDService {
 
 
 
-  buscarViajes() {
-    return this.database.executeSql('SELECT * FROM rol', []).then(res => {
-      //variable para almacenar el resultado
-      let items: Viaje[] = [];
-      //verifico la cantidad de registros
-      if (res.rows.length > 0) {
-        //agrego registro a registro en mi variable
-        for (var i = 0; i < res.rows.length; i++) {
-          items.push({
-            idViaje: res.rows.item(i).idrol,
-            fechaViaje: res.rows.item(i).fechaViaje,
-            horaViaje: res.rows.item(i).horaViaje,
-            asientos: res.rows.item(i).asientos,
-            costo: res.rows.item(i).costo,
-            idAuto_FK: res.rows.item(i).idAuto_FK,
-            idSede_FK: res.rows.item(i).idSede_FK,
-            idcomuna_FK: res.rows.item(i).idcomuna_FK,
 
-          });
-        }
+
+buscarViajes() {
+  return this.database.executeSql('SELECT * FROM viaje', []).then(res => {
+    let items: Viaje[] = [];
+    if (res.rows.length > 0) {
+      for (var i = 0; i < res.rows.length; i++) {
+        items.push({
+          idViaje: res.rows.item(i).idViaje,
+          fechaViaje: res.rows.item(i).fechaViaje,
+          horaViaje: res.rows.item(i).horaViaje,
+          asientos: res.rows.item(i).asientos,
+          costo: res.rows.item(i).costo,
+          idAuto_FK: res.rows.item(i).idAuto_FK,
+          idSede_FK: res.rows.item(i).idSede_FK,
+          idcomuna_FK: res.rows.item(i).idcomuna_FK,
+        });
       }
-      //actualizo el observable
-      this.listaViaje.next(items as any);
-    });
-  }
+    }
+    this.listaViaje.next(items as any);
+  });
+}
+
 
   buscarAuto() {
     return this.database.executeSql('SELECT * FROM auto', []).then(res => {
@@ -348,7 +346,7 @@ export class BDService {
                 clave: data.rows.item(i).clave,
                 telefono: data.rows.item(i).telefono,
                 direccion: data.rows.item(i).direccion,
-                idrol_FK: data.rows.item(i).idrol_FK,
+                idroles_FK: data.rows.item(i).idrol_FK,
               });
             }
             observer.next(usuarios);
@@ -367,19 +365,13 @@ export class BDService {
 
   obtenerUsuarioActual(): Observable<Usuario[]> {
     return new Observable((observer) => {
-      // Obtén la información de sesión o realiza la lógica necesaria para obtener el usuario actual
       const rutUsuarioRegistrado = localStorage.getItem('rutUsuarioRegistrado');
   
       if (rutUsuarioRegistrado) {
         this.buscarUsuarioPorRut(rutUsuarioRegistrado).subscribe(
           (usuarios) => {
-            if (usuarios.length > 0) {
-              // Devuelve el usuario encontrado
-              observer.next(usuarios);
-            } else {
-              // No se encontró un usuario con el rut actual
-              observer.next([]);
-            }
+            // Devuelve el array de usuarios directamente
+            observer.next(usuarios);
             observer.complete();
           },
           (error) => {
@@ -390,11 +382,13 @@ export class BDService {
         );
       } else {
         // No hay rut de usuario registrado en la sesión
-        observer.next([]);
+        observer.next([]); // Devuelve un array vacío
         observer.complete();
       }
     });
   }
+  
+  
 
 
   cerrarSesion() {
@@ -444,22 +438,34 @@ export class BDService {
     });
   }
   
-  //inserts de usuario
-  insertarViajes(fechaViaje:any, horaViaje:any, asientos:any, costo:any, idAuto_FK:any, idSede_FK:any, idcomuna_FK:any){
-    return this.database.executeSql('INSERT INTO viaje(fechaViaje,horaViaje,asientos,costo,idAuto_FK,idSede_FK,idcomuna_FK) VALUES(?,?,?,?,?,?,?)',[fechaViaje,horaViaje,asientos,costo,idAuto_FK,idSede_FK,idcomuna_FK]).then(res=>{
-      this.buscarViajes;
-    })
+  insertarViajes(fechaViaje: any, horaViaje: any, asientos: any, costo: any, idAuto_FK: any, idSede_FK: any, idcomuna_FK: any) {
+    return this.database
+      .executeSql('INSERT INTO viaje(fechaViaje,horaViaje,asientos,costo,idAuto_FK,idSede_FK,idcomuna_FK) VALUES(?,?,?,?,?,?,?)', [fechaViaje, horaViaje, asientos, costo, idAuto_FK, idSede_FK, idcomuna_FK])
+      .then(res => {
+        // Después de insertar, actualiza la lista de viajes
+        this.buscarViajes();
+      });
+  }
+  
+
+  insertarAuto(patente: any, color: any, marca: any, modelo: any, rut_FK: any) {
+    return this.database
+      .executeSql(
+        'INSERT INTO auto (patente, color, marca, modelo, rut_FK) VALUES (?, ?, ?, ?, ?)',
+        [patente, color, marca, modelo, rut_FK]
+      )
+      .then((res) => {
+        // Después de insertar, actualiza la lista de autos
+        this.buscarAuto();
+      })
+      .catch((error) => {
+        // Manejo de errores
+        console.error('Error al insertar auto:', error);
+      });
   }
 
-    //inserts de usuario
-    insertarAuto(patente:any, color:any, marca:any, modelo:any, rut_FK:any){
-      return this.database.executeSql('INSERT INTO auto(patente,color,marca,modelo,rut_FK) VALUES(?,?,?,?,?)',[patente,color,marca,modelo,rut_FK]).then(res=>{
-        this.buscarAuto;
-      })
-    }
-
   insertarUsuario(usuario: Usuario): Promise<void> {
-    const sql = 'INSERT INTO usuario (rut, nombre, apellido, correo, clave, telefono, direccion, idrol_FK) VALUES (?, ?, ?, ?, ?, ?, ?, ?)';
+    const sql = 'INSERT INTO usuario (rut, nombre, apellido, correo, clave, telefono, direccion, idroles_FK) VALUES (?, ?, ?, ?, ?, ?, ?, ?)';
     const values = [
       usuario.rut,
       usuario.nombre,
@@ -468,7 +474,7 @@ export class BDService {
       usuario.clave,
       usuario.telefono,
       usuario.direccion,
-      usuario.idrol_FK
+      usuario.idroles_FK
     ];
 
     return this.database.executeSql(sql, values)
@@ -535,8 +541,26 @@ export class BDService {
       await this.database.executeSql(this.insertComuna3, []);
       await this.database.executeSql(this.insertComuna4, []);
       await this.database.executeSql(this.insertComuna5, []);
+      await this.database.executeSql(this.insertComuna6, []);
+      await this.database.executeSql(this.insertComuna7, []);
+      await this.database.executeSql(this.insertComuna8, []);
+      await this.database.executeSql(this.insertComuna9, []);
+      await this.database.executeSql(this.insertComuna10, []);
+      await this.database.executeSql(this.insertComuna11, []);
+      await this.database.executeSql(this.insertComuna12, []);
       await this.database.executeSql(this.insertSede, []);
       await this.database.executeSql(this.insertSede2, []);
+      await this.database.executeSql(this.insertSede3, []);
+      await this.database.executeSql(this.insertSede4, []);
+      await this.database.executeSql(this.insertSede5, []);
+      await this.database.executeSql(this.insertSede6, []);
+      await this.database.executeSql(this.insertSede7, []);
+      await this.database.executeSql(this.insertSede8, []);
+      await this.database.executeSql(this.insertSede9, []);
+      await this.database.executeSql(this.insertSede10, []);
+      await this.database.executeSql(this.insertSede11, []);
+      await this.database.executeSql(this.insertSede12, []);
+      await this.database.executeSql(this.insertSede13, []);
 
       //cambio mi observable de BD
       this.isDBReady.next(true);

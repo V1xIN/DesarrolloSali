@@ -207,8 +207,9 @@ export class RegisterPage {
         clave: this.password,
         telefono: this.telefono,
         direccion: this.direccion,
-        idrol_FK: '1', // Cambia esto según el ID del rol correspondiente (ejemplo: '1' para Pasajero)
+        idroles_FK: ['1', '2'],
       };
+      
   
       // Llamar a la función insertarUsuario del servicio BDService
       this.bd.insertarUsuario(nuevoUsuario)
