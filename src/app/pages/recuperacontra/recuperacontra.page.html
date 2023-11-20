@@ -18,37 +18,24 @@
 </ion-header>
 
 <ion-content class="fondo" [fullscreen]="true">
-
-  <ion-card class="caja">
+  <ion-card class="caja" *ngIf="!codigoEnviado; else codigoEnviadoTemplate">
     <br>
-    <ion-label color="blank"><p>Ingrese su Correo:</p></ion-label>
-    <ion-input label="Correo Electrónico" label-placement="floating" fill="outline"
-      placeholder="Ingrese su Correo"></ion-input><br>
-  
-    <ion-button shape="round" color="success" id="present-alert" [routerLink]="['/']">Enviar código</ion-button>
+    <ion-label color="blank"><p>Ingrese su numero telefonico:</p></ion-label>
+    <ion-input label="telefono" label-placement="floating" fill="outline"
+      placeholder="Ingrese su numero telefonico" [(ngModel)]="numeroTelefono"></ion-input><br>
 
-    <ion-alert trigger="present-alert" header="Código enviado" subHeader="Revisar bandeja de entrada de su correo electrónico"
-      [buttons]="alertButtons">
-    </ion-alert>
-    <ion-button shape="round" color="danger"  [routerLink]="['/']">Cancelar</ion-button>
+    <ion-button shape="round" color="success" (click)="enviarCodigoRecuperacion()">Enviar código</ion-button>
+    <ion-button shape="round" color="danger" [routerLink]="['/login']">Cancelar</ion-button>
   </ion-card>
 
-  
+  <ng-template #codigoEnviadoTemplate>
+    <ion-card>
+      <ion-label color="blank"><p>Ingrese el código recibido:</p></ion-label>
+      <ion-input label="Código" label-placement="floating" fill="outline"
+        placeholder="Ingrese el código" [(ngModel)]="codigoRecibido"></ion-input><br>
 
-<!--  <ion-card class="caja">
-  <ion-input label="Contraseña nueva" label-placement="floating" fill="outline"
-  placeholder="Ingrese Contraseña nueva"></ion-input><br>
-<ion-input label="Confirmar contraseña" label-placement="floating" fill="outline"
-  placeholder="Confirmar contraseña"></ion-input><br>
-
-
-  <ion-button color="success" id="present-alert" [routerLink]="['/']">Cambiar contraseña</ion-button>
-
-    <ion-alert trigger="present-alert" header="Contraseña cambiada" subHeader="Ha cambiado su contraseña correctamente"
-      [buttons]="alertButtons">
-    </ion-alert>
-
-  </ion-card>  -->
- 
- 
+      <ion-button shape="round" color="success" (click)="verificarCodigo()">Verificar código</ion-button>
+      <ion-button shape="round" color="danger" [routerLink]="['/login']">Cancelar</ion-button>
+    </ion-card>
+  </ng-template>
 </ion-content>

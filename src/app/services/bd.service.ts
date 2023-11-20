@@ -225,6 +225,20 @@ export class BDService {
   });
 }
 
+actualizarContraseñaNueva(rut: string, nuevaContraseña: string): Promise<void> {
+  const sql = 'UPDATE usuario SET clave = ? WHERE rut = ?';
+  const values = [nuevaContraseña, rut];
+
+  return this.database.executeSql(sql, values)
+    .then(() => {
+      // Éxito al actualizar la contraseña
+      // Puedes realizar acciones adicionales aquí si es necesario
+    })
+    .catch((error) => {
+      // Manejo de errores
+      throw error;
+    });
+}
 
 
 
