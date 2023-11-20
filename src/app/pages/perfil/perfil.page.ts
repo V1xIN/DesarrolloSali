@@ -19,29 +19,43 @@ export class PerfilPage implements OnInit {
   constructor(private bdService: BDService) {}
 
   ngOnInit() {
-    // Obtener el rut del usuario registrado desde el localStorage
     const rutUsuarioRegistrado = localStorage.getItem('rutUsuarioRegistrado');
-
-    // Verificar si el rut existe en el localStorage
+  
     if (rutUsuarioRegistrado) {
-      // Buscar el usuario por el rut obtenido
-      this.bdService.buscarUsuarioPorRut(rutUsuarioRegistrado).subscribe((usuario: Usuario[]) => {
-        if (usuario && usuario.length > 0) {
-          // Actualizar los campos del perfil con la información del usuario
-          this.nombre = usuario[0].nombre;
-          this.apellido = usuario[0].apellido;
-          this.rut = usuario[0].rut;
-          this.email = usuario[0].correo;
-          this.telefono = usuario[0].telefono.toString();
-          this.direccion = usuario[0].direccion;
-          this.esConductor = this.isConductor(usuario[0]);
+      this.bdService.buscarUsuarioPorRut(rutUsuarioRegistrado).subscribe(
+        (usuario: Usuario[]) => {
+          if (usuario && usuario.length > 0) {
+            this.nombre = usuario[0].nombre;
+            this.apellido = usuario[0].apellido;
+            this.rut = usuario[0].rut;
+            this.email = usuario[0].correo;
+            this.telefono = usuario[0].telefono.toString();
+            this.direccion = usuario[0].direccion;
+            this.esConductor = this.isConductor(usuario[0]);
+          }
         }
-      });
+      );
+  
+      // Suscríbete a listaUsuario para recibir actualizaciones
+      this.bdService.fetchUsuario().subscribe(
+        (usuarios: Usuario[]) => {
+          const usuarioActualizado = usuarios.find((u) => u.rut === rutUsuarioRegistrado);
+          if (usuarioActualizado) {
+            this.nombre = usuarioActualizado.nombre;
+            this.apellido = usuarioActualizado.apellido;
+            this.email = usuarioActualizado.correo;
+            this.telefono = usuarioActualizado.telefono.toString();
+            this.direccion = usuarioActualizado.direccion;
+            this.esConductor = this.isConductor(usuarioActualizado);
+          }
+        }
+      );
     }
   }
+  
 
   private isConductor(usuario: Usuario): boolean {
     // Ajusta según la estructura de tus datos
-    return usuario.idrol_FK === 'id_del_rol_conductor';
+    return usuario.idrol_FK === 'conductor';
   }
 }

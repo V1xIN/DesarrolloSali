@@ -190,6 +190,42 @@ export class BDService {
     return this.listaDetalle.asObservable();
   }
 
+  actualizarUsuario(updatedUserData: Usuario): Observable<any> {
+  return new Observable((observer) => {
+    this.database
+      .executeSql(
+        'UPDATE usuario SET nombre=?, apellido=?, correo=?, telefono=?, direccion=? WHERE rut=?',
+        [
+          updatedUserData.nombre,
+          updatedUserData.apellido,
+          updatedUserData.correo,
+          updatedUserData.telefono,
+          updatedUserData.direccion,
+          // Mantén el rut aquí para usarlo en la cláusula WHERE
+          updatedUserData.rut,
+        ]
+      )
+      .then(() => {
+        // Obtén y emite los datos actualizados
+        this.buscarUsuarioPorRut(updatedUserData.rut).subscribe(
+          (usuario) => {
+            observer.next(usuario);
+          },
+          (error) => {
+            observer.error(error);
+          }
+        );
+      })
+      .catch((error) => {
+        observer.error(error);
+      })
+      .finally(() => {
+        observer.complete();
+      });
+  });
+}
+
+
 
   buscarViajes() {
     return this.database.executeSql('SELECT * FROM rol', []).then(res => {
@@ -219,11 +255,8 @@ export class BDService {
 
   buscarAuto() {
     return this.database.executeSql('SELECT * FROM auto', []).then(res => {
-      //variable para almacenar el resultado
       let items: Auto[] = [];
-      //verifico la cantidad de registros
       if (res.rows.length > 0) {
-        //agrego registro a registro en mi variable
         for (var i = 0; i < res.rows.length; i++) {
           items.push({
             idAuto: res.rows.item(i).idAuto,
@@ -235,10 +268,10 @@ export class BDService {
           });
         }
       }
-      //actualizo el observable
-      this.listaViaje.next(items as any);
+      this.listaAuto.next(items as any); // Cambiado de this.listaViaje a this.listaAuto
     });
   }
+  
 
   buscarComunas() {
     return this.database.executeSql('SELECT * FROM comuna', []).then(res => {
@@ -332,7 +365,36 @@ export class BDService {
     });
   } 
 
-
+  obtenerUsuarioActual(): Observable<Usuario[]> {
+    return new Observable((observer) => {
+      // Obtén la información de sesión o realiza la lógica necesaria para obtener el usuario actual
+      const rutUsuarioRegistrado = localStorage.getItem('rutUsuarioRegistrado');
+  
+      if (rutUsuarioRegistrado) {
+        this.buscarUsuarioPorRut(rutUsuarioRegistrado).subscribe(
+          (usuarios) => {
+            if (usuarios.length > 0) {
+              // Devuelve el usuario encontrado
+              observer.next(usuarios);
+            } else {
+              // No se encontró un usuario con el rut actual
+              observer.next([]);
+            }
+            observer.complete();
+          },
+          (error) => {
+            // Manejo de errores
+            observer.error(error);
+            observer.complete();
+          }
+        );
+      } else {
+        // No hay rut de usuario registrado en la sesión
+        observer.next([]);
+        observer.complete();
+      }
+    });
+  }
 
 
   cerrarSesion() {

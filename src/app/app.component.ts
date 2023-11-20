@@ -9,7 +9,6 @@ import { BDService } from 'src/app/services/bd.service';
 export class AppComponent implements OnInit {
   public appPages = [
     { title: 'Perfil', url: '/perfil', icon: 'person-circle' },
-    { title: 'Editar Perfil', url: '/modificaruser', icon: 'build' },
     { title: 'Reclamo', url: '/reclamo', icon: 'alert-circle' },
     { title: 'Registro', url: '/register', icon: 'finger-print' },
     { title: 'Agregar auto', url: '/addauto', icon: 'car-sport' },

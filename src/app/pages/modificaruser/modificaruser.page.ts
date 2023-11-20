@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
-import { Camera, CameraResultType, CameraSource } from '@capacitor/camera';
 import { AlertController } from '@ionic/angular';
 import { Router } from '@angular/router';
+import { BDService } from 'src/app/services/bd.service';
 
 @Component({
   selector: 'app-modificaruser',
@@ -12,39 +12,17 @@ export class ModificaruserPage {
   selectedImage: any;
   nombre: string = '';
   apellido: string = '';
-  rut: string = '';
   email: string = '';
-  password: string = '';
-  reppassword: string = '';
   telefono: string = '';
   direccion: string = '';
   errorMessages: any = {};
-  image: any;
   isModificationInProgress: boolean = false;
 
-  // Define propiedades para controlar si se ha mostrado el mensaje de error de cada campo
-  nombreErrorShown: boolean = false;
-  apellidoErrorShown: boolean = false;
-  rutErrorShown: boolean = false;
-  emailErrorShown: boolean = false;
-  passwordErrorShown: boolean = false;
-  reppasswordErrorShown: boolean = false;
-  telefonoErrorShown: boolean = false;
-  direccionErrorShown: boolean = false;
-
-  constructor(private alertController: AlertController, private router: Router) {}
-
-  takePicture = async () => {
-    const image = await Camera.getPhoto({
-      quality: 90,
-      allowEditing: false,
-      resultType: CameraResultType.DataUrl,
-      source: CameraSource.Camera,
-    });
-
-    // image.dataUrl contendrá el Data URL de la imagen capturada.
-    this.image = image.dataUrl;
-  };
+  constructor(
+    private alertController: AlertController,
+    private router: Router,
+    private bdService: BDService // Agrega tu servicio aquí
+  ) {}
 
   handleFileInput(event: any) {
     const file = event.target.files[0];
@@ -58,106 +36,57 @@ export class ModificaruserPage {
   }
 
   validateNombre() {
-    if (/[^a-zA-ZáéíóúÁÉÍÓÚ\s]/.test(this.nombre) || this.nombre.length < 1 || this.nombre.length > 14) {
-      this.errorMessages.nombre = 'Nombre no válido. Debe contener solo letras y tener entre 1 y 14 caracteres.';
-      if (!this.nombreErrorShown) {
-        this.showAlert(this.errorMessages.nombre);
-        this.nombreErrorShown = true;
-      }
+    if (
+      /[^a-zA-ZáéíóúÁÉÍÓÚ\s]/.test(this.nombre) ||
+      this.nombre.length < 1 ||
+      this.nombre.length > 14
+    ) {
+      this.errorMessages.nombre =
+        'Nombre no válido. Debe contener solo letras y tener entre 1 y 14 caracteres.';
     } else {
       this.errorMessages.nombre = '';
-      this.nombreErrorShown = false;
     }
   }
 
   validateApellido() {
-    if (/[^a-zA-ZáéíóúÁÉÍÓÚ\s]/.test(this.apellido) || this.apellido.length < 1 || this.apellido.length > 14) {
-      this.errorMessages.apellido = 'Apellido no válido. Debe contener solo letras y tener entre 1 y 14 caracteres.';
-      if (!this.apellidoErrorShown) {
-        this.showAlert(this.errorMessages.apellido);
-        this.apellidoErrorShown = true;
-      }
+    if (
+      /[^a-zA-ZáéíóúÁÉÍÓÚ\s]/.test(this.apellido) ||
+      this.apellido.length < 1 ||
+      this.apellido.length > 14
+    ) {
+      this.errorMessages.apellido =
+        'Apellido no válido. Debe contener solo letras y tener entre 1 y 14 caracteres.';
     } else {
       this.errorMessages.apellido = '';
-      this.apellidoErrorShown = false;
-    }
-  }
-
-  validateRut() {
-    if (!/^(\d{7,8}([0-9]|K))$/.test(this.rut)) {
-      this.errorMessages.rut = 'Rut no válido. Debe contener 8 o 9 dígitos seguidos de un número o la letra K.';
-      if (!this.rutErrorShown) {
-        this.showAlert(this.errorMessages.rut);
-        this.rutErrorShown = true;
-      }
-    } else {
-      this.errorMessages.rut = '';
-      this.rutErrorShown = false;
     }
   }
 
   validateEmail() {
     if (!/\S+@\S+\.\S+/.test(this.email)) {
-      this.errorMessages.email = 'Correo electrónico no válido. Debe contener un "@" y un dominio válido.';
-      if (!this.emailErrorShown) {
-        this.showAlert(this.errorMessages.email);
-        this.emailErrorShown = true;
-      }
+      this.errorMessages.email =
+        'Correo electrónico no válido. Debe contener un "@" y un dominio válido.';
     } else {
       this.errorMessages.email = '';
-      this.emailErrorShown = false;
-    }
-  }
-
-  validatePassword() {
-    if (!/(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[@#$%^&+=!])(?!\s)(?!.*([0-9])\1{5,}).{6,20}/.test(this.password)) {
-      this.errorMessages.password = 'Contraseña no válida. Debe cumplir con los criterios de seguridad.';
-      if (!this.passwordErrorShown) {
-        this.showAlert(this.errorMessages.password);
-        this.passwordErrorShown = true;
-      }
-    } else {
-      this.errorMessages.password = '';
-      this.passwordErrorShown = false;
-    }
-  }
-
-  validateReppassword() {
-    if (this.password !== this.reppassword) {
-      this.errorMessages.reppassword = 'Las contraseñas no coinciden.';
-      if (!this.reppasswordErrorShown) {
-        this.showAlert(this.errorMessages.reppassword);
-        this.reppasswordErrorShown = true;
-      }
-    } else {
-      this.errorMessages.reppassword = '';
-      this.reppasswordErrorShown = false;
     }
   }
 
   validateTelefono() {
     if (!/^\d{9}$/.test(this.telefono)) {
-      this.errorMessages.telefono = 'Teléfono no válido. Debe tener 9 dígitos sin espacios ni otros caracteres.';
-      if (!this.telefonoErrorShown) {
-        this.showAlert(this.errorMessages.telefono);
-        this.telefonoErrorShown = true;
-      }
+      this.errorMessages.telefono =
+        'Teléfono no válido. Debe tener 9 dígitos sin espacios ni otros caracteres.';
     } else {
       this.errorMessages.telefono = '';
-      this.telefonoErrorShown = false;
     }
   }
 
   validateDireccion() {
-    if (!/^[a-z\s\d]{1,12}(?:[^\d]*\d){3,4}$/.test(this.direccion)) {
-      this.errorMessages.direccion = 'Dirección no válida. Debe estar en minúsculas, contener entre 1 y 12 caracteres y tener 3 o 4 números.';
-      if (!this.direccionErrorShown) {
-        this.showAlert(this.errorMessages.direccion);
-        this.direccionErrorShown = true;
-      }
+    if (
+      !/^[a-z\s\d]{1,12}(?:[^\d]*\d){3,4}$/.test(this.direccion)
+    ) {
+      this.errorMessages.direccion =
+        'Dirección no válida. Debe estar en minúsculas, contener entre 1 y 12 caracteres y tener 3 o 4 números.';
     } else {
       this.errorMessages.direccion = '';
-      this.direccionErrorShown = false;
     }
   }
 
@@ -171,52 +100,78 @@ export class ModificaruserPage {
     await alert.present();
   }
 
-  // Función para validar si todos los campos son válidos
-  areAllValid(): boolean {
-    // Verifica que todos los campos no tengan errores
+  // Función para mostrar alerta de modificación exitosa
+  async showModificationSuccessAlert() {
+    const alert = await this.alertController.create({
+      header: 'Modificación exitosa',
+      message: 'Los datos del usuario se han modificado correctamente.',
+      buttons: ['OK'],
+    });
+    await alert.present();
+  }
+
+  // Función para validar si al menos un campo es válido
+  isAnyFieldValid(): boolean {
     return (
-      !this.errorMessages.nombre &&
-      !this.errorMessages.apellido &&
-      !this.errorMessages.rut &&
-      !this.errorMessages.email &&
-      !this.errorMessages.password &&
-      !this.errorMessages.reppassword &&
-      !this.errorMessages.telefono &&
+      !this.errorMessages.nombre ||
+      !this.errorMessages.apellido ||
+      !this.errorMessages.email ||
+      !this.errorMessages.telefono ||
       !this.errorMessages.direccion
     );
   }
 
   async modificaruser() {
+    // Validación de campos
     this.validateNombre();
     this.validateApellido();
-    this.validateRut();
     this.validateEmail();
-    this.validatePassword();
-    this.validateReppassword();
     this.validateTelefono();
     this.validateDireccion();
 
-    if (this.areAllValid()) {
-      // Lógica para el registro exitoso
-      this.showModificationSuccessAlert();
-      this.router.navigate(['/perfil']);
+    // Verifica que al menos un campo sea válido
+    if (this.isAnyFieldValid()) {
+      // Obtener datos del usuario actual
+      this.bdService.obtenerUsuarioActual().subscribe(
+        (usuarioActual) => {
+          if (usuarioActual.length > 0) {
+            const updatedUserData = {
+              ...usuarioActual[0], // Tomar el primer usuario (debería haber solo uno)
+              nombre: this.nombre || usuarioActual[0].nombre,
+              apellido: this.apellido || usuarioActual[0].apellido,
+              email: this.email || usuarioActual[0].correo,
+              telefono: this.telefono || usuarioActual[0].telefono,
+              direccion: this.direccion || usuarioActual[0].direccion,
+            };
+
+            this.bdService.actualizarUsuario(updatedUserData).subscribe(
+              () => {
+                // Lógica después de una actualización exitosa
+                this.showModificationSuccessAlert();
+                this.router.navigate(['/perfil']);
+              },
+              (error) => {
+                // Manejo de errores durante la actualización
+                console.error('Error al actualizar el usuario:', error);
+              }
+            );
+          } else {
+            // No se pudo obtener el usuario actual
+            console.error('No se pudo obtener el usuario actual');
+          }
+        },
+        (error) => {
+          // Manejo de errores al obtener el usuario actual
+          console.error('Error al obtener el usuario actual:', error);
+        }
+      );
     } else {
       const alert = await this.alertController.create({
-        header: 'Error de modificacion',
-        message: 'Por favor, complete todos los campos correctamente antes de modificar',
+        header: 'Error de modificación',
+        message: 'Por favor, complete al menos un campo correctamente antes de modificar',
         buttons: ['OK'],
       });
       await alert.present();
     }
-  }
-
-  // Función para mostrar alerta de registro exitoso
-  async showModificationSuccessAlert() {
-    const alert = await this.alertController.create({
-      header: 'Datos modificados',
-      message: '¡Has modificado tus datos con éxito!',
-      buttons: ['OK'],
-    });
-    await alert.present();
   }
 }
