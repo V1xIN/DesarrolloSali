@@ -4,6 +4,5 @@ export class Auto {
   color = '';
   marca = '';
   modelo = '';
-  numeroChasis = '';
   rut_FK = '';
 }

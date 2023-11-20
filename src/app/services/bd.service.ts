@@ -32,7 +32,7 @@ export class BDService {
     'CREATE TABLE IF NOT EXISTS usuario (rut VARCHAR(12) PRIMARY KEY, nombre VARCHAR(100) NOT NULL, apellido VARCHAR(100) NOT NULL, correo VARCHAR(100) NOT NULL, clave VARCHAR(100) NOT NULL, telefono INTEGER NOT NULL, direccion VARCHAR(50) NOT NULL, idrol_FK INTEGER, FOREIGN KEY (idrol_FK) REFERENCES rol(idrol));';
 
   tablaAuto: string =
-    'CREATE TABLE IF NOT EXISTS auto (idAuto INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, patente VARCHAR(20) NOT NULL, color VARCHAR(10) NOT NULL, marca VARCHAR(20) NOT NULL, modelo VARCHAR(20) NOT NULL, numeroChasis VARCHAR(100) NOT NULL, rut_FK VARCHAR(12), FOREIGN KEY (rut_FK) REFERENCES usuario(rut));';
+    'CREATE TABLE IF NOT EXISTS auto (idAuto INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, patente VARCHAR(20) NOT NULL, color VARCHAR(10) NOT NULL, marca VARCHAR(20) NOT NULL, modelo VARCHAR(20) NOT NULL, rut_FK VARCHAR(12), FOREIGN KEY (rut_FK) REFERENCES usuario(rut));';
 
   tablaViaje: string =
     'CREATE TABLE IF NOT EXISTS viaje (idViaje INTEGER PRIMARY KEY NOT NULL, fechaViaje DATE NOT NULL, horaViaje DATE NOT NULL, asientos INTEGER NOT NULL, costo INTEGER NOT NULL, idAuto_FK INTEGER, idSede_FK INTEGER, idcomuna_FK INTEGER, FOREIGN KEY (idAuto_FK) REFERENCES auto(idAuto), FOREIGN KEY (idSede_FK) REFERENCES sede(idSede), FOREIGN KEY (idcomuna_FK) REFERENCES comuna(idcomuna));';
@@ -130,77 +130,7 @@ export class BDService {
   insertSede13: string =
     "INSERT OR IGNORE INTO sede (idSede, nombreSede) VALUES (13, 'Sede San Joaquín');";
     //separador
-  insertColor: string =
-    "INSERT OR IGNORE INTO auto (idAuto, color) VALUES (1, 'Rojo');";
 
-  insertColor2: string =
-    "INSERT OR IGNORE INTO auto (idAuto, color) VALUES (2, 'azul');";
-  
-  insertColor3: string =
-    "INSERT OR IGNORE INTO auto (idAuto, color) VALUES (3, 'Verde');";
-
-  insertColor4: string =
-    "INSERT OR IGNORE INTO auto (idAuto, color) VALUES (4, 'Blanco');";
-
-  insertColor5: string =
-    "INSERT OR IGNORE INTO auto (idAuto, color) VALUES (5, 'Negro');";  
-
-  insertColor6: string =
-    "INSERT OR IGNORE INTO auto (idAuto, color) VALUES (6, 'Gris');";
-  
-  insertColor7: string =
-    "INSERT OR IGNORE INTO auto (idAuto, color) VALUES (7, 'Plateado');";
-
-  insertColor8: string =
-    "INSERT OR IGNORE INTO auto (idAuto, color) VALUES (8, 'Amarillo');";
-
-  insertColor9: string =
-    "INSERT OR IGNORE INTO auto (idAuto, color) VALUES (9, 'Naranja');";
-
-  insertColor10: string =
-    "INSERT OR IGNORE INTO auto (idAuto, color) VALUES (10, 'Marrón');";
-
-  insertColor11: string =
-    "INSERT OR IGNORE INTO auto (idAuto, color) VALUES (11, 'Violeta');";
-
-  insertColor12: string =
-    "INSERT OR IGNORE INTO auto (idAuto, color) VALUES (12, 'Rosa');";
-  //separador
-  insertMarca: string =
-    "INSERT OR IGNORE INTO auto (idAuto, marca) VALUES (1, 'Toyota');";
-
-  insertMarca2: string =
-    "INSERT OR IGNORE INTO auto (idAuto, marca) VALUES (2, 'Chevrolet');";
-
-  insertMarca3: string =
-    "INSERT OR IGNORE INTO auto (idAuto, marca) VALUES (3, 'Hyundai');";
-
-  insertMarca4: string =
-    "INSERT OR IGNORE INTO auto (idAuto, marca) VALUES (4, 'Kia');";
-
-  insertMarca5: string =
-    "INSERT OR IGNORE INTO auto (idAuto, marca) VALUES (5, 'Nissan');";
-
-  insertMarca6: string =
-    "INSERT OR IGNORE INTO auto (idAuto, marca) VALUES (6, 'Ford');";
-
-  insertMarca7: string =
-    "INSERT OR IGNORE INTO auto (idAuto, marca) VALUES (7, 'Volkswagen');";
-
-  insertMarca8: string =
-    "INSERT OR IGNORE INTO auto (idAuto, marca) VALUES (8, 'Mazda');";
-
-  insertMarca9: string =
-    "INSERT OR IGNORE INTO auto (idAuto, marca) VALUES (9, 'Suzuki');";
-
-  insertMarca10: string =
-    "INSERT OR IGNORE INTO auto (idAuto, marca) VALUES (10, 'Subaru');";
-
-  insertMarca11: string =
-    "INSERT OR IGNORE INTO auto (idAuto, marca) VALUES (11, 'Mercedes-Benz');";
-
-  insertMarca12: string =
-    "INSERT OR IGNORE INTO auto (idAuto, marca) VALUES (12, 'BMW');";
 
 
 
@@ -287,7 +217,28 @@ export class BDService {
     });
   }
 
-
+  buscarAuto() {
+    return this.database.executeSql('SELECT * FROM auto', []).then(res => {
+      //variable para almacenar el resultado
+      let items: Auto[] = [];
+      //verifico la cantidad de registros
+      if (res.rows.length > 0) {
+        //agrego registro a registro en mi variable
+        for (var i = 0; i < res.rows.length; i++) {
+          items.push({
+            idAuto: res.rows.item(i).idAuto,
+            patente: res.rows.item(i).patente,
+            color: res.rows.item(i).color,
+            modelo: res.rows.item(i).modelo,
+            marca: res.rows.item(i).marca,
+            rut_FK: res.rows.item(i).rut_FK,
+          });
+        }
+      }
+      //actualizo el observable
+      this.listaViaje.next(items as any);
+    });
+  }
 
   buscarComunas() {
     return this.database.executeSql('SELECT * FROM comuna', []).then(res => {
@@ -381,40 +332,8 @@ export class BDService {
     });
   } 
 
-  agregarAuto(auto: Auto): void {
-    this.insertarAuto(auto)
-      .then(() => {
-        console.log('Auto agregado exitosamente');
-        // Actualizar la lista de autos
-        this.fetchAuto();
-      })
-      .catch((error) => {
-        console.error('Error al agregar auto:', error);
-      });
-  }
-  
-  
-  insertarAuto(auto: Auto): Promise<void> {
-    const sql = 'INSERT INTO auto (patente, color, marca, modelo, numeroChasis, rut_FK) VALUES (?, ?, ?, ?, ?, ?)';
-    const values = [
-      auto.patente,
-      auto.color,
-      auto.marca,
-      auto.modelo,
-      auto.numeroChasis,
-      auto.rut_FK,
-    ];
-  
-    return this.database.executeSql(sql, values)
-      .then(() => {
-        // Éxito al insertar el auto
-        // Puedes realizar acciones adicionales aquí si es necesario
-      })
-      .catch((error) => {
-        // Manejo de errores
-        throw error;
-      });
-  }
+
+
 
   cerrarSesion() {
     // Otros procesos de cierre de sesión
@@ -470,6 +389,12 @@ export class BDService {
     })
   }
 
+    //inserts de usuario
+    insertarAuto(patente:any, color:any, marca:any, modelo:any, rut_FK:any){
+      return this.database.executeSql('INSERT INTO auto(patente,color,marca,modelo,rut_FK) VALUES(?,?,?,?,?)',[patente,color,marca,modelo,rut_FK]).then(res=>{
+        this.buscarAuto;
+      })
+    }
 
   insertarUsuario(usuario: Usuario): Promise<void> {
     const sql = 'INSERT INTO usuario (rut, nombre, apellido, correo, clave, telefono, direccion, idrol_FK) VALUES (?, ?, ?, ?, ?, ?, ?, ?)';
@@ -556,7 +481,8 @@ export class BDService {
       this.buscarRol();
       this.buscarSedes();
       this.buscarComunas();
-      
+      this.buscarViajes();
+      this.buscarAuto();
     } catch (e) {
       this.presentAlert('Error en crearBD: ' + e);
     }
