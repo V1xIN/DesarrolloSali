@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { BDService } from 'src/app/services/bd.service';
 import { Usuario } from 'src/app/services/usuario.service';
+import { Auto } from 'src/app/services/auto.service';
 
 @Component({
   selector: 'app-perfil',
@@ -15,6 +16,7 @@ export class PerfilPage implements OnInit {
   telefono: string = '';
   direccion: string = '';
   esConductor: boolean = false;
+  autos: Auto[] = [];
 
   constructor(private bdService: BDService) {}
 
@@ -32,9 +34,20 @@ export class PerfilPage implements OnInit {
             this.telefono = usuario[0].telefono.toString();
             this.direccion = usuario[0].direccion;
             this.esConductor = this.isConductor(usuario[0]);
+            
+            if (this.esConductor) {
+              // Si es conductor, busca y muestra los autos
+              this.bdService.buscarAutoPorRut(this.rut).subscribe(
+                (autos: Auto[]) => {
+                  this.autos = autos;
+                },
+                (error) => {
+                  console.error('Error al buscar autos por rut:', error);
+                }
+              );
+            }
           }
         }
-      
       );
 
       // Suscríbete a listaUsuario para recibir actualizaciones
@@ -48,6 +61,18 @@ export class PerfilPage implements OnInit {
             this.telefono = usuarioActualizado.telefono.toString();
             this.direccion = usuarioActualizado.direccion;
             this.esConductor = this.isConductor(usuarioActualizado);
+            
+            if (this.esConductor) {
+              // Si es conductor, busca y muestra los autos
+              this.bdService.buscarAutoPorRut(this.rut).subscribe(
+                (autos: Auto[]) => {
+                  this.autos = autos;
+                },
+                (error) => {
+                  console.error('Error al buscar autos por rut:', error);
+                }
+              );
+            }
           }
         }
       );
@@ -58,4 +83,4 @@ export class PerfilPage implements OnInit {
     // Ajusta según la estructura de tus datos
     return usuario.idroles_FK.includes('2'); // Considerando que el idrol_FK para conductor es 2
   }
-}  
+}

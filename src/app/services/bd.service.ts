@@ -265,24 +265,40 @@ buscarViajes() {
 }
 
 
-  buscarAuto() {
-    return this.database.executeSql('SELECT * FROM auto', []).then(res => {
-      let items: Auto[] = [];
-      if (res.rows.length > 0) {
-        for (var i = 0; i < res.rows.length; i++) {
-          items.push({
-            idAuto: res.rows.item(i).idAuto,
-            patente: res.rows.item(i).patente,
-            color: res.rows.item(i).color,
-            modelo: res.rows.item(i).modelo,
-            marca: res.rows.item(i).marca,
-            rut_FK: res.rows.item(i).rut_FK,
+// Cambia el tipo de retorno de la función buscarAutoPorRut
+buscarAutoPorRut(rut: string): Observable<Auto[]> {
+  return new Observable((observer) => {
+    const limiteAutos = 2000000;
+
+    this.database
+      .executeSql('SELECT * FROM auto WHERE rut_FK = ? LIMIT ?', [rut, limiteAutos])
+      .then((data) => {
+        let autos: Auto[] = [];
+        for (let i = 0; i < data.rows.length; i++) {
+          autos.push({
+            idAuto: data.rows.item(i).idAuto,
+            patente: data.rows.item(i).patente,
+            color: data.rows.item(i).color,
+            marca: data.rows.item(i).marca,
+            modelo: data.rows.item(i).modelo,
+            rut_FK: data.rows.item(i).rut_FK,
           });
         }
-      }
-      this.listaAuto.next(items as any); // Cambiado de this.listaViaje a this.listaAuto
-    });
-  }
+        observer.next(autos);
+        observer.complete();
+      })
+      .catch((error) => {
+        this.presentAlert('Error al buscar auto por rut: ' + error);
+        observer.error(error);
+        observer.complete();
+      });
+  });
+}
+
+
+
+
+
   
 
   buscarComunas() {
@@ -469,14 +485,15 @@ buscarViajes() {
         [patente, color, marca, modelo, rut_FK]
       )
       .then((res) => {
-        // Después de insertar, actualiza la lista de autos
-        this.buscarAuto();
+        // Después de insertar, actualiza la lista de autos para el usuario específico
+        this.buscarAutoPorRut(rut_FK);
       })
       .catch((error) => {
         // Manejo de errores
         console.error('Error al insertar auto:', error);
       });
   }
+  
 
   insertarUsuario(usuario: Usuario): Promise<void> {
     const sql = 'INSERT INTO usuario (rut, nombre, apellido, correo, clave, telefono, direccion, idroles_FK) VALUES (?, ?, ?, ?, ?, ?, ?, ?)';
@@ -582,7 +599,6 @@ buscarViajes() {
       this.buscarSedes();
       this.buscarComunas();
       this.buscarViajes();
-      this.buscarAuto();
     } catch (e) {
       this.presentAlert('Error en crearBD: ' + e);
     }

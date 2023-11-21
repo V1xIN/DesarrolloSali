@@ -5,7 +5,6 @@
     </ion-buttons>
     
     <ion-title slot="start" style="display: flex; align-items: center;">
-      <!-- Cambié el texto Bienvenido(a) por el título deseado -->
       <ion-title size="default">Perfil</ion-title>
     </ion-title>
     
@@ -18,16 +17,13 @@
 <ion-content class="fondo" [fullscreen]="true">
   <ion-header collapse="condense">
     <ion-toolbar>
-      <!-- Cambié el tamaño del título y el texto -->
       <ion-title size="large">Perfil</ion-title>
     </ion-toolbar>
   </ion-header>
 
   <ion-card class="caja">
     <ion-card-header>
-      <ion-card-title>
-
-      </ion-card-title>
+      <ion-card-title></ion-card-title>
     </ion-card-header>
     
     <ion-card-content>   
@@ -45,7 +41,21 @@
       <!-- Mostrar el botón solo si es conductor -->
       <ion-button *ngIf="esConductor" shape="round" [routerLink]="['/addauto']">Ingresar un auto</ion-button>
 
-
+      <!-- Mostrar la sección de autos solo si es conductor -->
+      <ion-card *ngIf="esConductor">
+        <ion-card-header>
+          <ion-card-title>Autos</ion-card-title>
+        </ion-card-header>
+        
+        <ion-card-content>
+          <ion-item *ngFor="let auto of autos">
+            <ion-label>Patente: {{ auto.patente }}</ion-label>
+            <ion-label>Color: {{ auto.color }}</ion-label>
+            <ion-label>Marca: {{ auto.marca }}</ion-label>
+            <ion-label>Modelo: {{ auto.modelo }}</ion-label>
+          </ion-item>
+        </ion-card-content>
+      </ion-card>
     </ion-card-content>
   </ion-card>
 </ion-content>
