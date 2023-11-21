@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { BDService } from 'src/app/services/bd.service'; // Importa el servicio necesario
+import { BDService } from 'src/app/services/bd.service';
 import { Viaje } from 'src/app/services/viaje.service';
 
 @Component({
@@ -9,7 +9,7 @@ import { Viaje } from 'src/app/services/viaje.service';
   styleUrls: ['./pprincipal.page.scss'],
 })
 export class PprincipalPage implements OnInit {
-  viajes: any = [];
+  viajes: Viaje[] = [];
 
   constructor(private bdService: BDService, private router: Router) {}
 
@@ -21,10 +21,9 @@ export class PprincipalPage implements OnInit {
         });
       }
     });
-    // Suscribe a los cambios en la lista de viajes del servicio
   }
+
   verInformacion(viaje: Viaje) {
     this.router.navigate(['/infoviaje', { viajeId: viaje.idViaje }]);
   }
-  
 }

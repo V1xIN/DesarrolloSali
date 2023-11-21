@@ -25,32 +25,25 @@
     </ion-toolbar>
   </ion-header>
 
-
-
-
-
   <ion-card *ngFor="let v of viajes" class="caja">
-
     <ion-card-header>
       <ion-card-title>{{v.horasalida}}</ion-card-title>
-
     </ion-card-header>
     <ion-card-content>
-      <ion-icon name="flag"></ion-icon>{{v.desde | uppercase}} <ion-icon name="arrow-forward-circle"></ion-icon>{{v.hacia | uppercase}}
+      <ion-icon name="calendar"></ion-icon> Fecha del viaje: {{v.fecha | date:'dd/MM/yyyy'}}
+    </ion-card-content>
+    <ion-card-content>
+      <ion-icon name="time"></ion-icon> Hora de registro: {{v.horaRegistro | date:'hh:mm a'}}
+    </ion-card-content>
+    <ion-card-content>
+      <ion-icon name="flag"></ion-icon> Origen: {{v.desde | uppercase}} <ion-icon name="arrow-forward-circle"></ion-icon> Destino: {{v.hacia | uppercase}}
     </ion-card-content>
     <ion-card-content>
       {{v.marca | uppercase}}
     </ion-card-content>
-    <img alt="Silhouette of mountains"
-      src="{{v.img}}" />
+    <img alt="Silhouette of mountains" src="{{v.img}}" />
     <br>
     <ion-button (click)="verInformacion(v)">Ver información</ion-button>
     <br>
   </ion-card>
-
-  
-
-
-  
-
-  
+</ion-content>

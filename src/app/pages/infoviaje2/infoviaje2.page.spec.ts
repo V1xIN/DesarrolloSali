@@ -1,11 +1,15 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { Infoviaje2Page } from './infoviaje2.page';
+import { SQLite } from '@awesome-cordova-plugins/sqlite/ngx';
 
 describe('Infoviaje2Page', () => {
   let component: Infoviaje2Page;
   let fixture: ComponentFixture<Infoviaje2Page>;
 
   beforeEach(async() => {
+    await TestBed.configureTestingModule({
+      providers: [SQLite]
+    }).compileComponents();
     fixture = TestBed.createComponent(Infoviaje2Page);
     component = fixture.componentInstance;
     fixture.detectChanges();

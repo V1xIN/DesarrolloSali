@@ -257,12 +257,26 @@ buscarViajes() {
           idAuto_FK: res.rows.item(i).idAuto_FK,
           idSede_FK: res.rows.item(i).idSede_FK,
           idcomuna_FK: res.rows.item(i).idcomuna_FK,
+          horasalida: '',
+          fecha: '',
+          horaRegistro: '',
+          desde: '',
+          hacia: '',
+          marca: '',
+          img: '',
+          conductor: '', // Agregar estas propiedades
+          imgConductor: '',
+          asientosDisponibles: 0, // O cualquier valor predeterminado
+          monto: 0, // O cualquier valor predeterminado
+          patente: '' // O cualquier valor predeterminado
         });
+        
       }
     }
     this.listaViaje.next(items as any);
   });
 }
+
 
 
 // Cambia el tipo de retorno de la función buscarAutoPorRut
@@ -295,6 +309,50 @@ buscarAutoPorRut(rut: string): Observable<Auto[]> {
   });
 }
 
+
+// Agrega esta función al servicio BDService
+getViajeById(viajeId: number): Observable<Viaje | undefined> {
+  return new Observable((observer) => {
+    this.database
+      .executeSql('SELECT * FROM viaje WHERE idViaje = ?', [viajeId])
+      .then((data) => {
+        if (data.rows.length > 0) {
+          const viaje: Viaje = {
+            idViaje: data.rows.item(0).idViaje,
+            fechaViaje: data.rows.item(0).fechaViaje,
+            horaViaje: data.rows.item(0).horaViaje,
+            asientos: data.rows.item(0).asientos,
+            costo: data.rows.item(0).costo,
+            idAuto_FK: data.rows.item(0).idAuto_FK,
+            idSede_FK: data.rows.item(0).idSede_FK,
+            idcomuna_FK: data.rows.item(0).idcomuna_FK,
+            // Agrega las propiedades faltantes con valores vacíos o los valores correspondientes
+            horasalida: '',
+            fecha: '',
+            horaRegistro: '',
+            desde: '',
+            hacia: '',
+            marca: '',
+            img: '',
+            conductor: '', // Agrega estas propiedades
+            imgConductor: '',
+            asientosDisponibles: 0,
+            monto: 0,
+            patente: ''
+          };
+          observer.next(viaje);
+        } else {
+          observer.next(undefined);
+        }
+        observer.complete();
+      })
+      .catch((error) => {
+        this.presentAlert('Error al buscar viaje por ID: ' + error);
+        observer.error(error);
+        observer.complete();
+      });
+  });
+}
 
 
 
