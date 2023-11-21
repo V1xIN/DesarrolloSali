@@ -14,10 +14,14 @@ export class PprincipalPage implements OnInit {
   constructor(private bdService: BDService, private router: Router) {}
 
   ngOnInit() {
-    // Suscribe a los cambios en la lista de viajes del servicio
-    this.bdService.fetchViaje().subscribe((viajes) => {
-      this.viajes = viajes;
+    this.bdService.bdState().subscribe((res) => {
+      if (res) {
+        this.bdService.fetchViaje().subscribe((viajes) => {
+          this.viajes = viajes;
+        });
+      }
     });
+    // Suscribe a los cambios en la lista de viajes del servicio
   }
   verInformacion(viaje: Viaje) {
     this.router.navigate(['/infoviaje', { viajeId: viaje.idViaje }]);
