@@ -1,7 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { BDService } from 'src/app/services/bd.service';
-import { Usuario } from 'src/app/services/usuario.service';
-import { Auto } from 'src/app/services/auto.service';
 
 @Component({
   selector: 'app-perfil',
@@ -9,17 +7,20 @@ import { Auto } from 'src/app/services/auto.service';
   styleUrls: ['./perfil.page.scss'],
 })
 export class PerfilPage implements OnInit {
-  nombre: string = '';
-  apellido: string = '';
-  rut: string = '';
-  email: string = '';
-  telefono: string = '';
-  direccion: string = '';
-  esConductor: boolean = false;
-  autos: Auto[] = [];
+  usuario: any;
+  autos: any;
 
   constructor(private bdService: BDService) {}
 
+  ngOnInit() {
+    this.bdService.fetchUsuario().subscribe(data=>{
+      this.usuario = data;
+    });
+    this.bdService.fetchAuto().subscribe(data2=>{
+      this.autos = data2;
+    })
+  }
+  /*
   ngOnInit() {
     const rutUsuarioRegistrado = localStorage.getItem('rutUsuarioRegistrado');
 
@@ -83,4 +84,6 @@ export class PerfilPage implements OnInit {
     // Ajusta según la estructura de tus datos
     return usuario.idroles_FK.includes('2'); // Considerando que el idrol_FK para conductor es 2
   }
+
+  */
 }

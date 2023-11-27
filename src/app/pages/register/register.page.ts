@@ -3,7 +3,6 @@ import { Camera, CameraResultType, CameraSource } from '@capacitor/camera';
 import { AlertController } from '@ionic/angular';
 import { Router } from '@angular/router';
 import { BDService } from 'src/app/services/bd.service';
-import { Usuario } from 'src/app/services/usuario.service';
 
 @Component({
   selector: 'app-register',
@@ -199,33 +198,8 @@ export class RegisterPage {
   
     if (this.areAllValid()) {
       // Crear un objeto Usuario con los datos del formulario
-      const nuevoUsuario: Usuario = {
-        rut: this.rut,
-        nombre: this.nombre,
-        apellido: this.apellido,
-        correo: this.email,
-        clave: this.password,
-        telefono: this.telefono,
-        direccion: this.direccion,
-        idroles_FK: ['1', '2'],
-      };
+      this.bd.InsertUser(this.rut,this.nombre,this.apellido,this.email,this.password,this.telefono,this.direccion,this.rol.idrol);
       
-  
-      // Llamar a la función insertarUsuario del servicio BDService
-      this.bd.insertarUsuario(nuevoUsuario)
-        .then(() => {
-          // Mostrar alerta de registro exitoso
-          this.showRegistrationSuccessAlert();
-          
-          // Almacenar el rut del usuario registrado
-          localStorage.setItem('rutUsuarioRegistrado', this.rut);
-          
-          this.router.navigate(['/perfil']);
-        })
-        .catch((error) => {
-          // Mostrar alerta de error en la inserción
-          this.showAlert('Error al registrar usuario: ' + error);
-        });
     } else {
       const alert = await this.alertController.create({
         header: 'Error de Validación',

@@ -27,22 +27,22 @@
     </ion-card-header>
     
     <ion-card-content>   
-      <ion-label>Nombre: {{ nombre }}</ion-label>
-      <ion-label>Apellido: {{ apellido }}</ion-label>
-      <ion-label>Rut: {{ rut }}</ion-label>
-      <ion-label>Correo Electrónico: {{ email }}</ion-label>
-      <ion-label>Teléfono: {{ telefono }}</ion-label>
-      <ion-label>Dirección: {{ direccion }}</ion-label>
+      <ion-label>Nombre: {{ usuario[0].nombre }}</ion-label>
+      <ion-label>Apellido: {{ usuario[0].apellido }}</ion-label>
+      <ion-label>Rut: {{ usuario[0].rut }}</ion-label>
+      <ion-label>Correo Electrónico: {{ usuario[0].correo }}</ion-label>
+      <ion-label>Teléfono: {{ usuario[0].telefono }}</ion-label>
+      <ion-label>Dirección: {{ usuario[0].direccion }}</ion-label>
       <ion-button shape="round" class="boton" [routerLink]="['/modificaruser']">Editar Perfil</ion-button>
 
       <!-- Mostrar el tipo de usuario -->
-      <ion-label>Tipo de Usuario: {{ esConductor ? 'Conductor' : 'Pasajero' }}</ion-label>
+      <ion-label>Tipo de Usuario: <span *ngIf="usuario[0].idroles_FK == 2">Conductor</span> <span *ngIf="usuario[0].idroles_FK == 1">Pasajero</span> </ion-label>
 
       <!-- Mostrar el botón solo si es conductor -->
-      <ion-button *ngIf="esConductor" shape="round" [routerLink]="['/addauto']">Ingresar un auto</ion-button>
+      <ion-button *ngIf="usuario[0].idroles_FK == 2" shape="round" [routerLink]="['/addauto']">Ingresar un auto</ion-button>
 
       <!-- Mostrar la sección de autos solo si es conductor -->
-      <ion-card *ngIf="esConductor">
+      <ion-card *ngIf="usuario[0].idroles_FK == 2">
         <ion-card-header>
           <ion-card-title>Autos</ion-card-title>
         </ion-card-header>

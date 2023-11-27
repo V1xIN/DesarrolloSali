@@ -62,21 +62,7 @@ export class LoginPage {
     this.validatePassword();
 
     if (this.areAllValid()) {
-      this.bd.iniciarSesion(this.email, this.password)
-        .then((isLoggedIn: boolean) => {
-          if (isLoggedIn) {
-            // Inicio de sesión exitoso
-            this.showAlert('Inicio de sesión exitoso', '¡Bienvenido!');
-            this.router.navigate(['/pprincipal']);
-          } else {
-            // Credenciales incorrectas
-            this.showAlert('Error de inicio de sesión', 'Correo electrónico o contraseña incorrectos.');
-          }
-        })
-        .catch((error) => {
-          // Manejo de errores
-          this.showAlert('Error de inicio de sesión', 'Error al intentar iniciar sesión: ' + error);
-        });
+      this.bd.LoginUser(this.email,this.password);
     } else {
       const alert = await this.alertController.create({
         header: 'Error de Validación',

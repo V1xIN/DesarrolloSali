@@ -4,13 +4,14 @@ import { Platform } from '@ionic/angular';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { AlertController } from '@ionic/angular';
 import { Rol } from './rol.service';
-import { Auto } from './auto.service';
 import { Comuna } from './comuna.service';
 import { Reclamo } from './reclamo.service';
 import { Sedes } from './sedes.service';
-import { Usuario } from './usuario.service';
 import { Viaje } from './viaje.service';
 import { Detalle } from './detalle.service';
+import { Usuario } from './usuario';
+import { Router } from '@angular/router';
+import { Auto } from './auto';
 
 @Injectable({
   providedIn: 'root',
@@ -29,7 +30,7 @@ export class BDService {
     'CREATE TABLE IF NOT EXISTS sede (idSede INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, nombreSede VARCHAR(30) NOT NULL);';
 
   tablaUsuario: string =
-    'CREATE TABLE IF NOT EXISTS usuario (rut VARCHAR(12) PRIMARY KEY, nombre VARCHAR(100) NOT NULL, apellido VARCHAR(100) NOT NULL, correo VARCHAR(100) NOT NULL, clave VARCHAR(100) NOT NULL, telefono INTEGER NOT NULL, direccion VARCHAR(50) NOT NULL, idroles_FK INTEGER, foto VARCHAR(255), FOREIGN KEY (idrol_FK) REFERENCES rol(idrol));';
+    'CREATE TABLE IF NOT EXISTS usuario (rut VARCHAR(12) PRIMARY KEY, nombre VARCHAR(100) NOT NULL, apellido VARCHAR(100) NOT NULL, correo VARCHAR(100) NOT NULL, clave VARCHAR(100) NOT NULL, telefono INTEGER NOT NULL, direccion VARCHAR(50) NOT NULL, idroles_FK INTEGER, foto VARCHAR(255), FOREIGN KEY (idroles_FK) REFERENCES rol(idrol));';
   
   tablaAuto: string =
     'CREATE TABLE IF NOT EXISTS auto (idAuto INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, patente VARCHAR(20) NOT NULL, color VARCHAR(10) NOT NULL, marca VARCHAR(20) NOT NULL, modelo VARCHAR(20) NOT NULL, rut_FK VARCHAR(12), FOREIGN KEY (rut_FK) REFERENCES usuario(rut));';
@@ -151,7 +152,7 @@ export class BDService {
 
   private isDBReady: BehaviorSubject<boolean> = new BehaviorSubject(false);
 
-  constructor(private alertController: AlertController, public sqlite: SQLite, private platform: Platform) {
+  constructor(private alertController: AlertController, public sqlite: SQLite, private platform: Platform, private router: Router) {
     this.crearBD();
   }
 
@@ -519,6 +520,8 @@ buscarAutoPorRut(rut: string): Observable<Auto[]> {
       });
   }
 
+
+  // Funciones correctas
   async presentAlert(msj: string) {
     const alert = await this.alertController.create({
       header: 'Alert',
@@ -600,7 +603,93 @@ buscarAutoPorRut(rut: string): Observable<Auto[]> {
       this.buscarComunas();
       this.buscarViajes();
     } catch (e) {
-      this.presentAlert('Error en crearBD: ' + e);
+      this.presentAlert('Error en crearBD: ' + JSON.stringify(e));
     }
   }
+
+  //Nuevas funciones
+  //Registro
+
+  InsertUser(rut: any, nombre: any, apellido: any, correo: any, clave: any, telefono: any, direccion: any, idroles_FK: any) {
+    return this.database
+      .executeSql('INSERT INTO usuario(rut,nombre,apellido,correo,clave,telefono,direccion,idroles_FK) VALUES(?,?,?,?,?,?,?,?)', [rut, nombre, apellido, correo, clave, telefono, direccion,idroles_FK]).then(res=>{
+        this.presentAlert("Usuario Registrado Correctamente");
+        this.router.navigate(['/login']);
+      }).catch(e=>{
+        this.presentAlert('Error en crear Usuario: ' + JSON.stringify(e));
+      })
+  }
+
+  //inicio sesion
+  LoginUser(correo:any, clave:any){
+    return this.database.executeSql("SELECT * FROM usuario WHERE correo = ? and clave = ?", [correo,clave]).then(res=>{
+      if(res.rows.length > 0){
+        this.presentAlert("Bienvenido al Sistema");
+        this.ObternerUserLogin(correo,clave);
+        this.router.navigate(['/pprincipal']);
+      }
+      else{
+        this.presentAlert("Usuario o Contraseña incorrecta");
+      }
+    }).catch(e=>{
+      this.presentAlert('Error en sentencia login: ' + JSON.stringify(e));
+    })
+  }
+  //observable para obtener el usuario logueado
+  ObternerUserLogin(correo:any,clave:any){
+    //this.presentAlert("1");
+    return this.database.executeSql("SELECT * FROM usuario WHERE correo = ? and clave = ?", [correo,clave]).then(res=>{
+      if(res.rows.length > 0){
+        //this.presentAlert("2");
+        let items: Usuario[] = [];
+        for (let i = 0; i < res.rows.length; i++) {
+          //this.presentAlert("3");
+          items.push({
+            rut: res.rows.item(i).rut,
+            nombre: res.rows.item(i).nombre,
+            apellido: res.rows.item(i).apellido,
+            correo: res.rows.item(i).correo,
+            clave: res.rows.item(i).clave,
+            telefono: res.rows.item(i).telefono,
+            direccion: res.rows.item(i).direccion,
+            idroles_FK: res.rows.item(i).idroles_FK,
+          });
+        }
+        //llamar a buscar autos del conductor
+        
+        this.listaUsuario.next(items as any);
+        this.SearchCar(items[0].rut);
+        //this.presentAlert("Actualizo el observable");
+      }
+    }).catch(e=>{
+      this.presentAlert('Error en sentencia select user: ' + JSON.stringify(e));
+    })
+  }
+
+
+  //funciuon buscar autos
+  SearchCar(rut:any){
+    return this.database.executeSql("SELECT * FROM auto WHERE rut_FK = ?", [rut]).then(res2=>{
+      if(res2.rows.length > 0){
+        let items2: Auto[] = [];
+        for (let i = 0; i < res2.rows.length; i++) {
+          //this.presentAlert("3");
+          items2.push({
+            idAuto: res2.rows.item(i).idAuto,
+            patente: res2.rows.item(i).patente,
+            color: res2.rows.item(i).color,
+            marca: res2.rows.item(i).marca,
+            modelo: res2.rows.item(i).modelo,
+            rut_FK: res2.rows.item(i).rut_FK
+
+          });
+        }
+        this.listaAuto.next(items2 as any);
+
+      }
+    }).catch(e=>{
+      this.presentAlert('Error en sentencia select car: ' + JSON.stringify(e));
+    })
+  }
+
 }
