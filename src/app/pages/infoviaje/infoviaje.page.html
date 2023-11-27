@@ -24,24 +24,35 @@
     </ion-toolbar>
   </ion-header>
 
-  <ion-card *ngIf="viaje" class="caja">
+
+  <ion-card class="caja">
+
     <ion-card-header>
-      <ion-card-title>En {{viaje.horasalida}}</ion-card-title>
+
+      <ion-card-title>En 10 minutos</ion-card-title>
+      
     </ion-card-header>
     <ion-card-content class="colorletra">
-      <ion-icon name="flag"></ion-icon> {{viaje.desde | uppercase}} <ion-icon name="arrow-forward-circle"></ion-icon> {{viaje.hacia | uppercase}}
+      <ion-icon name="flag"></ion-icon> Mall Plaza Norte <ion-icon name="arrow-forward-circle"></ion-icon> Costanera Center
     </ion-card-content>
     <ion-card-content class="colorletra">
-      <h1>Conductor: {{viaje.conductor}}</h1>
-      <img [src]="viaje.imgConductor" alt="Conductor Image"/>
-      <h2>Asientos disponibles: {{viaje.asientosDisponibles}}</h2>
-      <h2>Monto: ${{viaje.monto}}</h2>
-      <h2>Patente: {{viaje.patente}}</h2>
+     
+        <h1>Conductor: Ryan Gosling</h1>
+     
+
+      <img src="https://i.guim.co.uk/img/static/sys-images/Guardian/About/General/2011/9/14/1315997543282/ryan-gosling-in-drive-007.jpg?width=465&dpr=1&s=none"/>
+
+      <h2>Asientos disponibles: 2</h2>
+      <h2>Monto: $3.000</h2>
+      <h2>Patente: DRVR 13</h2>
     </ion-card-content>
 
-    <ion-button shape="round" color="success" (click)="confirmarViaje()">Tomar asiento</ion-button>
-    <ion-button shape="round" color="danger" (click)="cancelarViaje()">Cancelar viaje</ion-button>
+
+
+    <ion-button shape="round" color="success">Tomar asiento</ion-button>
   </ion-card>
 
   <br>
+
+
 </ion-content>
