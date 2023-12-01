@@ -191,41 +191,6 @@ export class BDService {
     return this.listaDetalle.asObservable();
   }
 
-  actualizarUsuario(updatedUserData: Usuario): Observable<any> {
-  return new Observable((observer) => {
-    this.database
-      .executeSql(
-        'UPDATE usuario SET nombre=?, apellido=?, correo=?, telefono=?, direccion=? WHERE rut=?',
-        [
-          updatedUserData.nombre,
-          updatedUserData.apellido,
-          updatedUserData.correo,
-          updatedUserData.telefono,
-          updatedUserData.direccion,
-          // Mantén el rut aquí para usarlo en la cláusula WHERE
-          updatedUserData.rut,
-        ]
-      )
-      .then(() => {
-        // Obtén y emite los datos actualizados
-        this.buscarUsuarioPorRut(updatedUserData.rut).subscribe(
-          (usuario) => {
-            observer.next(usuario);
-          },
-          (error) => {
-            observer.error(error);
-          }
-        );
-      })
-      .catch((error) => {
-        observer.error(error);
-      })
-      .finally(() => {
-        observer.complete();
-      });
-  });
-}
-
 actualizarContraseñaNueva(rut: string, nuevaContraseña: string): Promise<void> {
   const sql = 'UPDATE usuario SET clave = ? WHERE rut = ?';
   const values = [nuevaContraseña, rut];
@@ -267,41 +232,6 @@ buscarViajes() {
 
 
 // Cambia el tipo de retorno de la función buscarAutoPorRut
-buscarAutoPorRut(rut: string): Observable<Auto[]> {
-  return new Observable((observer) => {
-    const limiteAutos = 2000000;
-
-    this.database
-      .executeSql('SELECT * FROM auto WHERE rut_FK = ? LIMIT ?', [rut, limiteAutos])
-      .then((data) => {
-        let autos: Auto[] = [];
-        for (let i = 0; i < data.rows.length; i++) {
-          autos.push({
-            idAuto: data.rows.item(i).idAuto,
-            patente: data.rows.item(i).patente,
-            color: data.rows.item(i).color,
-            marca: data.rows.item(i).marca,
-            modelo: data.rows.item(i).modelo,
-            rut_FK: data.rows.item(i).rut_FK,
-          });
-        }
-        observer.next(autos);
-        observer.complete();
-      })
-      .catch((error) => {
-        this.presentAlert('Error al buscar auto por rut: ' + error);
-        observer.error(error);
-        observer.complete();
-      });
-  });
-}
-
-
-
-
-
-  
-
   buscarComunas() {
     return this.database.executeSql('SELECT * FROM comuna', []).then(res => {
       //variable para almacenar el resultado
@@ -360,67 +290,28 @@ buscarAutoPorRut(rut: string): Observable<Auto[]> {
       this.listaRol.next(roles as any);
     });
   }
-
-  buscarUsuarioPorRut(rut: string): Observable<Usuario[]> {
-    return new Observable((observer) => {
-      this.database
-        .executeSql('SELECT * FROM usuario WHERE rut = ?', [rut])
-        .then((data) => {
-          if (data.rows.length > 0) {
-            let usuarios: Usuario[] = [];
-            for (let i = 0; i < data.rows.length; i++) {
-              usuarios.push({
-                rut: data.rows.item(i).rut,
-                nombre: data.rows.item(i).nombre,
-                apellido: data.rows.item(i).apellido,
-                correo: data.rows.item(i).correo,
-                clave: data.rows.item(i).clave,
-                telefono: data.rows.item(i).telefono,
-                direccion: data.rows.item(i).direccion,
-                idroles_FK: data.rows.item(i).idrol_FK,
-              });
-            }
-            observer.next(usuarios);
-          } else {
-            observer.next([]);
-          }
-          observer.complete();
-        })
-        .catch((error) => {
-          this.presentAlert('Error al buscar usuario por rut: ' + error);
-          observer.error(error);
-          observer.complete();
-        });
-    });
-  } 
-
-  obtenerUsuarioActual(): Observable<Usuario[]> {
-    return new Observable((observer) => {
-      const rutUsuarioRegistrado = localStorage.getItem('rutUsuarioRegistrado');
-  
-      if (rutUsuarioRegistrado) {
-        this.buscarUsuarioPorRut(rutUsuarioRegistrado).subscribe(
-          (usuarios) => {
-            // Devuelve el array de usuarios directamente
-            observer.next(usuarios);
-            observer.complete();
-          },
-          (error) => {
-            // Manejo de errores
-            observer.error(error);
-            observer.complete();
-          }
-        );
-      } else {
-        // No hay rut de usuario registrado en la sesión
-        observer.next([]); // Devuelve un array vacío
-        observer.complete();
+  buscarAuto() {
+    return this.database.executeSql('SELECT * FROM auto', []).then(res => {
+      //variable para almacenar el resultado
+      let autos: Auto[] = [];
+      //verifico la cantidad de registros
+      if (res.rows.length > 0) {
+        //agrego registro a registro en mi variable
+        for (var i = 0; i < res.rows.length; i++) {
+          autos.push({
+            idAuto: res.rows.item(i).idAuto,
+            patente: res.rows.item(i).patente,
+            color: res.rows.item(i).color,
+            marca: res.rows.item(i).marca,
+            modelo: res.rows.item(i).modelo,
+            rut_FK: res.rows.item(i).rut_FK,
+          });
+        }
       }
+      //actualizo el observable
+      this.listaAuto.next(autos as any);
     });
   }
-  
-  
-
 
   cerrarSesion() {
     // Otros procesos de cierre de sesión
@@ -478,49 +369,19 @@ buscarAutoPorRut(rut: string): Observable<Auto[]> {
       });
   }
   
-
   insertarAuto(patente: any, color: any, marca: any, modelo: any, rut_FK: any) {
     return this.database
-      .executeSql(
-        'INSERT INTO auto (patente, color, marca, modelo, rut_FK) VALUES (?, ?, ?, ?, ?)',
-        [patente, color, marca, modelo, rut_FK]
-      )
-      .then((res) => {
-        // Después de insertar, actualiza la lista de autos para el usuario específico
-        this.buscarAutoPorRut(rut_FK);
-      })
-      .catch((error) => {
-        // Manejo de errores
-        console.error('Error al insertar auto:', error);
+      .executeSql('INSERT INTO auto(patente,color,marca,modelo,rut_FK) VALUES(?,?,?,?,?)', [patente, color, marca, modelo, rut_FK])
+      .then(res => {
+        // Después de insertar, actualiza la lista de viajes
+        this.presentAlert("Auto Registrado Correctamente");
+        this.router.navigate(['/perfil']);
+        this.buscarAuto();
+      }).catch(e=>{
+        this.presentAlert('Error en crear Auto: ' + JSON.stringify(e));
       });
   }
   
-
-  insertarUsuario(usuario: Usuario): Promise<void> {
-    const sql = 'INSERT INTO usuario (rut, nombre, apellido, correo, clave, telefono, direccion, idroles_FK) VALUES (?, ?, ?, ?, ?, ?, ?, ?)';
-    const values = [
-      usuario.rut,
-      usuario.nombre,
-      usuario.apellido,
-      usuario.correo,
-      usuario.clave,
-      usuario.telefono,
-      usuario.direccion,
-      usuario.idroles_FK
-    ];
-
-    return this.database.executeSql(sql, values)
-      .then(() => {
-        // Éxito al insertar el usuario
-        // Puedes realizar acciones adicionales aquí si es necesario
-      })
-      .catch((error) => {
-        // Manejo de errores
-        throw error;
-      });
-  }
-
-
   // Funciones correctas
   async presentAlert(msj: string) {
     const alert = await this.alertController.create({
@@ -602,6 +463,7 @@ buscarAutoPorRut(rut: string): Observable<Auto[]> {
       this.buscarSedes();
       this.buscarComunas();
       this.buscarViajes();
+      this.buscarAuto();
     } catch (e) {
       this.presentAlert('Error en crearBD: ' + JSON.stringify(e));
     }

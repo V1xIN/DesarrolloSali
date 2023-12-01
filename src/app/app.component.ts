@@ -11,9 +11,7 @@ export class AppComponent implements OnInit {
     { title: 'Perfil', url: '/perfil', icon: 'person-circle', visible: false },
     { title: 'Reclamo', url: '/reclamo', icon: 'alert-circle', visible: false },
     { title: 'Registro', url: '/register', icon: 'finger-print', visible: true },
-    { title: 'Agregar auto', url: '/addauto', icon: 'car-sport', visible: false },
     { title: 'Agregar viaje', url: '/addviaje', icon: 'trail-sign', visible: false },
-    { title: 'Iniciar Sesión', url: '/login', icon: 'log-in', visible: true },
     { title: 'Cerrar Sesión', url: '/login', icon: 'log-out', visible: false },
   ];
 
@@ -24,9 +22,9 @@ export class AppComponent implements OnInit {
 
   ngOnInit() {
     // Llama al método para obtener la información del usuario actual al inicializar el componente
-    this.obtenerUsuarioActual();
+    //this.obtenerUsuarioActual();
   }
-
+  /*
   obtenerUsuarioActual() {
     const rutUsuarioRegistrado = localStorage.getItem('rutUsuarioRegistrado');
 
@@ -41,7 +39,7 @@ export class AppComponent implements OnInit {
         }
       });
     }
-  }
+  }*/
 
   cerrarSesion() {
     // Otros procesos de cierre de sesión

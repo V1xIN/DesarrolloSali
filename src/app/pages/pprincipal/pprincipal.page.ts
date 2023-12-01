@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { BDService } from 'src/app/services/bd.service'; // Importa el servicio necesario
-import { Viaje } from 'src/app/services/viaje.service';
+import { Viaje } from 'src/app/services/viaje';
+
 
 @Component({
   selector: 'app-pprincipal',

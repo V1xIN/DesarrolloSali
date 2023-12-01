@@ -23,7 +23,7 @@
 
   <ion-card class="caja">
     <ion-card-header>
-      <ion-card-title></ion-card-title>
+      <ion-card-title>Perfil de Usuario</ion-card-title>
     </ion-card-header>
     
     <ion-card-content>   
@@ -42,18 +42,20 @@
       <ion-button *ngIf="usuario[0].idroles_FK == 2" shape="round" [routerLink]="['/addauto']">Ingresar un auto</ion-button>
 
       <!-- Mostrar la sección de autos solo si es conductor -->
-      <ion-card *ngIf="usuario[0].idroles_FK == 2">
+      <ion-card class="caja" *ngIf="usuario[0].idroles_FK == 2">
         <ion-card-header>
           <ion-card-title>Autos</ion-card-title>
         </ion-card-header>
         
         <ion-card-content>
-          <ion-item *ngFor="let auto of autos">
-            <ion-label>Patente: {{ auto.patente }}</ion-label>
-            <ion-label>Color: {{ auto.color }}</ion-label>
-            <ion-label>Marca: {{ auto.marca }}</ion-label>
-            <ion-label>Modelo: {{ auto.modelo }}</ion-label>
-          </ion-item>
+            <ion-label>Patente: {{ autos[0].patente }}</ion-label>
+            <br>
+            <ion-label>Color: {{ autos[0].color }}</ion-label>
+            <br>
+            <ion-label>Marca: {{ autos[0].marca }}</ion-label>
+            <br>
+            <ion-label>Modelo: {{ autos[0].modelo }}</ion-label>
+            <br>
         </ion-card-content>
       </ion-card>
     </ion-card-content>

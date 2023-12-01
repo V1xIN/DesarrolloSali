@@ -45,11 +45,13 @@
       <ion-input label="Color" label-placement="floating" fill="outline" placeholder="Azul"[(ngModel)]="color"></ion-input>
       <br>
 
+      <ion-label [(ngModel)]="rutuser">Rut: {{ useractual[0].rut }}</ion-label>
 
       <ion-button shape="round" (click)="insertarAuto()">Ingresar Auto</ion-button>
       <br>
       <ion-button shape="round" [routerLink]="['/']">Volver</ion-button>
     </ion-card>
+
   </ion-content>
 
 

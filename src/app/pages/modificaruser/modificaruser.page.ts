@@ -132,51 +132,6 @@ export class ModificaruserPage {
     // Verifica que al menos un campo sea válido
     if (this.isAnyFieldValid()) {
       // Obtener datos del usuario actual
-      this.bdService.obtenerUsuarioActual().subscribe(
-        (usuarioActual) => {
-          if (usuarioActual.length > 0) {
-            const updatedUserData: any = {
-              ...usuarioActual[0], // Tomar el primer usuario (debería haber solo uno)
-            };
-  
-            // Actualizar solo los campos que tienen un valor en el formulario
-            if (this.nombre) {
-              updatedUserData.nombre = this.nombre;
-            }
-            if (this.apellido) {
-              updatedUserData.apellido = this.apellido;
-            }
-            if (this.email) {
-              updatedUserData.email = this.email;
-            }
-            if (this.telefono) {
-              updatedUserData.telefono = this.telefono;
-            }
-            if (this.direccion) {
-              updatedUserData.direccion = this.direccion;
-            }
-  
-            this.bdService.actualizarUsuario(updatedUserData).subscribe(
-              () => {
-                // Lógica después de una actualización exitosa
-                this.showModificationSuccessAlert();
-                this.router.navigate(['/perfil']);
-              },
-              (error) => {
-                // Manejo de errores durante la actualización
-                console.error('Error al actualizar el usuario:', error);
-              }
-            );
-          } else {
-            // No se pudo obtener el usuario actual
-            console.error('No se pudo obtener el usuario actual');
-          }
-        },
-        (error) => {
-          // Manejo de errores al obtener el usuario actual
-          console.error('Error al obtener el usuario actual:', error);
-        }
-      );
     } else {
       const alert = await this.alertController.create({
         header: 'Error de modificación',
