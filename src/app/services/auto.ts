@@ -1,5 +1,5 @@
 export class Auto {
-    idAuto:any;
+  idAuto:any;
   patente:any;
   color:any;
   marca:any;

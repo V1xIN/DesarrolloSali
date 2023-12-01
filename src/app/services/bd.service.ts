@@ -3,15 +3,15 @@ import { SQLite, SQLiteObject } from '@awesome-cordova-plugins/sqlite/ngx';
 import { Platform } from '@ionic/angular';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { AlertController } from '@ionic/angular';
-import { Rol } from './rol.service';
-import { Comuna } from './comuna.service';
-import { Reclamo } from './reclamo.service';
-import { Sedes } from './sedes.service';
-import { Viaje } from './viaje.service';
-import { Detalle } from './detalle.service';
 import { Usuario } from './usuario';
 import { Router } from '@angular/router';
 import { Auto } from './auto';
+import { Rol } from './rol';
+import { Comuna } from './comuna';
+import { Sedes } from './sedes';
+import { Viaje } from './viaje';
+import { Reclamo } from './reclamo';
+import { Detalle } from './detalle';
 
 @Injectable({
   providedIn: 'root',
