@@ -10,15 +10,15 @@ import { Viaje } from 'src/app/services/viaje';
   styleUrls: ['./pprincipal.page.scss'],
 })
 export class PprincipalPage implements OnInit {
-  viajes: any = [];
+  viajes: any;
 
   constructor(private bdService: BDService, private router: Router) {}
 
   ngOnInit() {
     this.bdService.bdState().subscribe((res) => {
       if (res) {
-        this.bdService.fetchViaje().subscribe((viajes) => {
-          this.viajes = viajes;
+        this.bdService.fetchViaje().subscribe((viajes2) => {
+          this.viajes = viajes2;
         });
       }
     });

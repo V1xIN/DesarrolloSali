@@ -364,8 +364,11 @@ buscarViajes() {
     return this.database
       .executeSql('INSERT INTO viaje(fechaViaje,horaViaje,asientos,costo,idAuto_FK,idSede_FK,idcomuna_FK) VALUES(?,?,?,?,?,?,?)', [fechaViaje, horaViaje, asientos, costo, idAuto_FK, idSede_FK, idcomuna_FK])
       .then(res => {
+        this.presentAlert("Viaje Registrado Correctamente");
         // Después de insertar, actualiza la lista de viajes
         this.buscarViajes();
+      }).catch(e=>{
+        this.presentAlert('Error en crear Viaje: ' + JSON.stringify(e));
       });
   }
   
