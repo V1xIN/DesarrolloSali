@@ -33,7 +33,7 @@
       <ion-label>Correo Electrónico: {{ usuario[0].correo }}</ion-label>
       <ion-label>Teléfono: {{ usuario[0].telefono }}</ion-label>
       <ion-label>Dirección: {{ usuario[0].direccion }}</ion-label>
-      <ion-button shape="round" class="boton" [routerLink]="['/modificaruser']">Editar Perfil</ion-button>
+      <ion-button shape="round" class="boton" (click)="modificar(usuario[0].rut)">Editar Perfil</ion-button>
 
       <!-- Mostrar el tipo de usuario -->
       <ion-label>Tipo de Usuario: <span *ngIf="usuario[0].idroles_FK == 2">Conductor</span> <span *ngIf="usuario[0].idroles_FK == 1">Pasajero</span> </ion-label>

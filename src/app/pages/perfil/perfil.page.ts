@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { NavigationExtras, Router } from '@angular/router';
 import { BDService } from 'src/app/services/bd.service';
 
 @Component({
@@ -9,8 +10,7 @@ import { BDService } from 'src/app/services/bd.service';
 export class PerfilPage implements OnInit {
   usuario: any;
   autos: any;
-
-  constructor(private bdService: BDService) {}
+  constructor(private bdService: BDService, private router: Router) {}
 
   ngOnInit() {
     this.bdService.fetchUsuario().subscribe(data=>{
@@ -20,6 +20,21 @@ export class PerfilPage implements OnInit {
       this.autos = data2;
     })
   }
+  modificar(usuario:any){
+    let navigationExtras : NavigationExtras = {
+      state: {
+        rutenviado: usuario.rut,
+        nombreenviado: usuario.nombre,
+        apellidoenviado: usuario.apellido,
+        correoenviado: usuario.correo,
+        telefonoenviado: usuario.telefono,
+        direccionenviado: usuario.direccion
+      }
+    }
+    this.router.navigate(['/modificaruser'], navigationExtras);
+
+  }
+
   /*
   ngOnInit() {
     const rutUsuarioRegistrado = localStorage.getItem('rutUsuarioRegistrado');

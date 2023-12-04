@@ -290,6 +290,30 @@ buscarViajes() {
       this.listaRol.next(roles as any);
     });
   }
+  buscarusuario() {
+    return this.database.executeSql('SELECT * FROM usuario', []).then(res => {
+      //variable para almacenar el resultado
+      let usuarios: Usuario[] = [];
+      //verifico la cantidad de registros
+      if (res.rows.length > 0) {
+        //agrego registro a registro en mi variable
+        for (var i = 0; i < res.rows.length; i++) {
+          usuarios.push({
+            rut: res.rows.item(i).rut,
+            nombre: res.rows.item(i).nombre,
+            apellido: res.rows.item(i).apellido,
+            correo: res.rows.item(i).correo,
+            clave: res.rows.item(i).clave,
+            telefono: res.rows.item(i).telefono,
+            direccion: res.rows.item(i).direccion,
+            idroles_FK: res.rows.item(i).idroles_FK,
+          });
+        }
+      }
+      //actualizo el observable
+      this.listaRol.next(usuarios as any);
+    });
+  }
   buscarAuto() {
     return this.database.executeSql('SELECT * FROM auto', []).then(res => {
       //variable para almacenar el resultado
@@ -474,7 +498,15 @@ buscarViajes() {
 
   //Nuevas funciones
   //Registro
-
+  actualizarUsuario(rut:any,nombre:any,apellido:any,correo:any,telefono:any,direccion:any){
+    return this.database.executeSql('UPDATE usuario SET nombre = ?,apellido = ?,correo = ?,telefono = ?,direccion = ? WHERE rut = ?',[nombre,apellido,correo,telefono,direccion,rut]).then(res=>{
+      this.buscarusuario();
+      this.router.navigate(['/perfil']);
+      
+    }).catch(e=>{
+      this.presentAlert('Error en Modificar Usuario: ' + JSON.stringify(e));
+    })
+  }
   InsertUser(rut: any, nombre: any, apellido: any, correo: any, clave: any, telefono: any, direccion: any, idroles_FK: any) {
     return this.database
       .executeSql('INSERT INTO usuario(rut,nombre,apellido,correo,clave,telefono,direccion,idroles_FK) VALUES(?,?,?,?,?,?,?,?)', [rut, nombre, apellido, correo, clave, telefono, direccion,idroles_FK]).then(res=>{
