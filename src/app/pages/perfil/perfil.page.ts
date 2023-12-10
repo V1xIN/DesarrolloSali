@@ -20,6 +20,7 @@ export class PerfilPage implements OnInit {
       this.autos = data2;
     })
   }
+  
   modificar(usuario:any){
     let navigationExtras : NavigationExtras = {
       state: {

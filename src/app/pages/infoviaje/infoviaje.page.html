@@ -29,22 +29,23 @@
 
     <ion-card-header>
 
-      <ion-card-title>En 10 minutos</ion-card-title>
+      <ion-card-title>Viaje</ion-card-title>
       
     </ion-card-header>
     <ion-card-content class="colorletra">
-      <ion-icon name="flag"></ion-icon> Mall Plaza Norte <ion-icon name="arrow-forward-circle"></ion-icon> Costanera Center
+      <ion-input label="Fecha de salida" label-placement="floating" fill="outline" readonly [(ngModel)]="fechaViaje" ></ion-input>
+      <ion-input label="Hora de salida" label-placement="floating" fill="outline" readonly [(ngModel)]="horaViaje" ></ion-input>
+      <ion-input label="Desde" label-placement="floating" fill="outline" readonly [(ngModel)]="idSede_FK" ></ion-input>
+      <ion-input label="Hasta" label-placement="floating" fill="outline" readonly [(ngModel)]="idcomuna_FK" ></ion-input>
     </ion-card-content>
     <ion-card-content class="colorletra">
      
-        <h1>Conductor: Ryan Gosling</h1>
-     
 
-      <img src="https://i.guim.co.uk/img/static/sys-images/Guardian/About/General/2011/9/14/1315997543282/ryan-gosling-in-drive-007.jpg?width=465&dpr=1&s=none"/>
+      
 
-      <h2>Asientos disponibles: 2</h2>
-      <h2>Monto: $3.000</h2>
-      <h2>Patente: DRVR 13</h2>
+      <ion-input label="Asientos Disponibles" label-placement="floating" fill="outline" readonly [(ngModel)]="asientos" ></ion-input>
+      <ion-input label="Monto por asiento" label-placement="floating" fill="outline" readonly [(ngModel)]="costo" ></ion-input>
+      <ion-input label="Auto asignado al viaje" label-placement="floating" fill="outline" readonly [(ngModel)]="idAuto_FK" ></ion-input>
     </ion-card-content>
 
 

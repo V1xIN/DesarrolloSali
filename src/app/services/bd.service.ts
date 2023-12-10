@@ -500,6 +500,7 @@ buscarViajes() {
   //Registro
   actualizarUsuario(rut:any,nombre:any,apellido:any,correo:any,telefono:any,direccion:any){
     return this.database.executeSql('UPDATE usuario SET nombre = ?,apellido = ?,correo = ?,telefono = ?,direccion = ? WHERE rut = ?',[nombre,apellido,correo,telefono,direccion,rut]).then(res=>{
+      this.presentAlert("Usuario Actualizado Correctamente");
       this.buscarusuario();
       this.router.navigate(['/perfil']);
       

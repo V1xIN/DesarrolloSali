@@ -27,7 +27,7 @@
 
 
       
-      <ion-input label="Nombre" label-placement="floating" fill="outline" placeholder="Ingrese su nombre" [(ngModel)]="nombre" (input)="validateNombre()"></ion-input>
+      <ion-input label="Nombre" label-placement="floating" fill="outline" placeholder="Ingrese su nombre"  [(ngModel)]="nombre" (input)="validateNombre()"></ion-input>
       <p *ngIf="errorMessages.nombre" class="error-message">{{ errorMessages.nombre }}</p>
 
       <ion-input label="Apellido" label-placement="floating" fill="outline" placeholder="Ingrese su apellido" [(ngModel)]="apellido" (input)="validateApellido()"></ion-input>

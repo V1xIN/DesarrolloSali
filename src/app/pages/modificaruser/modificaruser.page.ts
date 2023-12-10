@@ -19,12 +19,8 @@ export class ModificaruserPage {
   errorMessages: any = {};
   isModificationInProgress: boolean = false;
 
-  constructor(
-    private alertController: AlertController,
-    private router: Router,
-    private bdService: BDService, // Agrega tu servicio aquí
-    private activeRoute: ActivatedRoute
-  ) {this.activeRoute.queryParams.subscribe(res=>{
+  constructor(private alertController: AlertController,private router: Router,private bdService: BDService,private activeRoute: ActivatedRoute) {
+    this.activeRoute.queryParams.subscribe(res=>{
     if(this.router.getCurrentNavigation()?.extras.state){
       this.rut = this.router.getCurrentNavigation()?.extras?.state?.['rutenviado'];
       this.nombre = this.router.getCurrentNavigation()?.extras?.state?.['nombreenviado'];
@@ -32,7 +28,8 @@ export class ModificaruserPage {
       this.email = this.router.getCurrentNavigation()?.extras?.state?.['correoenviado'];
       this.telefono = this.router.getCurrentNavigation()?.extras?.state?.['telefonoenviado'];
       this.direccion = this.router.getCurrentNavigation()?.extras?.state?.['direccionenviado'];
-    }})
+    }
+    })
   }
 
   handleFileInput(event: any) {
@@ -143,10 +140,6 @@ export class ModificaruserPage {
     // Verifica que al menos un campo sea válido
     if (this.isAnyFieldValid()) {
         this.bdService.actualizarUsuario(this.rut,this.nombre,this.apellido,this.email,this.telefono,this.direccion);
-        this.bdService.presentAlert("Usuario Actualizado");
-        this.router.navigate(['/perfil']);
-    
-      
     } else {
       const alert = await this.alertController.create({
         header: 'Error de modificación',
@@ -156,4 +149,6 @@ export class ModificaruserPage {
       await alert.present();
     }
   }
+
+  
 }  
