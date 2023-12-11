@@ -46,11 +46,13 @@
       <ion-input label="Asientos Disponibles" label-placement="floating" fill="outline" readonly [(ngModel)]="asientos" ></ion-input>
       <ion-input label="Monto por asiento" label-placement="floating" fill="outline" readonly [(ngModel)]="costo" ></ion-input>
       <ion-input label="Auto asignado al viaje" label-placement="floating" fill="outline" readonly [(ngModel)]="idAuto_FK" ></ion-input>
+    
     </ion-card-content>
 
 
 
     <ion-button shape="round" color="success">Tomar asiento</ion-button>
+    <ion-button *ngIf="usuario[0].idroles_FK == 2" shape="round" color="danger" (click)="eliminar(idViaje)">Cancelar viaje</ion-button>
   </ion-card>
 
   <br>

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { BDService } from 'src/app/services/bd.service';
 
 @Component({
   selector: 'app-infoviaje',
@@ -7,7 +8,7 @@ import { ActivatedRoute, Router } from '@angular/router';
   styleUrls: ['./infoviaje.page.scss'],
 })
 export class InfoviajePage implements OnInit {
-  
+  usuario: any;
   idViaje = "";
   fechaViaje= "";
   horaViaje= "";
@@ -17,7 +18,7 @@ export class InfoviajePage implements OnInit {
   idSede_FK= "";
   idcomuna_FK= "";
 
-  constructor(private router: Router,private activeRoute: ActivatedRoute) {
+  constructor(private bdService: BDService,private router: Router,private activeRoute: ActivatedRoute) {
     this.activeRoute.queryParams.subscribe(res=>{
       if(this.router.getCurrentNavigation()?.extras.state){
         this.idViaje = this.router.getCurrentNavigation()?.extras?.state?.['idViajeenv'];
@@ -32,7 +33,16 @@ export class InfoviajePage implements OnInit {
       })
    }
 
+   eliminar(idViaje:any){
+    this.bdService.eliminarviaje(idViaje);
+    this.bdService.presentAlert("Noticia Eliminada");
+
+  }
+
   ngOnInit() {
+    this.bdService.fetchUsuario().subscribe(data=>{
+      this.usuario = data;
+    });
   }
 
 }

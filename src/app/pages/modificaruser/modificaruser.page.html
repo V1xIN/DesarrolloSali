@@ -27,23 +27,23 @@
 
 
       
-      <ion-input label="Nombre" label-placement="floating" fill="outline" placeholder="Ingrese su nombre"  [(ngModel)]="nombre" (input)="validateNombre()"></ion-input>
-      <p *ngIf="errorMessages.nombre" class="error-message">{{ errorMessages.nombre }}</p>
+      <ion-input label="Nombre" label-placement="floating" fill="outline" placeholder="Ingrese su nombre"  [(ngModel)]="nombre" ></ion-input>
+      
 
-      <ion-input label="Apellido" label-placement="floating" fill="outline" placeholder="Ingrese su apellido" [(ngModel)]="apellido" (input)="validateApellido()"></ion-input>
-      <p *ngIf="errorMessages.apellido" class="error-message">{{ errorMessages.apellido }}</p>
+      <ion-input label="Apellido" label-placement="floating" fill="outline" placeholder="Ingrese su apellido" [(ngModel)]="apellido" ></ion-input>
+      
 
-      <ion-input label="Correo Electrónico" label-placement="floating" fill="outline" placeholder="Ingrese su Correo" [(ngModel)]="email" (input)="validateEmail()"></ion-input>
-      <p *ngIf="errorMessages.email" class="error-message">{{ errorMessages.email }}</p>
+      <ion-input label="Correo Electrónico" label-placement="floating" fill="outline" placeholder="Ingrese su Correo" [(ngModel)]="email" ></ion-input>
+     
 
-      <ion-input label="Telefono" label-placement="floating" fill="outline" placeholder="Ingrese su teléfono" [(ngModel)]="telefono" (input)="validateTelefono()"></ion-input>
-      <p *ngIf="errorMessages.telefono" class="error-message">{{ errorMessages.telefono }}</p>
+      <ion-input label="Telefono" label-placement="floating" fill="outline" placeholder="Ingrese su teléfono" [(ngModel)]="telefono" ></ion-input>
+      
 
-      <ion-input label="Direccion" label-placement="floating" fill="outline" placeholder="Ingrese su dirección" [(ngModel)]="direccion" (input)="validateDireccion()"></ion-input>
-      <p *ngIf="errorMessages.direccion" class="error-message">{{ errorMessages.direccion }}</p>
+      <ion-input label="Direccion" label-placement="floating" fill="outline" placeholder="Ingrese su dirección" [(ngModel)]="direccion" ></ion-input>
+      
       <br>
 
-      <ion-button shape="round" class="boton" (click)="modificaruser()">Modificar datos</ion-button>
+      <ion-button shape="round" class="boton" (click)="editarusuario()">Modificar datos</ion-button>
 
 
 

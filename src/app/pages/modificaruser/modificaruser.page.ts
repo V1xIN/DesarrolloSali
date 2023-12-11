@@ -128,7 +128,10 @@ export class ModificaruserPage {
       !this.errorMessages.direccion
     );
   }
-
+  editarusuario(){
+    this.bdService.actualizarUsuario(this.rut,this.nombre,this.apellido,this.email,this.telefono,this.direccion);
+  }
+  /*
   async modificaruser() {
     // Validación de campos
     this.validateNombre();
@@ -148,7 +151,7 @@ export class ModificaruserPage {
       });
       await alert.present();
     }
-  }
+  }*/
 
   
 }  

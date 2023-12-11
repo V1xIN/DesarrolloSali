@@ -395,6 +395,13 @@ buscarViajes() {
         this.presentAlert('Error en crear Viaje: ' + JSON.stringify(e));
       });
   }
+
+  eliminarviaje(idViaje:any){
+    return this.database.executeSql('DELETE FROM viaje WHERE idViaje = ?',[idViaje]).then(res=>{
+      this.buscarViajes();
+      this.router.navigate(['/pprincipal']);
+    })
+  }
   
   insertarAuto(patente: any, color: any, marca: any, modelo: any, rut_FK: any) {
     return this.database
@@ -491,6 +498,7 @@ buscarViajes() {
       this.buscarComunas();
       this.buscarViajes();
       this.buscarAuto();
+      this.buscarusuario(); 
     } catch (e) {
       this.presentAlert('Error en crearBD: ' + JSON.stringify(e));
     }
@@ -502,12 +510,14 @@ buscarViajes() {
     return this.database.executeSql('UPDATE usuario SET nombre = ?,apellido = ?,correo = ?,telefono = ?,direccion = ? WHERE rut = ?',[nombre,apellido,correo,telefono,direccion,rut]).then(res=>{
       this.presentAlert("Usuario Actualizado Correctamente");
       this.buscarusuario();
-      this.router.navigate(['/perfil']);
+      this.router.navigate(['/login']);
       
     }).catch(e=>{
       this.presentAlert('Error en Modificar Usuario: ' + JSON.stringify(e));
     })
   }
+  
+
   InsertUser(rut: any, nombre: any, apellido: any, correo: any, clave: any, telefono: any, direccion: any, idroles_FK: any) {
     return this.database
       .executeSql('INSERT INTO usuario(rut,nombre,apellido,correo,clave,telefono,direccion,idroles_FK) VALUES(?,?,?,?,?,?,?,?)', [rut, nombre, apellido, correo, clave, telefono, direccion,idroles_FK]).then(res=>{
