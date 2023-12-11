@@ -35,7 +35,7 @@ export class InfoviajePage implements OnInit {
 
    eliminar(idViaje:any){
     this.bdService.eliminarviaje(idViaje);
-    this.bdService.presentAlert("Noticia Eliminada");
+    this.bdService.presentAlert("Tu viaje ha sido cancelado");
 
   }
 
