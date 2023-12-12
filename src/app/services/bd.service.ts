@@ -493,12 +493,12 @@ buscarViajes() {
 
       //cambio mi observable de BD
       this.isDBReady.next(true);
-      this.buscarRol();
       this.buscarSedes();
       this.buscarComunas();
       this.buscarViajes();
       this.buscarAuto();
-      this.buscarusuario(); 
+      this.buscarusuario();
+      this.buscarRol(); 
     } catch (e) {
       this.presentAlert('Error en crearBD: ' + JSON.stringify(e));
     }
