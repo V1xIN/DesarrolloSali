@@ -9,6 +9,7 @@ import { BDService } from 'src/app/services/bd.service'; // Importa el servicio 
   styleUrls: ['./pprincipal.page.scss'],
 })
 export class PprincipalPage implements OnInit {
+  usuario: any;
   viajes: any;
   arreglocomunas: any;
   arregloSedes: any;
@@ -43,6 +44,9 @@ export class PprincipalPage implements OnInit {
         });
         this.bdService.fetchSedes().subscribe((sedes) => {
           this.arregloSedes = sedes;
+        });
+        this.bdService.fetchUsuario().subscribe(data=>{
+          this.usuario = data;
         });
       }
     });

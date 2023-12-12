@@ -10,8 +10,6 @@ export class AppComponent implements OnInit {
   public appPages = [
     { title: 'Perfil', url: '/perfil', icon: 'person-circle', visible: false },
     { title: 'Reclamo', url: '/reclamo', icon: 'alert-circle', visible: false },
-    { title: 'Registro', url: '/register', icon: 'finger-print', visible: true },
-    { title: 'Agregar viaje', url: '/addviaje', icon: 'trail-sign', visible: false },
     { title: 'Cerrar Sesión', url: '/login', icon: 'log-out', visible: false },
   ];
 
